@@ -1,0 +1,17 @@
+{
+  "version": "0.0.0",
+  "private": true,
+  "name": "angular-cloudinary-photo",
+  "description": "A tutorial application for AngularJS",
+  "repository": "https://github.com/angular/angular-phonecat",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^0.6.1",
+    "bower": "^1.3.1"
+  },
+  "scripts": {
+    "postinstall": "bower install",
+    "prestart": "npm install",
+    "start": "http-server -p 8000"
+  }
+}

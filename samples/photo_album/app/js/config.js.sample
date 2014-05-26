@@ -1,0 +1,2 @@
+$.cloudinary.config().cloud_name = 'XXXXXXXXX';
+$.cloudinary.config().upload_preset = 'YYYYYYYY';
