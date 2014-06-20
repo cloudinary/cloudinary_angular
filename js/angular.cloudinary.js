@@ -81,6 +81,7 @@
       transclude : true,
       template: "<img ng-transclude/>",
       scope: {},
+      priority: 99,
       controller: function($scope) {
         this.addTransformation = function(ts){
           $scope.transformations = $scope.transformations || [];
@@ -95,9 +96,13 @@
         if (scope.transformations) {
           attributes.transformation = scope.transformations;
         }
-      
-        var url = $.cloudinary.url(attrs.publicId, attributes);
-        element.attr('src', url);
+        
+        attrs.$observe('publicId', function(publicId){
+          if (!publicId) return;
+          var url = $.cloudinary.url(publicId, attributes);
+          element.attr('src', url);
+        });
+
         if (attrs.htmlWidth) {
           element.attr("width", attrs.htmlWidth);
         } else {
@@ -108,6 +113,7 @@
         } else {
           element.removeAttr("height");
         }
+        
       }
     };
   });
