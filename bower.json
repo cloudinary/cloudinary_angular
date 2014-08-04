@@ -8,5 +8,8 @@
   "dependencies": {
     "angular": "1.2.x",
     "cloudinary_js": ">=1.0.17"
-  }
+  },
+  "main": [
+    "js/angular.cloudinary.js"
+  ]
 }
