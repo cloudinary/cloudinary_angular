@@ -41,7 +41,7 @@
             if (!value)
                return;
 
-            var attributes = {}
+            var attributes = {};
             $.each(element[0].attributes, function(){attributes[cloudinaryAttr(this.name)] = this.value});
             value = $.cloudinary.url(value, attributes);
             attr.$set(name, value);
