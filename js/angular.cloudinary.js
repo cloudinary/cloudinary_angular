@@ -13,7 +13,7 @@
 }(function ($, angular) {
 
   var angularModule = angular.module('cloudinary', []);
-  
+
   var cloudinaryAttr = function(attr){
     if (attr.match(/cl[A-Z]/)) attr = attr.substring(2);
     return attr.replace(/([a-z])([A-Z])/g,'$1_$2').toLowerCase();
@@ -40,7 +40,7 @@
           attr.$observe(normalized, function(value) {
             if (!value)
                return;
-             
+
             var attributes = {}
             $.each(element[0].attributes, function(){attributes[cloudinaryAttr(this.name)] = this.value});
             value = $.cloudinary.url(value, attributes);
@@ -75,6 +75,13 @@
   });
 
   angularModule.directive('clImage', function() {
+    var Controller = function($scope) {
+      this.addTransformation = function(ts) {
+        $scope.transformations = $scope.transformations || [];
+        $scope.transformations.push(ts);
+      }
+    };
+    Controller.$inject = ['$scope'];
     return {
       restrict : 'E',
       replace: true,
@@ -82,21 +89,16 @@
       template: "<img ng-transclude/>",
       scope: {},
       priority: 99,
-      controller: function($scope) {
-        this.addTransformation = function(ts){
-          $scope.transformations = $scope.transformations || [];
-          $scope.transformations.push(ts);
-        }
-      },
+      controller: Controller,
       // The linking function will add behavior to the template
       link : function(scope, element, attrs) {
         var attributes = {};
         $.each(attrs, function(name, value){attributes[cloudinaryAttr(name)] = value});
-      
+
         if (scope.transformations) {
           attributes.transformation = scope.transformations;
         }
-        
+
         attrs.$observe('publicId', function(publicId){
           if (!publicId) return;
           var url = $.cloudinary.url(publicId, attributes);
@@ -113,7 +115,7 @@
         } else {
           element.removeAttr("height");
         }
-        
+
       }
     };
   });
