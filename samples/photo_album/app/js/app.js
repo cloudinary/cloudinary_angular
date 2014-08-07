@@ -31,6 +31,10 @@ photoAlbumApp.config(['$routeProvider',
         templateUrl: 'partials/photo-upload.html',
         controller: 'photoUploadCtrl'
       }).
+      when('/photos/new_jquery', {
+        templateUrl: 'partials/photo-upload-jquery.html',
+        controller: 'photoUploadCtrlJQuery'
+      }).
       otherwise({
         redirectTo: '/photos'
       });

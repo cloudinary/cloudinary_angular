@@ -1,21 +1,20 @@
-<div id="direct_upload" 
-    ng-file-drop="onFileSelect($files)"
-    ng-file-drag-over-class="dragOverClass($event)">
+<div id="direct_upload_jquery">
     <h1>New Photo</h1>
-    <h2>Direct upload from the browser with Angular File Upload</h2>
+    <h2>Direct upload from the browser with jQuery File Upload</h2>
     <p>You can also drag and drop an image file into the dashed area.</p>
     <form>
         <div class="form_line">
             <label path="title">Title:</label>
             <div class="form_controls">
-                <input type="text" class="form-control" placeholder="Title" ng-model="title"/>
+                <input type="text" class="form-control" placeholder="Title" ng-model="title" ng-change="updateTitle()"/>
             </div>
         </div>
         <div class="form_line">
             <label>Image:</label>
             <div class="form_controls">
                 <div class="upload_button_holder">
-                    <div href="#" class="upload_button" ng-file-select="onFileSelect($files)" data-multiple="false" title="aaaa" onclick="this.value = null">Upload</div>
+                    <a href="#" class="upload_button">Upload</a>
+                    <input type="file" name="file" class="cloudinary_fileupload">
                 </div>
                 <div class="status">{{status}}</div>
                 <div class="progress-bar">

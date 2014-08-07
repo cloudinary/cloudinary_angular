@@ -21,10 +21,10 @@ a { color: #0b63b6 }
 .inline { display: inline-block; }
 td { vertical-align: top; padding-right: 5px; }
 
-#backend_upload, #direct_upload { padding: 20px 20px; margin: 20px 0;
+#direct_upload_jquery, #direct_upload { padding: 20px 20px; margin: 20px 0;
     border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; }
 
-#backend_upload h1, #direct_upload h1 { margin: 0 0 15px 0; }
+#direct_upload_jquery h1, #direct_upload h1 { margin: 0 0 15px 0; }
 
 .back_link { font-weight: bold; display: block; font-size: 16px; margin: 10px 0; }
 
@@ -34,18 +34,19 @@ form .form_controls { margin-left: 180px; }
 form label { float: left; width: 160px; padding-top: 3px; text-align: right; }
 form .error { color: #c55; margin: 0 10px; }
 
-#direct_upload { border: 4px dashed #ccc; }
+#direct_upload, #direct_upload_jquery { border: 4px dashed #ccc; }
+#direct_upload.dragover { border-color: #0c0; }
+#direct_upload.dragover-err { border-color: #c00; }
 
 .upload_details { font-size: 12px; margin: 20px; border-top: 1px solid #ccc; word-wrap: break-word; }
-
 .upload_button_holder {
     position: relative;
-    display: inline-block;
     overflow: hidden;
+    display: inline-block;
 }
 
-.upload_button_holder .upload_button {
-    display: block;
+.upload_button {
+    display: inline-block;
     position: relative;
     font-weight: bold;
     font-size: 14px;
@@ -61,10 +62,13 @@ form .error { color: #c55; margin: 0 10px; }
     cursor: pointer;
 }
 
-.upload_button_holder:hover .upload_button {
+.upload_button_holder .upload_button {
+    display: block;
+} 
+
+.upload_button:hover {
     background-color: rgb(17, 133, 240);
 }
-
 .upload_button_holder .cloudinary_fileupload {
     opacity: 0;
     filter: alpha(opacity=0);
