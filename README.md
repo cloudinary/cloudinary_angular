@@ -49,7 +49,7 @@ Will be transformed to:
 
 ### Uploading images
 
-You can upload image sdirectly from the browser using Cloudinary's jQuery plugin from you AngularJS app. See the sample [photo album app](https://github.com/cloudinary/cloudinary_angular/tree/master/samples/photo_album) for a usage example.
+You can upload images directly from the browser using Cloudinary's jQuery plugin from you AngularJS app. See the sample [photo album app](https://github.com/cloudinary/cloudinary_angular/tree/master/samples/photo_album) for a usage example.
 
 
 ## Samples
