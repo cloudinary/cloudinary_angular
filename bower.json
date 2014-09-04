@@ -2,7 +2,7 @@
   "name": "cloudinary_ng",
   "description": "A set of AngularJS directives/helpers for using Cloudinary with AngularJS",
   "version": "0.1.2",
-  "homepage": "https://github.com/cloudinary/cloudinary_agular",
+  "homepage": "https://github.com/cloudinary/cloudinary_angular",
   "license": "MIT",
   "private": false,
   "dependencies": {
