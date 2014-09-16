@@ -93,16 +93,26 @@
       // The linking function will add behavior to the template
       link : function(scope, element, attrs) {
         var attributes = {};
+        var publicId = null;
+
         $.each(attrs, function(name, value){attributes[cloudinaryAttr(name)] = value});
 
         if (scope.transformations) {
           attributes.transformation = scope.transformations;
         }
 
-        attrs.$observe('publicId', function(publicId){
-          if (!publicId) return;
-          var url = $.cloudinary.url(publicId, attributes);
-          element.attr('src', url);
+        // store public id and load image
+        attrs.$observe('publicId', function(value){
+          if (!value) return;
+          publicId = value
+          loadImage();
+        });
+
+        // observe and update version attribute
+        attrs.$observe('version', function(value){
+          if (!value) return;
+          attributes['version'] = value;
+          loadImage();
         });
 
         if (attrs.htmlWidth) {
@@ -114,6 +124,11 @@
           element.attr("height", attrs.htmlHeight);
         } else {
           element.removeAttr("height");
+        }
+
+        var loadImage = function() {
+          var url = $.cloudinary.url(publicId, attributes);
+          element.attr('src', url);
         }
 
       }
