@@ -33,11 +33,11 @@ Then go to
 
 The `index.html` page and the `photo-upload.html` partial give some examples of both the URL directive and Image directive.
 
-### Unsignd Upload ###
+### Unsigned Upload ###
 
-In order to add images to our photo album that would later be rettrievable from the Cloudinary service we must select a tag which will serve as our source for the list. In this case `myphotoalbum`. While this can tag can actually be set in the upload preset and be hidden from the client side, in this sample we included it in the request itself to make this sample work without fursther configuration steps.
+In order to add images to our photo album that would later be retrievable from the Cloudinary service we must select a tag which will serve as our source for the list. In this case `myphotoalbum`. While this can tag can actually be set in the upload preset and be hidden from the client side, in this sample we included it in the request itself to make this sample work without further configuration steps.
 
-The `photoUploadCtrl` uses the [Angular File Upload](https://github.com/danialfarid/angular-file-upload) in order to configure the direct upload widget.
+The `photoUploadCtrl` uses the [Angular File Upload](https://github.com/danialfarid/angular-file-upload) library in order to configure the direct upload widget.
 
 The `photoUploadCtrlJQuery` uses the Cloudinary JQuery library in order to configure the direct upload widget. Notice that changes to the title field are propagated to the `formData` being sent in the upload request. This is meant to illustrate the possiblity of attaching extra meta-data to each upload image.
 
