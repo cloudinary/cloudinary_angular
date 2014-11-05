@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "angular": "1.2.x",
+    "angular": "1.x",
     "cloudinary_js": ">=1.0.17"
   },
   "main": [
