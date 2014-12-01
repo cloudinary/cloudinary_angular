@@ -23,7 +23,7 @@
   ['Src', 'Srcset', 'Href'].forEach(function(attrName) {
     var normalized = 'cl' + attrName;
     attrName = attrName.toLowerCase();
-    angularModule.directive(normalized, function($sniffer) {
+    angularModule.directive(normalized, ['$sniffer', function($sniffer) {
       return {
         priority: 99, // it needs to run after the attributes are interpolated
         link: function(scope, element, attr) {
@@ -54,10 +54,10 @@
           });
         }
       };
-    });
+    }]);
   });
 
-  angularModule.directive('clTransformation', function() {
+  angularModule.directive('clTransformation', [function() {
     return {
       restrict : 'E',
       transclude : false,
@@ -72,9 +72,9 @@
         clImageCtrl.addTransformation(attributes);
       }
     }
-  });
+  }]);
 
-  angularModule.directive('clImage', function() {
+  angularModule.directive('clImage', [function() {
     var Controller = function($scope) {
       this.addTransformation = function(ts) {
         $scope.transformations = $scope.transformations || [];
@@ -133,5 +133,5 @@
 
       }
     };
-  });
+  }]);
 }));
