@@ -48,24 +48,30 @@ photoAlbumControllers.controller('photoUploadCtrlJQuery', ['$scope', '$rootScope
   }]).controller('photoUploadCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$upload', 
   /* Uploading with Angular File Upload */
   function($scope, $rootScope, $routeParams, $location, $upload) {
-    $scope.onFileSelect = function($files) {
-      var file = $files[0]; // we're not interested in multiple file uploads here
-      $scope.upload = $upload.upload({
-        url: "https://api.cloudinary.com/v1_1/" + $.cloudinary.config().cloud_name + "/upload",
-        data: {upload_preset: $.cloudinary.config().upload_preset, tags: 'myphotoalbum', context:'photo=' + $scope.title},
-        file: file
-      }).progress(function (e) {
-        $scope.progress = Math.round((e.loaded * 100.0) / e.total);
-        $scope.status = "Uploading... " + $scope.progress + "%";
-        $scope.$apply();
-      }).success(function (data, status, headers, config) {
-        $rootScope.photos = $rootScope.photos || [];
-        data.context = {custom: {photo: $scope.title}};
-        $scope.result = data;
-        $rootScope.photos.push(data);
-        $scope.$apply();
+    $scope.$watch('files', function() {
+      if (!$scope.files) return;
+      $scope.files.forEach(function(file){
+        $scope.upload = $upload.upload({
+          url: "https://api.cloudinary.com/v1_1/" + $.cloudinary.config().cloud_name + "/upload",
+          data: {upload_preset: $.cloudinary.config().upload_preset, tags: 'myphotoalbum', context:'photo=' + $scope.title},
+          file: file
+        }).progress(function (e) {
+          file.progress = Math.round((e.loaded * 100.0) / e.total);
+          file.status = "Uploading... " + file.progress + "%";
+          if(!$scope.$$phase) {
+            $scope.$apply();
+          }
+        }).success(function (data, status, headers, config) {
+          $rootScope.photos = $rootScope.photos || [];
+          data.context = {custom: {photo: $scope.title}};
+          file.result = data;
+          $rootScope.photos.push(data);
+          if(!$scope.$$phase) {
+            $scope.$apply();
+          }
+        });
       });
-    };
+    });
 
     /* Modify the look and fill of the dropzone when files are being dragged over it */
     $scope.dragOverClass = function($event) {

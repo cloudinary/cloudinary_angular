@@ -6,8 +6,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "ng-file-upload-shim": "1.6.x",
-    "ng-file-upload": "1.6.x",
+    "ng-file-upload-shim": "2.1.x",
+    "ng-file-upload": "2.1.x",
     "angular": "1.2.x",
     "angular-route": "~1.2.x",
     "angular-resource": "~1.2.x",
