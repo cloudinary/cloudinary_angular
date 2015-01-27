@@ -5,11 +5,39 @@
   "homepage": "https://github.com/cloudinary/cloudinary_angular",
   "license": "MIT",
   "private": false,
+  "keywords": [
+    "angularjs",
+    "jquery",
+    "file",
+    "image",
+    "media",
+    "cloud",
+    "upload",
+    "widget",
+    "multiple",
+    "selection",
+    "drag",
+    "drop",
+    "progress",
+    "preview",
+    "cross-domain",
+    "cross-site",
+    "chunk",
+    "resume",
+    "bootstrap"
+  ],
   "dependencies": {
     "angular": ">=1.2.0",
     "cloudinary_js": ">=1.0.17"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cloudinary/cloudinary_angular.git"
+  },
   "main": [
     "js/angular.cloudinary.js"
+  ],
+  "ignore": [
+    "samples"
   ]
 }
