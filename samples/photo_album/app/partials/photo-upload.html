@@ -1,6 +1,8 @@
 <div id="direct_upload" 
-    ng-file-drop="onFileSelect($files)"
-    ng-file-drag-over-class="dragOverClass($event)">
+    ng-file-drop
+    ng-file-drag-over-class="dragOverClass($event)"
+    ng-model="files"
+    ng-multiple="true">
     <h1>New Photo</h1>
     <h2>Direct upload from the browser with Angular File Upload</h2>
     <p>You can also drag and drop an image file into the dashed area.</p>
@@ -15,7 +17,7 @@
             <label>Image:</label>
             <div class="form_controls">
                 <div class="upload_button_holder">
-                    <div href="#" class="upload_button" ng-file-select ng-multiple="true" title="aaaa" resetOnClick="true" ng-model="files">Upload</div>
+                    <div href="#" class="upload_button" ng-file-select ng-multiple="true" title="upload" resetOnClick="true" ng-model="files">Upload</div>
                 </div>
                 
             </div>
