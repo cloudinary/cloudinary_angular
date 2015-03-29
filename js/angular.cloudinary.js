@@ -70,15 +70,50 @@
           }
         });
         clImageCtrl.addTransformation(attributes);
+
+        scope.$watch(function() {
+          var output=[];
+          for(var a in attrs.$attr){
+            output.push(attrs[a]);
+          }
+          return output;
+        },function(newVal,oldVal){
+          clImageCtrl.updateTransformation(newVal,oldVal);
+        },true);
+
       }
-    }
-  }]);
+    };
+}]);
 
   angularModule.directive('clImage', [function() {
     var Controller = function($scope) {
       this.addTransformation = function(ts) {
         $scope.transformations = $scope.transformations || [];
         $scope.transformations.push(ts);
+      }
+
+      this.updateTransformation = function(newTransformation,oldTransformation) {
+        if($scope.transformations.length){
+          for(var t in $scope.transformations){
+            var equal = true;
+            var c = 0;
+            for(var i in $scope.transformations[t]){
+              if(typeof oldTransformation[c] === 'undefined'
+                || $scope.transformations[t][i] !== oldTransformation[c] ){
+                equal = false
+              }
+              c++;
+            }
+
+            if(equal){
+              var c = 0;
+              for(var i in $scope.transformations[t]){
+                $scope.transformations[t][i] = newTransformation[c];
+                c++;
+              }
+            }
+          }
+        }
       }
     };
     Controller.$inject = ['$scope'];
@@ -125,6 +160,16 @@
         } else {
           element.removeAttr("height");
         }
+        
+        scope.$watch('transformations',function(newVal,oldVal){
+
+          if (scope.transformations) {
+            attributes.transformation = scope.transformations;
+          }
+          if (!attrs.publicId) return;
+            loadImage();
+
+        },true);
 
         var loadImage = function() {
           var url = $.cloudinary.url(publicId, attributes);
