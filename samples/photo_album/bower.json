@@ -6,11 +6,11 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "ng-file-upload": "2.2.x",
-    "angular": "1.2.x",
-    "angular-route": "~1.2.x",
-    "angular-resource": "~1.2.x",
-    "angular-animate": "~1.2.x",
+    "ng-file-upload": "5.1.x",
+    "angular": "1.3.x",
+    "angular-route": "~1.3.x",
+    "angular-resource": "~1.3.x",
+    "angular-animate": "~1.3.x",
     "cloudinary_ng": "../..#edge"
   },
   "ignore": {}

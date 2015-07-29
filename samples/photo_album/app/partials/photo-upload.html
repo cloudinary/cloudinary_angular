@@ -1,6 +1,6 @@
 <div id="direct_upload" 
-    ng-file-drop
-    ng-file-drag-over-class="dragOverClass($event)"
+    ngf-drop
+    ngf-drag-over-class="dragOverClass($event)"
     ng-model="files"
     ng-multiple="true">
     <h1>New Photo</h1>
@@ -17,7 +17,7 @@
             <label>Image:</label>
             <div class="form_controls">
                 <div class="upload_button_holder">
-                    <div href="#" class="upload_button" ng-file-select ng-multiple="true" title="upload" resetOnClick="true" ng-model="files">Upload</div>
+                    <div href="#" class="upload_button" ngf-select ng-multiple="true" title="upload" resetOnClick="true" ng-model="files">Upload</div>
                 </div>
                 
             </div>
