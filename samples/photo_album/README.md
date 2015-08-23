@@ -39,7 +39,7 @@ In order to add images to our photo album that would later be retrievable from t
 
 The `photoUploadCtrl` uses the [Angular File Upload](https://github.com/danialfarid/angular-file-upload) library in order to configure the direct upload widget.
 
-The `photoUploadCtrlJQuery` uses the Cloudinary JQuery library in order to configure the direct upload widget. Notice that changes to the title field are propagated to the `formData` being sent in the upload request. This is meant to illustrate the possiblity of attaching extra meta-data to each upload image.
+The `photoUploadCtrlJQuery` uses the Cloudinary JQuery library in order to configure the direct upload widget. Notice that changes to the title field are propagated to the `formData` being sent in the upload request. This is meant to illustrate the possibility of attaching extra meta-data to each upload image.
 
 Also note, these upload widgets use the `upload_preset` we configured in Configuration step. This uses the settings defined on Cloudinary side to process the uploaded file.
 

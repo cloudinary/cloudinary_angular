@@ -104,7 +104,7 @@
         // store public id and load image
         attrs.$observe('publicId', function(value){
           if (!value) return;
-          publicId = value
+          publicId = value;
           loadImage();
         });
 

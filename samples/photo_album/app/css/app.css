@@ -90,7 +90,7 @@ form .error { color: #c55; margin: 0 10px; }
 .progress-bar .progress{
   height: 4px;
   background-color: #ff0000;
-  width: 0%;
+  width: 0;
 }
 .preview img, .preview audio, .preview video {
     max-width: 300px;

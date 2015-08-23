@@ -16,7 +16,7 @@ photoAlbumControllers.controller('photoUploadCtrlJQuery', ['$scope', '$rootScope
 
     $scope.widget = $(".cloudinary_fileupload")
       .unsigned_cloudinary_upload($.cloudinary.config().upload_preset, {tags: 'myphotoalbum', context:'photo='}, {
-        // Uncomment the following lines to enable client side image resizing and valiation.
+        // Uncomment the following lines to enable client side image resizing and validation.
         // Make sure cloudinary/processing is included the js file
         //disableImageResize: false,
         //imageMaxWidth: 800,

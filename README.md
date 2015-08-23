@@ -39,7 +39,7 @@ For a complete list of image manipulation options see [this reference](http://cl
 
 These directives transform the given URI to a cloudinary URL. For example:
 
-    <link rel="shortcut icon" cl-href="{publicly_available_image}" type="fetch" effect="sepia" width="16" heigh="16" crop="fit"/>
+    <link rel="shortcut icon" cl-href="{publicly_available_image}" type="fetch" effect="sepia" width="16" height="16" crop="fit"/>
 
 Will be transformed to:
 
