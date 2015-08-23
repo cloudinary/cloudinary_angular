@@ -58,34 +58,47 @@ photoAlbumControllers.controller('photoUploadCtrlJQuery', ['$scope', '$rootScope
         $scope.files[name] = file;
         $rootScope.photos.push(data.result);
         $scope.$apply();
-      });
+      }).on("cloudinaryfail", function(e, data){
+          var file = $scope.files[name] ||{};
+          file.name = name;
+          file.result = data.result;
+          $scope.files[name] = file;
+
+        });
   }]).controller('photoUploadCtrl', ['$scope', '$rootScope', '$routeParams', '$location', 'Upload',
   /* Uploading with Angular File Upload */
   function($scope, $rootScope, $routeParams, $location, $upload) {
-    $scope.$watch('files', function() {
+    var d = new Date();
+    $scope.title = "Image (" + d.getDate() + " - " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds() + ")";
+    //$scope.$watch('files', function() {
+    $scope.uploadFiles = function(files){
+      $scope.files = files;
       if (!$scope.files) return;
-      $scope.files.forEach(function(file){
-        $scope.upload = $upload.upload({
-          url: "https://api.cloudinary.com/v1_1/" + $.cloudinary.config().cloud_name + "/upload",
-          fields: {upload_preset: $.cloudinary.config().upload_preset, tags: 'myphotoalbum', context:'photo=' + $scope.title},
-          file: file
-        }).progress(function (e) {
-          file.progress = Math.round((e.loaded * 100.0) / e.total);
-          file.status = "Uploading... " + file.progress + "%";
-          if(!$scope.$$phase) {
-            $scope.$apply();
-          }
-        }).success(function (data, status, headers, config) {
-          $rootScope.photos = $rootScope.photos || [];
-          data.context = {custom: {photo: $scope.title}};
-          file.result = data;
-          $rootScope.photos.push(data);
-          if(!$scope.$$phase) {
-            $scope.$apply();
-          }
-        });
+      angular.forEach(files, function(file){
+        if (file && !file.$error) {
+          file.upload = $upload.upload({
+            url: "https://api.cloudinary.com/v1_1/" + $.cloudinary.config().cloud_name + "/upload",
+            fields: {
+              upload_preset: $.cloudinary.config().upload_preset,
+              tags: 'myphotoalbum',
+              context: 'photo=' + $scope.title
+            },
+            file: file
+          }).progress(function (e) {
+            file.progress = Math.round((e.loaded * 100.0) / e.total);
+            file.status = "Uploading... " + file.progress + "%";
+          }).success(function (data, status, headers, config) {
+            $rootScope.photos = $rootScope.photos || [];
+            data.context = {custom: {photo: $scope.title}};
+            file.result = data;
+            $rootScope.photos.push(data);
+          }).error(function (data, status, headers, config) {
+            file.result = data;
+          });
+        }
       });
-    });
+    };
+    //});
 
     /* Modify the look and fill of the dropzone when files are being dragged over it */
     $scope.dragOverClass = function($event) {

@@ -92,3 +92,7 @@ form .error { color: #c55; margin: 0 10px; }
   background-color: #ff0000;
   width: 0%;
 }
+.preview img, .preview audio, .preview video {
+    max-width: 300px;
+    max-height: 150px;
+}

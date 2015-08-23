@@ -1,5 +1,5 @@
 <div id="direct_upload" 
-    ngf-drop
+    ngf-drop="uploadFiles($files)"
     ngf-drag-over-class="dragOverClass($event)"
     ng-model="files"
     ng-multiple="true">
@@ -10,14 +10,14 @@
         <div class="form_line">
             <label path="title">Title:</label>
             <div class="form_controls">
-                <input type="text" class="form-control" placeholder="Title" ng-model="title"/>
+                <input type="text" class="form-control" placeholder="Title" ng-model="title" />
             </div>
         </div>
         <div class="form_line">
             <label>Image:</label>
             <div class="form_controls">
                 <div class="upload_button_holder">
-                    <div href="#" class="upload_button" ngf-select ng-multiple="true" title="upload" resetOnClick="true" ng-model="files">Upload</div>
+                    <div href="#" class="upload_button" ngf-select="uploadFiles($files)" multiple title="upload" resetOnClick="true" >Upload</div>
                 </div>
                 
             </div>
@@ -25,14 +25,16 @@
     </form>
     <h2>Status</h2>
     <div class="file" ng-repeat="file in files">
-        <h3>{{file.name}}</h3>
+        <h3>{{file.name}} {{f.$error}} {{f.$errorParam}}</h3>
         <div class="status">{{file.status}}</div>
         <div class="progress-bar">
           <div class="progress" style="width: {{file.progress}}%" ng-init="progress=0"></div>
         </div>
         <div class="form_line">
             <div class="form_controls">
-                <div class="preview"></div>
+                <div class="preview">
+                    <img ngf-src="file.result.url || file">
+                </div>
             </div>
         </div>
         <div class="info">
