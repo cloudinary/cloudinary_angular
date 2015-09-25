@@ -20,7 +20,7 @@
   };
 
 
-  ['Src', 'Srcset', 'Href'].forEach(function(attrName) {
+  ['Src', 'Srcset', 'Href', 'Content'].forEach(function(attrName) {
     var normalized = 'cl' + attrName;
     attrName = attrName.toLowerCase();
     angularModule.directive(normalized, ['$sniffer', function($sniffer) {
@@ -38,7 +38,7 @@
           }
 
           attr.$observe(normalized, function(value) {
-            if (!value)
+            if (!value || !value.toString().match('/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/'))
                return;
 
             var attributes = {};
