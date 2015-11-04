@@ -8,17 +8,12 @@
         ], factory);
     } else {
         // Browser globals:
-        factory($.cloudinary, angular);
+        factory(cloudinary, angular);
     }
 }(function (cloudinary, angular) {
-  if( !cloudinary.constructor.name.match(/^Cloudinary/)  ) {
-    if( cloudinary.CloudinaryJQuery && (typeof cloudinary.CloudinaryJQuery === "function")) {
-      cloudinary = new cloudinary.CloudinaryJQuery();
-      cloudinary.config();
+  window.cl = new cloudinary.Cloudinary();
 
-    }
-  }
-  var angularModule = angular.module('cloudinary', []);
+  var cloudinaryModule = angular.module('cloudinary', []);
 
   var cloudinaryAttr = function(attr){
     if (attr.match(/cl[A-Z]/)) attr = attr.substring(2);
@@ -51,7 +46,7 @@
   ['Src', 'Srcset', 'Href'].forEach(function(attrName) {
     var normalized = 'cl' + attrName;
     attrName = attrName.toLowerCase();
-    angularModule.directive(normalized, ['$sniffer', function($sniffer) {
+    cloudinaryModule.directive(normalized, ['$sniffer', 'cloudinary', function($sniffer, cloudinary) {
       return {
         priority: 99, // it needs to run after the attributes are interpolated
         link: function(scope, element, attr) {
@@ -83,7 +78,7 @@
     }]);
   });
 
-  angularModule.directive('clTransformation', [function() {
+  cloudinaryModule.directive('clTransformation', [function() {
     return {
       restrict : 'E',
       transclude : false,
@@ -94,7 +89,7 @@
     }
   }]);
 
-  angularModule.directive('clImage', [function() {
+  cloudinaryModule.directive('clImage', ['cloudinary', function(cloudinary) {
     var Controller = function($scope) {
       this.addTransformation = function(ts) {
         $scope.transformations = $scope.transformations || [];
@@ -152,4 +147,17 @@
       }
     };
   }]);
+
+  cloudinaryModule.provider( 'cloudinary', function CloudinaryProvider(){
+    var configuration = {};
+    this.cloudName = function(name){
+      configuration.cloud_name = name;
+    };
+    this.cloudName = function(name){
+      configuration.cloud_name = name;
+    };
+    this.$get = [function cloudinaryFactory(){
+      return new cloudinary.Cloudinary();
+    }]
+  })
 }));
