@@ -11,6 +11,14 @@ Cloudinary provides URL and HTTP based APIs that can be easily integrated with a
 
 For AngularJS, Cloudinary provides a plugin for simplifying the integration even further. The plugin serves as a layer on top the [Cloudinary jQuery plugin](http://cloudinary.com/documentation/jquery_integration#installation)
 
+## Install ######################################################################
+
+You can get it on bower.
+
+```shell
+bower install cloudinary_ng --save
+```
+
 ## Setup ######################################################################
 
 Follow the setup procedure described in the [Cloudinary jQuery plugin](https://github.com/cloudinary/cloudinary_js#setup) setup procedure. The sample project contained in this repository can serve as an example.
