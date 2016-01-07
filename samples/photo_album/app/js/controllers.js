@@ -17,12 +17,12 @@ photoAlbumControllers.controller('photoUploadCtrl', ['$scope', '$rootScope', '$r
         if (file && !file.$error) {
           file.upload = $upload.upload({
             url: "https://api.cloudinary.com/v1_1/" + cloudinary.config().cloud_name + "/upload",
-            fields: {
+            data: {
               upload_preset: cloudinary.config().upload_preset,
               tags: 'myphotoalbum',
-              context: 'photo=' + $scope.title
-            },
-            file: file
+              context: 'photo=' + $scope.title,
+              file: file
+            }
           }).progress(function (e) {
             file.progress = Math.round((e.loaded * 100.0) / e.total);
             file.status = "Uploading... " + file.progress + "%";
