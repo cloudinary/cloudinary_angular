@@ -10,8 +10,7 @@
         // Browser globals:
         factory(cloudinary, angular);
     }
-}(function (cloudinary, angular) {
-  window.cl = new cloudinary.Cloudinary();
+})(function (cloudinary, angular) {
 
   var cloudinaryModule = angular.module('cloudinary', []);
 
@@ -148,16 +147,23 @@
     };
   }]);
 
-  cloudinaryModule.provider( 'cloudinary', function CloudinaryProvider(){
-    var configuration = {};
-    this.cloudName = function(name){
-      configuration.cloud_name = name;
+  cloudinaryModule.provider( 'cloudinary', function(){
+    var configuration = new cloudinary.Configuration();
+    this.set = function(name, value){
+      configuration.set(name, value);
+      return this;
     };
-    this.cloudName = function(name){
-      configuration.cloud_name = name;
+    this.get = function(name){
+      return configuration.get(name);
     };
     this.$get = [function cloudinaryFactory(){
-      return new cloudinary.Cloudinary();
+      if(cloudinary.CloudinaryJQuery && jQuery) {
+        // cloudinary is attached to the global `jQuery` object
+        jQuery.cloudinary.config(configuration.config());
+        return jQuery.cloudinary;
+      } else {
+        return new cloudinary.Cloudinary(configuration.config());
+      }
     }]
-  })
-}));
+  });
+});
