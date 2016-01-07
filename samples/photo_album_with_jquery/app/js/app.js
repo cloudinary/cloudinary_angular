@@ -1,5 +1,4 @@
 'use strict';
-
 /* App Module */
 var photoAlbumApp = angular.module('photoAlbumApp', [
   'ngRoute',
@@ -8,7 +7,6 @@ var photoAlbumApp = angular.module('photoAlbumApp', [
   'photoAlbumControllers',
   'photoAlbumServices'
 ]);
-
 photoAlbumApp.config(['$routeProvider',
   function ($routeProvider) {
     $routeProvider.when('/photos', {
@@ -26,10 +24,9 @@ photoAlbumApp.config(['$routeProvider',
         }
       }
     }).when('/photos/new', {
-      templateUrl: 'partials/photo-upload.html',
-      controller: 'photoUploadCtrl'
+      templateUrl: 'partials/photo-upload-jquery.html',
+      controller: 'photoUploadCtrlJQuery'
     }).otherwise({
       redirectTo: '/photos'
     });
   }]);
-

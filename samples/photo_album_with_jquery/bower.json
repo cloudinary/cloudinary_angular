@@ -6,12 +6,15 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "ng-file-upload": "^11.0.2",
+    "jquery": ">=1.9",
+    "blueimp-file-upload": "^9.11.2",
+    "jquery.ui": "1.11.x",
     "angular": "1.4.x",
     "angular-route": "1.4.x",
     "angular-resource": "1.4.x",
     "angular-animate": "1.4.x",
-    "cloudinary_ng": "#master"
+    "cloudinary_ng": "#master",
+    "cloudinary-jquery-file-upload": "^2.0"
   },
   "ignore": {}
 }
