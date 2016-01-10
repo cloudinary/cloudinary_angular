@@ -28,9 +28,8 @@
    */
   var toCloudinaryAttributes = function( source, filter) {
     var attributes = {};
-    var isNamedNodeMap = source && source.constructor.name === "NamedNodeMap";
+    var isNamedNodeMap = source && (source.constructor.name === "NamedNodeMap" || source instanceof NamedNodeMap);
     angular.forEach(source, function(value, name){
-
       if( isNamedNodeMap) {
         name = value.name;
         value = value.value;
