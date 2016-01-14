@@ -1,0 +1,36 @@
+{
+  "name": "cloudinary_ng",
+  "version": "0.1.4",
+  "description": "A set of AngularJS directives/helpers for using Cloudinary with AngularJS",
+  "main": "js/angular.cloudinary.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cloudinary/cloudinary_angular.git"
+  },
+  "author": "Cloudinary",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cloudinary/cloudinary_angular/issues"
+  },
+  "homepage": "https://github.com/cloudinary/cloudinary_angular",
+  "devDependencies": {
+    "coffee-script": "~1.10",
+    "grunt": "~0.4",
+    "grunt-karma": "~0.12",
+    "grunt-version": "~1.0",
+    "jasmine-core": "~2.4",
+    "karma": "~0.13",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-coverage": "~0.5",
+    "karma-jasmine": "~0.3",
+    "karma-phantomjs-launcher": "~0.2",
+    "karma-story-reporter": "~0.3",
+    "phantomjs": "~1.9"
+  }
+}
