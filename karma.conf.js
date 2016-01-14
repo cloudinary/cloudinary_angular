@@ -8,22 +8,23 @@ module.exports = function (config) {
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/cloudinary-core/cloudinary-core.js',
       'js/angular.cloudinary.js',
-      'spec/cloudinaryspec.js'],
+      'spec/cloudinary_spec.js'],
     preprocessors: {
-      'spec/*.js': ['coverage']
     },
-    reporters: ['story', 'coverage'],
+    reporters: ['story'],
     port: 9876,
     colors: true,
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
     autoWatch: false,
     //browsers: ['Chrome', 'Firefox', 'Safari'],
-    browsers: ['PhantomJS'],
+    browsers: ['PhantomJS', "Chrome"],
+    //browsers: ['Chrome'],
     singleRun: true,
     plugins: [
       'karma-jasmine',
       'karma-coverage',
       'karma-story-reporter',
+      'karma-chrome-launcher',
       'karma-phantomjs-launcher'
     ]
   });
