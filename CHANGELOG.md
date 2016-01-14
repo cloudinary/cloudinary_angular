@@ -1,4 +1,29 @@
 
+0.2.0 / 2016-01-14
+==================
+
+jQuery independent version
+--------------------------
+
+  * Use Cloudinary new API
+  * Create CloudinaryProvider.
+  * Separate sample app to with and without jQuery.
+
+Other changes
+-------------
+
+  * Add setter and getter to Cloudinary provider. Serve `jQuery.cloudinary` if present.
+  * Add NPM package.json file
+  * Add spec file. Add Karma configuration.
+  * Update gitignore. Update dependencies.
+  * Rename spec file. Remove coverage and add Chrome to the karma test.
+  * Fix sample project dependency. Remove leftover file.
+  * Add uploaded image preview to the jQuery upload page
+  * Support PhantomJS
+  * Change ng-file-upload input to match version 11.
+  * Merge pull request #40 from ArdentKid/master
+  * bower dependency fix for "cloudinary_ng"
+
 0.1.4 / 2015-08-23
 ==================
 
