@@ -1,15 +1,15 @@
 (function (factory) {
-    'use strict';
-    if (typeof define === 'function' && define.amd) {
-        // Register as an anonymous AMD module:
-        define([
-            'cloudinary',
-            'angular'
-        ], factory);
-    } else {
-        // Browser globals:
-        factory(cloudinary, angular);
-    }
+  'use strict';
+  if (typeof define === 'function' && define.amd) {
+    // Register as an anonymous AMD module:
+    define([
+      'cloudinary',
+      'angular'
+    ], factory);
+  } else {
+    // Browser globals:
+    factory(cloudinary, angular);
+  }
 })(function (cloudinary, angular) {
 
   var cloudinaryModule = angular.module('cloudinary', []);
@@ -49,10 +49,10 @@
         priority: 99, // it needs to run after the attributes are interpolated
         link: function(scope, element, attr) {
           var propName = attrName,
-              name = attrName;
+            name = attrName;
 
           if (attrName === 'href' &&
-              toString.call(element.prop('href')) === '[object SVGAnimatedString]') {
+            toString.call(element.prop('href')) === '[object SVGAnimatedString]') {
             name = 'xlinkHref';
             attr.$attr[name] = 'xlink:href';
             propName = null;
@@ -60,7 +60,7 @@
 
           attr.$observe(normalized, function(value) {
             if (!value)
-               return;
+              return;
 
             value = cloudinary.url(value, toCloudinaryAttributes(element[0].attributes));
             attr.$set(name, value);
@@ -100,7 +100,7 @@
       replace: true,
       transclude : true,
       template: "<img ng-transclude/>",
-      scope: {},
+      scope: true,
       priority: 99,
       controller: Controller,
       // The linking function will add behavior to the template
@@ -108,8 +108,32 @@
         var attributes = toCloudinaryAttributes(attrs);
         var publicId = null;
 
+        //if (scope.transformations) {
+        //  attributes.transformation = scope.transformations;
+        //}
+
         if (scope.transformations) {
-          attributes.transformation = scope.transformations;
+          attributes.transformation = scope.transformations.map(function(cloudinaryAttribs){
+            var evaledAttribs = {};
+            angular.forEach(cloudinaryAttribs, function(value, key) {
+              var evaled = scope.$eval(value);
+
+              if (evaled !== undefined) {
+                scope.$watch(value, function(newValue, oldValue) {
+                  if (newValue != oldValue) {
+                    evaledAttribs[key] = newValue;
+                    loadImage();
+                  }
+                }, true);
+              } else {
+                evaled = value;
+              }
+
+              evaledAttribs[key] = evaled;
+            });
+
+            return evaledAttribs;
+          });
         }
 
         // store public id and load image
