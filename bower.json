@@ -38,6 +38,9 @@
     "js/angular.cloudinary.js"
   ],
   "ignore": [
-    "samples"
+    "samples",
+    "spec",
+    "karma*"
+
   ]
 }
