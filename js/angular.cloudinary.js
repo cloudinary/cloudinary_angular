@@ -105,11 +105,11 @@
       controller: Controller,
       // The linking function will add behavior to the template
       link : function(scope, element, attrs) {
-        var attributes = toCloudinaryAttributes(attrs);
+        var options = toCloudinaryAttributes(attrs);
         var publicId = null;
 
         if (scope.transformations) {
-          attributes.transformation = scope.transformations;
+          options.transformation = scope.transformations;
         }
 
         // store public id and load image
@@ -122,7 +122,7 @@
         // observe and update version attribute
         attrs.$observe('version', function(value){
           if (!value) return;
-          attributes['version'] = value;
+          options['version'] = value;
           loadImage();
         });
 
@@ -138,9 +138,18 @@
         }
 
         var loadImage = function() {
-          var url = cloudinary.url(publicId, attributes);
-          element.attr('src', url);
-        }
+          if (options.responsive === "" || options.responsive === "true" || options.responsive === true) {
+            options.responsive = true;
+          }
+          var url = cloudinary.url(publicId, options);
+          if (options.responsive) {
+            cloudinary.Util.setData(element[0], "src", url);
+            cloudinary.cloudinary_update(element[0], options);
+            cloudinary.responsive(options, false);
+          } else {
+            element.attr('src', url);
+          }
+        };
 
       }
     };
@@ -155,14 +164,17 @@
     this.get = function(name){
       return configuration.get(name);
     };
-    this.$get = [function cloudinaryFactory(){
-      if(cloudinary.CloudinaryJQuery && jQuery) {
+    this.$get = [function cloudinaryFactory() {
+      var instance;
+      if (cloudinary.CloudinaryJQuery && jQuery) {
         // cloudinary is attached to the global `jQuery` object
         jQuery.cloudinary.config(configuration.config());
-        return jQuery.cloudinary;
+        instance = jQuery.cloudinary;
       } else {
-        return new cloudinary.Cloudinary(configuration.config());
+        instance = new cloudinary.Cloudinary(configuration.config());
       }
-    }]
+      cloudinary.Util.assign(instance, cloudinary); // copy namespace to the service instance
+      return instance;
+    }];
   });
 });

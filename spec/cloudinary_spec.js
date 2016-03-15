@@ -1,10 +1,10 @@
-const CLOUD_NAME = "demo";
+const CLOUD_NAME = "sdk-test";
 
 describe("cloudinary", function () {
 
   var $compile,
       $rootScope,
-      $provider;
+      $window;
   beforeEach(function () {
     module('cloudinary');
     angular.module('cloudinary').config(['cloudinaryProvider', function (cloudinaryProvider) {
@@ -18,6 +18,8 @@ describe("cloudinary", function () {
     // The injector unwraps the underscores (_) from around the parameter names when matching
     $compile = _$compile_;
     $rootScope = _$rootScope_;
+    $window = window;
+    $rootScope.testPublicId = "sample";
   }));
   describe("clImage", function () {
     it('Adds an inner <img> tag', function () {
@@ -56,7 +58,9 @@ describe("cloudinary", function () {
     describe("html-width", function(){
       var element;
       beforeEach(function(){
+        $rootScope.testPublicId = "sample";
         element = $compile("<div><cl-image public_id='{{testPublicId}}'/></div>")($rootScope);
+        $rootScope.$digest();
       });
       it('adds a width attribute to the tag if it has a value', function () {
         var element = $compile("<div><cl-image public_id='foobar'/></div>")($rootScope);
@@ -67,12 +71,8 @@ describe("cloudinary", function () {
         expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/foobar\"");
       });
       it('modify the src attribute when the public ID attribute changes', function () {
-        // Compile a piece of HTML containing the directive
         $rootScope.testPublicId = 'foobar';
-        var element = $compile("<div><cl-image public_id='{{testPublicId}}'/></div>")($rootScope);
-        // fire all the watches, so the scope expression {{1 + 1}} will be evaluated
         $rootScope.$digest();
-        // Check that the compiled element contains the templated content
         expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/foobar\"");
         $rootScope.testPublicId = 'barfoo';
         $rootScope.$digest();
@@ -80,6 +80,43 @@ describe("cloudinary", function () {
 
       });
 
+    });
+    describe("responsive", function () {
+      var testWindow, tabImage2, image1;
+      beforeAll(function (done) {
+        testWindow = window.open("/base/spec/responsive-core-test.html", "Cloudinary test #{(new Date()).toLocaleString()}", "width=200, height=500");
+
+        testWindow.addEventListener('load', function () {
+          image1 = testWindow.document.getElementById("image1");
+          tabImage2 = testWindow.document.getElementById("tabImage2");
+          expect(tabImage2).toBeDefined();
+          done();
+        });
+
+      });
+      afterAll(function () {
+        testWindow && testWindow.close();
+      });
+      it('should enable responsive functionality', function () {
+        expect(tabImage2.getAttribute("src")).toMatch("https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/c_scale,w_200/sample.jpg");
+      });
+      it("should react to a change in the parent's width", function (done) {
+
+        var listener = function () {
+          expect(tabImage2.outerHTML).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/c_scale,w_400/sample.jpg\"");
+          done();
+        };
+        // testWindow.addEventListener('resize', listener);
+        setTimeout(listener, 2000);
+        testWindow.resizeTo(350, 800);
+      });
+      it('should apply responsive if "width" is not defined', function () {
+        element = $compile("<div><cl-image public_id='{{testPublicId}}' responsive/></div>")($rootScope);
+        $rootScope.$digest();
+        expect(cloudinary.Util.getData(element[0], "width")).toBeDefined();
+        expect(cloudinary.Util.hasClass(element[0], "cld-responsive")).toBeDefined();
+
+      })
     })
   });
   describe("clSrc", function () {
