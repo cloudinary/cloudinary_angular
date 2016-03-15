@@ -1,4 +1,20 @@
 
+1.0.0 / 2016-03-15
+==================
+
+New Features
+------------
+
+  * Support Responsive behaviour
+
+Other Changes
+-------------
+
+  * Add tests for responsive behaviour
+  * Add spec and karma to bower ignore list
+  * Merge pull request #42 from gilhanan/gilhanan-readme-patch-1
+    * Add bower install instructions
+
 0.2.0 / 2016-01-14
 ==================
 

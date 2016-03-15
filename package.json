@@ -1,6 +1,6 @@
 {
   "name": "cloudinary_ng",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "A set of AngularJS directives/helpers for using Cloudinary with AngularJS",
   "main": "js/angular.cloudinary.js",
   "directories": {

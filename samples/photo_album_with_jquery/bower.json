@@ -13,7 +13,7 @@
     "angular-route": "1.4.x",
     "angular-resource": "1.4.x",
     "angular-animate": "1.4.x",
-    "cloudinary_ng": "~0.2.0",
+    "cloudinary_ng": "~1.0.0",
     "cloudinary-jquery-file-upload": "^2.0"
   },
   "ignore": {}
