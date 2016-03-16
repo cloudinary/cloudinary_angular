@@ -3,7 +3,7 @@
   "description": "A set of AngularJS directives/helpers for using Cloudinary with AngularJS",
   "version": "1.0.0",
   "homepage": "https://github.com/cloudinary/cloudinary_angular",
-  "license": "MIT",
+  "license": "M",
   "private": false,
   "keywords": [
     "angularjs",
@@ -41,6 +41,8 @@
     "samples",
     "spec",
     "karma*"
-
-  ]
+  ],
+  "devDependencies": {
+    "angular-mocks": "^1.5.1"
+  }
 }
