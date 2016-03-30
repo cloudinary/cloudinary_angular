@@ -52,7 +52,6 @@ describe("cloudinary", function () {
         $rootScope.testPublicId = 'barfoo';
         $rootScope.$digest();
         expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/barfoo\"");
-
       });
     });
     describe("html-width", function(){
@@ -79,8 +78,65 @@ describe("cloudinary", function () {
         expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/barfoo\"");
 
       });
-
     });
+    
+    describe ('conditional transformation', function(){
+      it ('should add if (condition) to the result URL', function() {
+        // Compile a piece of HTML containing the directive
+        var element = $compile("<div><cl-image public_id='foobar' if='w_gt_200' width='100' crop='scale'/></div>")($rootScope);
+        // fire all the watches, so the scope expression {{1 + 1}} will be evaluated
+        $rootScope.$digest();
+
+        // Check that the compiled element contains the templated content
+        expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/if_w_gt_200,c_scale,w_100/foobar\"");
+      });
+      
+      it ('should add if (condition) to the result URL', function() {
+        // Compile a piece of HTML containing the directive
+        var element = $compile("<div><cl-image public_id='foobar'><cl-transformation if='w_gt_200' width='100' crop='scale'/></cl-image></div>")($rootScope);
+        // fire all the watches, so the scope expression {{1 + 1}} will be evaluated
+        $rootScope.$digest();
+
+        // Check that the compiled element contains the templated content
+        expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/if_w_gt_200,c_scale,w_100/foobar\"");
+      });    
+      
+      it ('should add if (condition) to the result URL', function() {
+        // Compile a piece of HTML containing the directive
+        var element = $compile("<div>" + 
+          "<cl-image public_id='foobar'>" + 
+          "<cl-transformation if='w_gt_200'/>"+
+          "<cl-transformation width='100' crop='scale'/>" + 
+          "<cl-transformation height='100' crop='fill'/>"+
+          "<cl-transformation if='end'/>" + 
+          "</cl-image></div>")($rootScope);
+        // fire all the watches, so the scope expression {{1 + 1}} will be evaluated
+        $rootScope.$digest();
+
+        // Check that the compiled element contains the templated content
+        expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/if_w_gt_200/c_scale,w_100/c_fill,h_100/if_end/foobar\"");
+      });
+      
+      it ('should add if (condition) to the result URL', function() {
+        // Compile a piece of HTML containing the directive
+        var element = $compile("<div>" + 
+          "<cl-image public_id='foobar'>" + 
+          "<cl-transformation if='w_gt_200'/>"+
+          "<cl-transformation width='100' crop='scale'/>" + 
+          "<cl-transformation height='100' crop='fill'/>"+
+          "<cl-transformation if='else'/>" +
+          "<cl-transformation width='200' crop='fill'/>" + 
+          "<cl-transformation height='200' crop='fit'/>"+
+          "<cl-transformation if='end'/>" +          
+          "</cl-image></div>")($rootScope);
+        // fire all the watches, so the scope expression {{1 + 1}} will be evaluated
+        $rootScope.$digest();
+
+        // Check that the compiled element contains the templated content
+        expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/if_w_gt_200/c_scale,w_100/c_fill,h_100/if_else/c_fill,w_200/c_fit,h_200/if_end/foobar\"");
+      });
+    });
+    
     describe("responsive", function () {
       var testWindow, tabImage2, image1;
       beforeAll(function (done) {
