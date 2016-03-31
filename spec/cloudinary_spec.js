@@ -84,7 +84,6 @@ describe("cloudinary", function () {
       it ('should add if (condition) to the result URL', function() {
         // Compile a piece of HTML containing the directive
         var element = $compile("<div><cl-image public_id='foobar' if='w_gt_200' width='100' crop='scale'/></div>")($rootScope);
-        // fire all the watches, so the scope expression {{1 + 1}} will be evaluated
         $rootScope.$digest();
 
         // Check that the compiled element contains the templated content
@@ -94,7 +93,6 @@ describe("cloudinary", function () {
       it ('should add if (condition) to the result URL', function() {
         // Compile a piece of HTML containing the directive
         var element = $compile("<div><cl-image public_id='foobar'><cl-transformation if='w_gt_200' width='100' crop='scale'/></cl-image></div>")($rootScope);
-        // fire all the watches, so the scope expression {{1 + 1}} will be evaluated
         $rootScope.$digest();
 
         // Check that the compiled element contains the templated content
@@ -110,7 +108,6 @@ describe("cloudinary", function () {
           "<cl-transformation height='100' crop='fill'/>"+
           "<cl-transformation if='end'/>" + 
           "</cl-image></div>")($rootScope);
-        // fire all the watches, so the scope expression {{1 + 1}} will be evaluated
         $rootScope.$digest();
 
         // Check that the compiled element contains the templated content
@@ -129,7 +126,6 @@ describe("cloudinary", function () {
           "<cl-transformation height='200' crop='fit'/>"+
           "<cl-transformation if='end'/>" +          
           "</cl-image></div>")($rootScope);
-        // fire all the watches, so the scope expression {{1 + 1}} will be evaluated
         $rootScope.$digest();
 
         // Check that the compiled element contains the templated content
