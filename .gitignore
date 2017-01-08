@@ -1,15 +1,35 @@
-
 # Logs
 logs
 *.log
 npm-debug.log*
-config.js
+config.ts
+
+# Ignore output of typescript compilation. They WILL be included in the package since .npmignore is empty
+*.js
+*.js.map
+*.d.ts
+
+# Ignore generated output
+lib/
+
+# Ignore generated typings 
+typings/
+
+# Exclude root folder *.js files and
+!/*.js
+
+# Exclude important config files
+!systemjs.config.js
+!webpack.config.js
+
+# Exclude scripts folder
+!/scripts/*
 
 # Coverage directory used by tools like istanbul
 coverage
 
-# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
-.grunt
+# protractor test results
+_test-output/
 
 # Dependency directory
 # https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
@@ -23,3 +43,4 @@ build/
 
 ## Directory-based project format:
 .idea/
+.vscode/

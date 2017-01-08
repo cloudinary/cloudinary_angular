@@ -1,0 +1,56 @@
+<div id="direct_upload" ng2FileDrop [uploader]="uploader" (fileOver)="fileOverBase($event)" [ngClass]="{'nv-file-over': hasBaseDropZoneOver}">
+	<h1>New Photo</h1>
+	<h2>Direct upload from the browser with Angular File Upload</h2>
+	<p>You can also drag and drop an image file into the dashed area.</p>
+	<form>
+		<div class="form_line">
+			<label path="title">Title:</label>
+			<div class="form_controls">
+				<input type="text" class="form-control" #title placeholder="Title" (keyup.enter)="updateTitle(title.value)" (blur)="updateTitle(title.value)"
+				/>
+			</div>
+		</div>
+		<div class="form_line">
+			<label>Image:</label>
+			<div class="form_controls">
+				<div class="upload_button_holder">
+					<label class="upload_button" for="fileupload">Upload</label>
+					<!-- onChange hanlder resets the input value to get the change event when uploading the same file consecutively -->
+					<input type="file" id="fileupload" #fileInput ng2FileSelect [style.display]="'none'" [uploader]="uploader" (change)="fileInput.value=''"
+						multiple />
+				</div>
+
+			</div>
+		</div>
+	</form>
+	<h2>Status</h2>
+	<div class="file" *ngFor="let response of responses">
+		<h3>{{response.file.name}}</h3>
+		<div class="status">
+			Uploading... {{response.progress}}%
+			<div *ngIf="!response.status">In progress</div>
+			<div class="status-code" *ngIf="response.status">Upload completed with status code {{response.status}}</div>
+		</div>
+		<div class="progress-bar">
+			<div class="progress" role="progressbar" [style.width.%]="response.progress"></div>
+		</div>
+		<div class="form_line">
+			<div class="form_controls">
+				<div class="preview">
+					<!-- Consider using https://github.com/valor-software/ng2-file-upload/issues/461 for image preview -->
+				</div>
+			</div>
+		</div>
+		<div class="info">
+			<table>
+				<tr *ngFor="let property of getFileProperties(response.data)">
+					<td> {{ property.key }} </td>
+					<td> {{ property.value | json}} </td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+</div>
+
+<a routerLink="" class="back_link">Back to list</a>

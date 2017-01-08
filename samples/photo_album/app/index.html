@@ -1,42 +1,18 @@
 <!doctype html>
-<html lang="en" ng-app="photoAlbumApp">
+<html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <title>Photo Album</title>
-    <link type="text/css" rel="stylesheet" media="all" href="css/app.css">
-    <link rel="shortcut icon"
-          cl-href="http://cloudinary.com/favicon.png" type="fetch" effect="sepia"/>
-
-  <link rel="stylesheet" href="css/app.css">
-  <link rel="stylesheet" href="css/animations.css">
-
-  <script src="../bower_components/lodash/lodash.js"></script>
-  <script src="../bower_components/cloudinary-core/cloudinary-core.js"></script>
-  <!-- angular file upload -->
-  <script src="../bower_components/ng-file-upload/ng-file-upload-shim.js"></script>
-  <!-- angular dependencies -->
-  <script src="../bower_components/angular/angular.js"></script>
-  <script src="../bower_components/angular-animate/angular-animate.js"></script>
-  <script src="../bower_components/angular-route/angular-route.js"></script>
-  <script src="../bower_components/angular-resource/angular-resource.js"></script>
-  <!-- cloudinary angular plugin -->
-  <script src="../bower_components/cloudinary_ng/js/angular.cloudinary.js"></script>
-  <!-- angular file upload -->
-  <script src="../bower_components/ng-file-upload/ng-file-upload.js"></script>
-  <!-- application code -->
-  <script src="js/app.js"></script>
-  <script src="js/config.js"></script>
-  <script src="js/animations.js"></script>
-  <script src="js/controllers.js"></script>
-  <script src="js/services.js"></script>
+	<base href="/">
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" clHref="http://cloudinary.com/favicon.png" type="fetch" effect="sepia"/>
+	<title>Photo Album</title>
 </head>
+
 <body>
-  <div id="logo">
-      <!-- This will render the image fetched from a remote HTTP URL using Cloudinary -->
-      <cl-image public-id="http://cloudinary.com/images/logo.png" type="fetch"/>
-  </div>
-  <div class="content">
-    <div ng-view class="view-frame"></div>
-  </div>  
+	<div class="content">
+	</div>
+
+	<script src="bundle.js"></script>
 </body>
+
 </html>

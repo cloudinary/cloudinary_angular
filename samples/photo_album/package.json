@@ -2,16 +2,43 @@
   "version": "0.0.0",
   "private": true,
   "name": "angular-cloudinary-photo",
-  "description": "A tutorial application for AngularJS",
-  "repository": "https://github.com/angular/angular-phonecat",
+  "description": "Sample application using Cloudinary's Angular2 SDK",
   "license": "MIT",
+  "dependencies": {
+    "@angular/common": "^2.3.0",
+    "@angular/compiler": "^2.3.0",
+    "@angular/core": "^2.3.0",
+    "@angular/forms": "^2.3.0",
+    "@angular/http": "^2.3.0",
+    "@angular/platform-browser": "^2.3.0",
+    "@angular/platform-browser-dynamic": "^2.3.0",
+    "@angular/router": "^3.2.3",
+    "cloudinary-core": "^2.1.9",
+    "core-js": "^2.4.1",
+    "ng2-file-upload": "^1.1.4-2",
+    "reflect-metadata": "^0.1.8",
+    "rxjs": "^5.0.1",
+    "ts-loader": "^1.2.2",
+    "tslint": "^4.0.2",
+    "tslint-loader": "^3.2.0",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2",
+    "zone.js": "^0.7.2"
+  },
   "devDependencies": {
-    "http-server": "^0.6.1",
-    "bower": "^1.3.1"
+    "@types/node": "0.0.1",
+    "angular2-template-loader": "^0.6.0",
+    "awesome-typescript-loader": "^3.0.0-beta.9",
+    "concurrently": "^3.0.0",
+    "css-loader": "^0.26.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "raw-loader": "^0.5.1",
+    "style-loader": "^0.13.1",
+    "to-string-loader": "^1.1.5",
+    "typescript": "^2.0.3"
   },
   "scripts": {
-    "postinstall": "bower install",
-    "prestart": "npm install",
-    "start": "http-server -p 8000"
+    "start": "webpack-dev-server --open",
+    "start:e2e": "webpack-dev-server"
   }
 }
