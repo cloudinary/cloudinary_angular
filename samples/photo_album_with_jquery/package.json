@@ -13,6 +13,7 @@
     "@angular/platform-browser-dynamic": "^2.3.0",
     "@angular/router": "^3.0.2",
     "blueimp-file-upload": "^9.11.2",
+    "@cloudinary/angular": "^1.0.0-rc1",
     "cloudinary-jquery-file-upload": "^2.1.9",
     "core-js": "^2.4.1",
     "jquery": ">=1.9",
