@@ -1,3 +1,7 @@
-!*.js
-!*.js.map
-!*.d.ts
+# Include everything that's not part of the distributable package 
+**/*
+
+# Exclude tsc destination folder
+!lib/**/*
+!package.json
+
