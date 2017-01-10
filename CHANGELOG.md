@@ -1,7 +1,7 @@
 
-1.0.0-rc1 / 2016-12-19
+2.0.0 / 2017-01-10
 ==================
-First release
+First release of the Angular 2.x compatible library
 
 New Features
 ------------
