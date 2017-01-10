@@ -15,8 +15,8 @@
     "sdk",
     "performance"
   ],
-  "main": "./lib/index.js",
-  "types": "./lib/index.ts",
+  "main": "index.js",
+  "types": "index.ts",
   "scripts": {
     "lint": "tslint **/*.ts -t verbose --exclude=**/*.d.ts",
     "test": "tsc && concurrently \"tsc -w\" \"karma start karma.conf.js\"",

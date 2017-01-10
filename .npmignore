@@ -1,7 +1,14 @@
-# Include everything that's not part of the distributable package 
+# Include everything that's not part of the distributable package
 **/*
 
-# Exclude tsc destination folder
-!lib/**/*
+# Exclude tsc output that needs to be part of the released package
+!src/**/*.js
+!src/**/*.js.map
+!src/**/*.d.ts
+
+!index.js
+!index.js.map
+!index.d.ts
+
 !package.json
 

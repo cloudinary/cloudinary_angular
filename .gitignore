@@ -5,20 +5,30 @@ npm-debug.log*
 config.ts
 
 # Ignore output of typescript compilation. They WILL be included in the package since .npmignore is empty
-*.js
-*.js.map
-*.d.ts
+index.js.map
+index.d.ts
 
-# Ignore generated output
-lib/
+/src/**/*.js
+/src/**/*.js.map
+/src/**/*.d.ts
 
-# Ignore generated typings 
+# Ignore testing code TS compilation output
+/e2e/**/*.js
+/e2e/**/*.js.map
+/e2e/**/*.d.ts
+
+/samples/**/*.js
+/samples/**/*.js.map
+/samples/**/*.d.ts
+
+# Ignore generated typings
 typings/
 
-# Exclude root folder *.js files and
+# Exclude root folder *.js files and except the generated index.js
 !/*.js
+index.js
 
-# Exclude important config files
+# Exclude important config files (part of the samples)
 !systemjs.config.js
 !webpack.config.js
 

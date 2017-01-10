@@ -27,7 +27,7 @@ exports.config = {
   framework: 'jasmine',
 
   // Spec patterns are relative to this config file
-  specs: ['lib/e2e/**/*e2e-spec.js'],
+  specs: ['e2e/**/*e2e-spec.js'],
 
   allScriptsTimeout: 60000,
   getPageTimeout: 60000,
