@@ -13,7 +13,7 @@
     "@angular/platform-browser": "^2.3.0",
     "@angular/platform-browser-dynamic": "^2.3.0",
     "@angular/router": "^3.2.3",
-    "@cloudinary/angular": "^1.0.0-rc1",
+    "@cloudinary/angular": "^2.0.0-rc1",
     "cloudinary-core": "^2.1.9",
     "core-js": "^2.4.1",
     "ng2-file-upload": "^1.1.4-2",

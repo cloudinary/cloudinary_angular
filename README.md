@@ -27,7 +27,7 @@ The SDK serves as a layer on top of one of Cloudinary's Javascript libraries:
 ## Installation ######################################################################
 
 ```shell
-npm install cloudinary_ng --save
+npm install @cloudinary/angular --save
 ```
 
 ## Setup ######################################################################
@@ -58,7 +58,7 @@ Example Coudinary configuration in your application's module definition:
 
 ```javascript
 import { NgModule } from '@angular/core';
-...
+// ...
 import { CloudinaryModule, CloudinaryConfiguration, provideCloudinary } from 'cloudinary-ng';
 
 @NgModule({
@@ -68,19 +68,19 @@ import { CloudinaryModule, CloudinaryConfiguration, provideCloudinary } from 'cl
     providers: [
         provideCloudinary(require('cloudinary-core'), { cloud_name: 'your_cloud_name' } as CloudinaryConfiguration)
     ],
-    bootstrap: [...]
+    bootstrap: [/* ... */]
 })
 export class AppModule { }
 ```
 
 See [samples folder](samples) for a complete reference project.
 
-### - Creating new image tags with cl-image & cl-transformation ##################################
+### Creating new image tags with cl-image & cl-transformation ##################################
 
 The [cl-image](src/cloudinary-image.component.ts) component generates an `<image>` tag with requested transformation, type, and format. 
 The image tag can contain optional `<cl-transformation>` tags that will be used as chained transformations:
 
-```javascript
+```html
     <cl-image public-id="readme" class="thumbnail inline" angle="20" format="jpg">
         <cl-transformation height="150" width="150" crop="fill" effect="sepia" radius="20"></cl-transformation>
         <cl-transformation overlay="text:arial_60:readme" gravity="north" y="20"></cl-transformation>
@@ -89,13 +89,13 @@ The image tag can contain optional `<cl-transformation>` tags that will be used 
 
 Will be compiled by Angular to:
 
-```javascript
+```html
     <cl-image _ngcontent-ywn-2="" public-id="readme" class="thumbnail inline" format="jpg" angle="20" ng-reflect-public-id="readme">
         <img src="http://res.cloudinary.com/{your_cloud_name}/image/upload/c_fill,e_sepia,h_150,r_20,w_150/g_north,l_text:arial_60:readme,y_20/a_20/readme.jpg">
     </cl-image>
 ```
 
-### - Creating new video tags with cl-video & cl-transformation ##################################
+### Creating new video tags with cl-video & cl-transformation ##################################
 
 The [cl-video](src/cloudinary-video.component.ts) component generates a `<video>` tag with requested transformation, type, and format.
  
@@ -103,7 +103,7 @@ The generated `<video>` is created with configurable child `<source>` elements f
 
 The video tag can contain optional `<cl-transformation>` tags that will be used as chained transformations:
 
-```javascript
+```html
     <cl-video cloud-name="my_other_cloud" public-id="watchme" secure="true" class="my-videos">
         <cl-transformation overlay="text:arial_60:watchme" gravity="north" y="20"></cl-transformation>
     </cl-video>
@@ -111,7 +111,7 @@ The video tag can contain optional `<cl-transformation>` tags that will be used 
 
 Will be compiled by Angular to:
 
-```javascript
+```html
     <video class="my-videos" public-id="watchme" ng-reflect-public-id="watchme" 
             poster="https://res.cloudinary.com/my_other_cloud/video/upload/g_north,l_text:arial_60:watchme,y_20/watchme.jpg">
         <source src="https://res.cloudinary.com/my_other_cloud/video/upload/g_north,l_text:arial_60:watchme,y_20/watchme.webm" type="video/webm">
@@ -125,7 +125,7 @@ You can update attributes dynamically for `<cl-image>` and `<cl-video>` elements
 new transformations.
  
 The following example from the sample projects demonstrates setting the opacity to 50% when hovering on top of an element:
-```javascript
+```html
     <cl-image
         public-id={{photo.public_id}}
         (mouseenter)="photo.isMouseOver = true"
@@ -138,13 +138,13 @@ The following example from the sample projects demonstrates setting the opacity 
 
 These directives transform the given URI to a cloudinary URL. For example:
 
-```javascript
+```html
     <img clSrc="http://cloudinary.com/images/logo.png" type="fetch" fetch-format="auto" quality="auto">
 ```
 
 Will be compiled by Angular to:
 
-```javascript
+```html
     <img clSrc="http://cloudinary.com/images/logo.png" fetch-format="auto" quality="auto" type="fetch" ng-reflect-clSrc="http://cloudinary.com/images/logo.png" 
     src="http://res.cloudinary.com/{your_cloud_name}/image/fetch/f_auto,q_auto/http://cloudinary.com/images/logo.png">
 ```
@@ -203,7 +203,7 @@ Additional resources are available at:
 
 ## Support #######################################################################
 
-You can [open an issue through GitHub](https://github.com/cloudinary/cloudinary_ng/issues).
+You can [open an issue through GitHub](https://github.com/cloudinary/cloudinary_angular/issues).
 
 Contact us [https://cloudinary.com/contact](https://cloudinary.com/contact)
 

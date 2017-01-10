@@ -1,7 +1,7 @@
 {
   "name": "@cloudinary/angular",
-  "version": "1.0.0-rc1",
-  "description": "The formal Cloudinary-Angular SDK to enhance your applications with image and video components powered by Cloudinary",
+  "version": "2.0.0-rc1",
+  "description": "The formal Cloudinary Angular SDK to enhance your applications with image and video components powered by Cloudinary",
   "keywords": [
     "cloudinary",
     "angular",
@@ -34,14 +34,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/cloudinary/cloudinary-angular-2.git"
+    "url": "git://github.com/cloudinary/cloudinary_angular.git"
   },
   "author": "Cloudinary",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cloudinary/cloudinary-angular-2/issues"
+    "url": "https://github.com/cloudinary/cloudinary_angular/issues"
   },
-  "homepage": "https://github.com/cloudinary/cloudinary-angular-2",
+  "homepage": "https://github.com/cloudinary/cloudinary_angular",
   "dependencies": {
     "@angular/common": "^2.2.4",
     "@angular/core": "^2.2.4",
