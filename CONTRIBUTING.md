@@ -4,8 +4,8 @@ Contributions are welcome and greatly appreciated!
 
 ## Reporting a bug
 
-- Ensure that the bug was not already reported by searching in GitHub under [Issues](https://github.com/cloudinary/cloudinary-angular-2/issues) and the Cloudinary [Support forms](https://support.cloudinary.com).
-- If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/cloudinary/cloudinary-angular-2/issues/new).
+- Ensure that the bug was not already reported by searching in GitHub under [Issues](https://github.com/cloudinary/cloudinary_angular/issues) and the Cloudinary [Support forms](https://support.cloudinary.com).
+- If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/cloudinary/cloudinary_angular/issues/new).
   Be sure to include a **title and clear description**, as much relevant information as possible, and a **code sample** or an **executable test case** demonstrating the expected behavior that is not occurring.
 - If you require assistance in the implementation of the Cloudinary Angular SDK please [submit a support request](https://support.cloudinary.com/hc/en-us/requests/new) in the Cloudinary web site.
 
@@ -14,7 +14,7 @@ Contributions are welcome and greatly appreciated!
 We would love to hear your requests!
 Please be aware that some features may not be applicable to all users.
 
-- Open a GitHub [issue](https://github.com/cloudinary/cloudinary-angular-2/issues/new) describing the benefits (and possible drawbacks) of the requested feature
+- Open a GitHub [issue](https://github.com/cloudinary/cloudinary_angular/issues/new) describing the benefits (and possible drawbacks) of the requested feature
 
 ## Fixing a bug / Implementing a new feature
 
@@ -29,12 +29,13 @@ When contributing code, either to fix a bug or to implement a new feature, pleas
 
 #### Fork the Project
 
-Fork [project on Github](https://github.com/cloudinary/cloudinary-angular-2) and check out your copy.
+Fork [project on Github](https://github.com/cloudinary/cloudinary_angular) and check out your copy.
 
 ```
-git clone https://github.com/contributor/cloudinary_ng.git
-cd cloudinary_ng
-git remote add upstream https://github.com/cloudinary/cloudinary-angular-2.git
+git clone https://github.com/contributor/cloudinary_angular.git
+cd cloudinary_angular
+git checkout angular_next
+git remote add upstream https://github.com/cloudinary/cloudinary_angular.git
 ```
 
 #### Create a Topic Branch
@@ -42,8 +43,8 @@ git remote add upstream https://github.com/cloudinary/cloudinary-angular-2.git
 Make sure your fork is up-to-date and create a topic branch for your feature or bug fix.
 
 ```
-git checkout master
-git pull upstream master
+git checkout angular_next
+git pull upstream angular_next
 git checkout -b my-feature-branch
 ```
 #### Rebase
@@ -52,7 +53,7 @@ If you've been working on a change for a while, rebase with upstream/master.
 
 ```
 git fetch upstream
-git rebase upstream/master
+git rebase upstream/angular_next
 git push origin my-feature-branch -f
 ```
 
@@ -99,10 +100,10 @@ git push origin my-feature-branch
 
 #### Make a Pull Request
 
-Go to https://github.com/contributor/cloudinary_ng and select your feature branch. Click the 'Pull Request' button and fill out the form. 
+Go to https://github.com/contributor/cloudinary_angular and select your feature branch. Click the 'Pull Request' button and fill out the form. 
 Pull requests are usually reviewed within a few days.
 
-Ensure the PR description clearly describes the problem and solution. Include the relevant issue number if applicable.
+Ensure that the PR title starts with "[angular_next]" and that the PR description clearly describes the problem and solution. Include the relevant issue number if applicable.
 
 #### Check on Your Pull Request
 
