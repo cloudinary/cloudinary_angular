@@ -28,7 +28,15 @@
    */
   var toCloudinaryAttributes = function( source, filter) {
     var attributes = {};
-    var isNamedNodeMap = source && (source.constructor.name === "NamedNodeMap" || source instanceof NamedNodeMap);
+    var isNamedNodeMap;
+    if (window.NamedNodeMap) {
+      isNamedNodeMap = source && (source.constructor.name === "NamedNodeMap" || source instanceof NamedNodeMap);
+    } else if (window.MozNamedAttrMap) {
+      // https://developer.mozilla.org/en-US/docs/Web/API/NamedNodeMap
+      // https://www.fxsitecompat.com/en-CA/docs/2013/namednodemap-has-been-renamed-to-moznamedattrmap/
+      // In Firefox versions 22 - 33 the interface "NamedNodeMap" was called "MozNamedAttrMap"
+      var isNamedNodeMap = source && (source.constructor.name === "MozNamedAttrMap" || source instanceof MozNamedAttrMap);
+    }
     angular.forEach(source, function(value, name){
       if( isNamedNodeMap) {
         name = value.name;
