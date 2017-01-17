@@ -1,0 +1,4 @@
+aot/
+
+*.ngsummary.json
+*.ngstyle.ts

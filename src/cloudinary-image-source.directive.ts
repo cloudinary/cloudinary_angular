@@ -7,12 +7,12 @@ import {CloudinaryTransformationDirective} from './cloudinary-transformation.dir
 })
 export class CloudinaryImageSourceDirective implements AfterViewInit {
 
-    @Input() private clHref: string;
-    @Input() private clSrc: string;
-    @Input() private clSrcset: string;
+    @Input() clHref: string;
+    @Input() clSrc: string;
+    @Input() clSrcset: string;
 
     @ContentChildren(CloudinaryTransformationDirective)
-    private transformations: QueryList<CloudinaryTransformationDirective>;
+    transformations: QueryList<CloudinaryTransformationDirective>;
 
     constructor(private el: ElementRef, private cloudinary: Cloudinary) {
     }

@@ -4,6 +4,10 @@ logs
 npm-debug.log*
 config.ts
 
+# Ignore AOT compiler output
+/compiled
+*.metadata.json
+
 # Ignore output of typescript compilation. They WILL be included in the package since .npmignore is empty
 index.js.map
 index.d.ts

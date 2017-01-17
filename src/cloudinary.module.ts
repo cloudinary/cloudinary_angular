@@ -1,34 +1,58 @@
 'use strict';
 /* App Module */
-import {NgModule} from '@angular/core';
-import {CloudinaryImage} from './cloudinary-image.component';
-import {CloudinaryVideo} from './cloudinary-video.component';
-import {CloudinaryTransformationDirective} from './cloudinary-transformation.directive';
-import {CloudinaryImageSourceDirective} from './cloudinary-image-source.directive';
+import { NgModule, ModuleWithProviders, OpaqueToken } from '@angular/core';
+import { Cloudinary } from './cloudinary.service';
+import { CloudinaryImage } from './cloudinary-image.component';
+import { CloudinaryVideo } from './cloudinary-video.component';
+import { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
+import { CloudinaryImageSourceDirective } from './cloudinary-image-source.directive';
 import CloudinaryConfiguration from './cloudinary-configuration.class';
 
 // Export for lib consumers
-export {CloudinaryImage} from './cloudinary-image.component';
-export {CloudinaryVideo} from './cloudinary-video.component';
-export {CloudinaryTransformationDirective} from './cloudinary-transformation.directive';
-export {CloudinaryImageSourceDirective} from './cloudinary-image-source.directive';
+export { CloudinaryImage } from './cloudinary-image.component';
+export { CloudinaryVideo } from './cloudinary-video.component';
+export { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
+export { CloudinaryImageSourceDirective } from './cloudinary-image-source.directive';
 
-export {Cloudinary, provideCloudinary} from './cloudinary.service';
+export { Cloudinary, provideCloudinary } from './cloudinary.service';
 
-export {CloudinaryConfiguration};
+export { CloudinaryConfiguration };
+
+export const CLOUDINARY_LIB = new OpaqueToken('CLOUDINARY_LIB');
+export const CLOUDINARY_CONFIGURATION = new OpaqueToken('CLOUDINARY_CONFIGURATION');
+
+// Export this function to Angular's AOT to work
+export function createCloudinary(cloudinaryJsLib: any, configuration: any) {
+  return new Cloudinary(cloudinaryJsLib, configuration);
+};
 
 @NgModule({
-    declarations: [
-        CloudinaryImageSourceDirective,
-        CloudinaryImage,
-        CloudinaryVideo,
-        CloudinaryTransformationDirective
-    ],
-    exports: [
-        CloudinaryImageSourceDirective,
-        CloudinaryImage,
-        CloudinaryVideo,
-        CloudinaryTransformationDirective
-    ]
+  declarations: [
+    CloudinaryImageSourceDirective,
+    CloudinaryImage,
+    CloudinaryVideo,
+    CloudinaryTransformationDirective
+  ],
+  exports: [
+    CloudinaryImageSourceDirective,
+    CloudinaryImage,
+    CloudinaryVideo,
+    CloudinaryTransformationDirective
+  ]
 })
-export class CloudinaryModule { }
+export class CloudinaryModule {
+  static forRoot(cloudinaryJsLib: any, cloudinaryConfiguration: any): ModuleWithProviders {
+    return {
+      ngModule: CloudinaryModule,
+      providers: [
+        { provide: CLOUDINARY_LIB, useValue: cloudinaryJsLib },
+        { provide: CLOUDINARY_CONFIGURATION, useValue: cloudinaryConfiguration },
+        {
+          provide: Cloudinary,
+          useFactory: createCloudinary,
+          deps: [CLOUDINARY_LIB, CLOUDINARY_CONFIGURATION]
+        }
+      ]
+    };
+  }
+}

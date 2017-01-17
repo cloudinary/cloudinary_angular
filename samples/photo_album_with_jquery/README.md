@@ -1,4 +1,4 @@
-Cloudinary Angular hoto Album Sample with jQuery
+Cloudinary Angular Photo Album Sample with jQuery
 =======================================
 
 This sample project shows:

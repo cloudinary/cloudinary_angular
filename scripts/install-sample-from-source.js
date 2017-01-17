@@ -1,6 +1,6 @@
 /**
  * This script packs the SDK module into a tgz and installs it in the given sample folder.
- * 
+ *
  * Usage example: "node install-form-source.js samples/photo_album"
  */
 
@@ -9,7 +9,7 @@ const path = require('path');
 const fs = require('fs');
 
 console.log('Running TypeScript compiler');
-const tsc = execSync('npm run tsc', {stdio:[0,1,2]});
+execSync('npm run ngc', {stdio:[0,1,2]});
 
 console.log('Packing module');
 const packedFileName = execSync('npm pack');

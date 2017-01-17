@@ -2,17 +2,17 @@
 # yarn lockfile v1
 
 
-"@angular/common@^2.3.0":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@angular/common/-/common-2.4.1.tgz#a70167430574959c3423ac96ebdec98032d3500d"
+"@angular/common@^2.2.4", "@angular/common@^2.4.3":
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/@angular/common/-/common-2.4.3.tgz#78d96bd2f8a1a105f635cd25e362ba5704b47f56"
 
-"@angular/compiler@^2.3.0":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-2.4.1.tgz#62b4fbfc53c934bd5def78db594cbf245b3f446a"
+"@angular/compiler@^2.4.3":
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-2.4.3.tgz#76a41916f90eda66643107740c4a9ae45cb7a6c1"
 
-"@angular/core@^2.3.0":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.4.1.tgz#3a6d2dc7fd86fdebe4febae7eb28abad7d04c76a"
+"@angular/core@^2.2.4", "@angular/core@^2.4.3":
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.4.3.tgz#a72a13bb9f01659b8388558cd6e3a570a8434b1c"
 
 "@angular/forms@^2.3.0":
   version "2.4.1"
@@ -22,17 +22,28 @@
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/@angular/http/-/http-2.4.1.tgz#f06067e370c44d025ed00a03ef704f6c46ea59ac"
 
-"@angular/platform-browser-dynamic@^2.3.0":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-2.4.1.tgz#5fb72038f76c1e3646cea95f5b4722d67a4419dd"
+"@angular/platform-browser-dynamic@^2.4.3":
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-2.4.3.tgz#d65cc9bc4487e2a86e2c6f6641c711fccfa90c5a"
 
-"@angular/platform-browser@^2.3.0":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-2.4.1.tgz#4eaa829b450be34f0029796b6c3b99e27d3d5740"
+"@angular/platform-browser@^2.4.3":
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-2.4.3.tgz#eba8588d2fffc39d0b85a9180c297d9ca2f1f3a4"
 
 "@angular/router@^3.2.3":
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/@angular/router/-/router-3.4.1.tgz#079c8580943547a710f292026ac86a08d336a49d"
+
+"@cloudinary/angular@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@cloudinary/angular/-/angular-2.0.0.tgz#fc4906291abdca8ed1cb9e67042fdf10ce68cf28"
+  dependencies:
+    "@angular/common" "^2.2.4"
+    "@angular/core" "^2.2.4"
+    core-js "^2.4.1"
+    reflect-metadata "^0.1.8"
+    rxjs "^5.0.1"
+    zone.js "^0.7.2"
 
 "@types/node@0.0.1":
   version "0.0.1"

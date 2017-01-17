@@ -29,8 +29,8 @@
     "start-sample:jquery": "npm run install-sample-from-source:jquery && cd samples/photo_album_with_jquery && npm run start:e2e",
     "e2e": "npm run install-sample-from-source && concurrently \"npm run start-sample\" \"protractor protractor.config.js --baseUrl='http://localhost:4000/'\" --kill-others --success first",
     "e2e:jquery": "npm run start-sample:jquery && protractor protractor.config.js --baseUrl='http://localhost:3000/' --kill-others --success first",
-    "tsc": "tsc",
-    "tsc:w": "tsc -w"
+    "ngc": "ngc",
+    "ngc:w": "ngc -w"
   },
   "repository": {
     "type": "git",
@@ -43,17 +43,19 @@
   },
   "homepage": "https://github.com/cloudinary/cloudinary_angular",
   "dependencies": {
-    "@angular/common": "^2.2.4",
-    "@angular/core": "^2.2.4",
+    "@angular/common": "^2.4.3",
+    "@angular/compiler-cli": "^2.2.4",
+    "@angular/core": "^2.4.3",
+    "@angular/platform-server": "^2.4.3",
     "core-js": "^2.4.1",
     "reflect-metadata": "^0.1.8",
     "rxjs": "^5.0.1",
     "zone.js": "^0.7.2"
   },
   "devDependencies": {
-    "@angular/compiler": "^2.2.4",
-    "@angular/platform-browser": "^2.2.4",
-    "@angular/platform-browser-dynamic": "^2.2.4",
+    "@angular/compiler": "^2.4.3",
+    "@angular/platform-browser": "^2.4.3",
+    "@angular/platform-browser-dynamic": "^2.4.3",
     "@types/jasmine": "^2.5.36",
     "@types/node": "^6.0.46",
     "@types/selenium-webdriver": "^2.53.36",

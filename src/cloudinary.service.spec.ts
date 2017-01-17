@@ -1,9 +1,8 @@
-// Using require instead of import until clodinary-core has typings and can be loaded by tsc 
+// Using require instead of import until clodinary-core has typings and can be loaded by tsc
 const cloudinaryCore = require('cloudinary-core');
 
 import {
     Cloudinary,
-    provideCloudinary,
     isJsonLikeString,
     isNamedNodeMap,
     transformKeyNamesFromKebabToSnakeCase
@@ -14,17 +13,10 @@ const cloudName: string = 'service-test';
 
 describe('Cloudinary service', () => {
 
-    let service: Cloudinary;
-    let config: CloudinaryConfiguration;
-
-    beforeEach(() => {
-        config = {
-            cloud_name: cloudName
-        };
-
-        const provider = provideCloudinary(cloudinaryCore, config);
-        service = provider.useFactory();
-    });
+    let config: CloudinaryConfiguration = {
+        cloud_name: cloudName
+    };
+    let service: Cloudinary = new Cloudinary(cloudinaryCore, config);
 
     it('Creates an instance of the service', () => {
         expect(service instanceof Cloudinary).toBe(true);
@@ -89,8 +81,8 @@ describe('Cloudinary service', () => {
             );
         });
         it('Transforms property names of json-like strings spanning multi-lines from kebab-case to snake_case', () => {
-            expect(transformKeyNamesFromKebabToSnakeCase(`{"aaa-aaa":"1", 
-            "bbb-bbb":"2", 
+            expect(transformKeyNamesFromKebabToSnakeCase(`{"aaa-aaa":"1",
+            "bbb-bbb":"2",
             "cc": "ccc-ccc"}`)).toEqual(
                 {
                     aaa_aaa: '1',
@@ -133,8 +125,8 @@ describe('Cloudinary service', () => {
             ]);
         });
         it('transforms complex json-like objects into options', () => {
-            expect(transformKeyNamesFromKebabToSnakeCase(`{"aaa-aaa":"1", 
-            "bbb-bbb":"2", 
+            expect(transformKeyNamesFromKebabToSnakeCase(`{"aaa-aaa":"1",
+            "bbb-bbb":"2",
             "transform-ation": [{ "effect": "sepia", "fetch_format": "auto"}]
             }`)).toEqual(
                 {
@@ -148,53 +140,4 @@ describe('Cloudinary service', () => {
             );
         });
     });
-
-    // describe('toCloudinaryAttributes', () => {
-    //     it('Returns an array of cloudinary attributes without filters', () => {
-    //         const src = 'image_public_id';
-    //         const width = 'auto';
-    //         const height = 150;
-    //         const responsive = true;
-    //         expect(service.toCloudinaryAttributes({
-    //             'clSrc': src,
-    //             width,
-    //             height,
-    //             responsive
-    //         })).toEqual({'clsrc': src, width, height, responsive});
-    //     });
-    //
-    //     it('Returns a filtered array of cloudinary attributes', () => {
-    //         const src = 'image_public_id';
-    //         const width = 'auto';
-    //         const height = 150;
-    //         const responsive = true;
-    //         expect(service.toCloudinaryAttributes({
-    //                 'clSrc': src,
-    //             width,
-    //             height,
-    //             responsive
-    //             },
-    //             /clSrc|width/
-    //         )).toEqual({'clsrc': src, width});
-    //
-    //         expect(service.toCloudinaryAttributes({
-    //             'clSrc': src,
-    //             width,
-    //             height,
-    //             responsive
-    //         }, /foo/)).toEqual({});
-    //
-    //         expect(service.toCloudinaryAttributes({
-    //             'clSrc': src,
-    //             width,
-    //             height,
-    //             responsive
-    //         }, /^[^$]/)).toEqual({'clsrc': src, width, height, responsive});
-    //     });
-    //
-    //     it('tolerates missing values', () => {
-    //         expect(service.toCloudinaryAttributes(undefined)).toEqual({});
-    //         expect(service.toCloudinaryAttributes(null)).toEqual({});
-    //     });
-    // });
 });

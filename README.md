@@ -59,14 +59,12 @@ Example Coudinary configuration in your application's module definition:
 ```javascript
 import { NgModule } from '@angular/core';
 // ...
-import { CloudinaryModule, CloudinaryConfiguration, provideCloudinary } from '@cloudinary/angular';
+import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular';
+import { Cloudinary } from 'cloudinary-core';
 
 @NgModule({
     imports: [
-        CloudinaryModule
-    ],
-    providers: [
-        provideCloudinary(require('cloudinary-core'), { cloud_name: 'your_cloud_name' } as CloudinaryConfiguration)
+        CloudinaryModule.forRoot({Cloudinary}, { cloud_name: 'your_cloud_name' } as CloudinaryConfiguration),
     ],
     bootstrap: [/* ... */]
 })
@@ -169,6 +167,9 @@ The samples differ by their bundling solution and upload implementation:
 * [Photo album sample app with jQuery](samples/photo_album_with_jquery) 
     * Uses [Cloudinary's jQuery plugin](http://cloudinary.com/blog/direct_upload_made_easy_from_browser_or_mobile_app_to_the_cloud#direct_uploading_from_the_browser_using_jquery) for uploading files using jQuery and blueimp.
     * Uses [SystemJS](https://github.com/systemjs/systemjs) for bundling the application and [lite-server](https://github.com/johnpapa/lite-server) for serving the application. 
+* [Photo Album AOT compilation](samples/photo_album_aot) 
+    * Demonstrates usage of Cloudinary SDK in an [Angular AOT](https://angular.io/docs/ts/latest/cookbook/aot-compiler.html) application
+    * Uses [Rollup](http://rollupjs.org/) for bundling the application and [lite-server](https://github.com/johnpapa/lite-server) for serving the application.
 
 Please consult with the respective README file of each sample for usage and additional information.
 

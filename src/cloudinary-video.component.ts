@@ -18,12 +18,12 @@ import {CloudinaryTransformationDirective} from './cloudinary-transformation.dir
 // See also video reference - http://cloudinary.com/documentation/video_manipulation_and_delivery#video_transformations_reference
 export class CloudinaryVideo implements AfterViewInit, OnInit, OnDestroy {
 
-    @Input('public-id') private publicId: string;
+    @Input('public-id') publicId: string;
 
     @ContentChildren(CloudinaryTransformationDirective)
-    private transformations: QueryList<CloudinaryTransformationDirective>;
+    transformations: QueryList<CloudinaryTransformationDirective>;
 
-    private observer: MutationObserver;
+    observer: MutationObserver;
 
     constructor(private el: ElementRef, private cloudinary: Cloudinary) {
     }

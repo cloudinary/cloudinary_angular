@@ -17,12 +17,12 @@ import {CloudinaryTransformationDirective} from './cloudinary-transformation.dir
 })
 export class CloudinaryImage implements AfterViewInit, OnInit, OnDestroy {
 
-    @Input('public-id') private publicId: string;
+    @Input('public-id') publicId: string;
 
     @ContentChildren(CloudinaryTransformationDirective)
-    private transformations: QueryList<CloudinaryTransformationDirective>;
+    transformations: QueryList<CloudinaryTransformationDirective>;
 
-    private observer: MutationObserver;
+    observer: MutationObserver;
 
     constructor(private el: ElementRef, private cloudinary: Cloudinary) {
     }
