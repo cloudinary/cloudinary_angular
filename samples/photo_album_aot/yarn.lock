@@ -2,11 +2,11 @@
 # yarn lockfile v1
 
 
-"@angular/common@^2.2.4", "@angular/common@^2.4.3":
+"@angular/common@^2.4.3":
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/@angular/common/-/common-2.4.3.tgz#78d96bd2f8a1a105f635cd25e362ba5704b47f56"
 
-"@angular/compiler-cli@^2.4.3":
+"@angular/compiler-cli@^2.2.4", "@angular/compiler-cli@^2.4.3":
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-2.4.3.tgz#8339c2f428d29df3ea0eac17f08d296fc87eb160"
   dependencies:
@@ -18,7 +18,7 @@
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-2.4.3.tgz#76a41916f90eda66643107740c4a9ae45cb7a6c1"
 
-"@angular/core@^2.2.4", "@angular/core@^2.4.3":
+"@angular/core@^2.4.3":
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.4.3.tgz#a72a13bb9f01659b8388558cd6e3a570a8434b1c"
 
@@ -50,12 +50,14 @@
   dependencies:
     tsickle "^0.2"
 
-"@cloudinary/angular@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@cloudinary/angular/-/angular-2.0.0.tgz#fc4906291abdca8ed1cb9e67042fdf10ce68cf28"
+"@cloudinary/angular@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@cloudinary/angular/-/angular-2.1.1.tgz#07f4aa956d6deeda019511cdf40089853d7e7454"
   dependencies:
-    "@angular/common" "^2.2.4"
-    "@angular/core" "^2.2.4"
+    "@angular/common" "^2.4.3"
+    "@angular/compiler-cli" "^2.2.4"
+    "@angular/core" "^2.4.3"
+    "@angular/platform-server" "^2.4.3"
     core-js "^2.4.1"
     reflect-metadata "^0.1.8"
     rxjs "^5.0.1"
