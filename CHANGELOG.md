@@ -1,4 +1,10 @@
 
+2.1.1 / 2017-01-18
+==================
+
+  * Add missing files in npm package
+  * Update sample projects
+
 2.1.0 / 2017-01-18
 ==================
 
