@@ -28,7 +28,8 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.ts', '.js'],
-    modules: [path.join(__dirname, "node_modules")]
+    modules: [path.join(__dirname, "node_modules")],
+    alias: { "cloudinary-core": "cloudinary-core/cloudinary-core-shrinkwrap.js" }
   },
   devServer: {
     port: 8002,
