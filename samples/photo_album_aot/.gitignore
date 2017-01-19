@@ -2,3 +2,5 @@ aot/
 
 *.ngsummary.json
 *.ngstyle.ts
+
+!rollup-config.js
