@@ -16,7 +16,8 @@ import { routing } from './app.routing';
 
 const cloudinaryLib = {
   Cloudinary: Cloudinary
-}
+};
+
 @NgModule({
   imports: [
     BrowserModule,
