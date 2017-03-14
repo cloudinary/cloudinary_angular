@@ -1,6 +1,6 @@
 'use strict';
 /* App Module */
-import { NgModule, ModuleWithProviders, OpaqueToken } from '@angular/core';
+import { NgModule, ModuleWithProviders, InjectionToken } from '@angular/core';
 import { Cloudinary } from './cloudinary.service';
 import { CloudinaryImage } from './cloudinary-image.component';
 import { CloudinaryVideo } from './cloudinary-video.component';
@@ -18,8 +18,8 @@ export { Cloudinary, provideCloudinary } from './cloudinary.service';
 
 export { CloudinaryConfiguration };
 
-export const CLOUDINARY_LIB = new OpaqueToken('CLOUDINARY_LIB');
-export const CLOUDINARY_CONFIGURATION = new OpaqueToken('CLOUDINARY_CONFIGURATION');
+export const CLOUDINARY_LIB = new InjectionToken('CLOUDINARY_LIB');
+export const CLOUDINARY_CONFIGURATION = new InjectionToken('CLOUDINARY_CONFIGURATION');
 
 // Export this function to Angular's AOT to work
 export function createCloudinary(cloudinaryJsLib: any, configuration: any) {
