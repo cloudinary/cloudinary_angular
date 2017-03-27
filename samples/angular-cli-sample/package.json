@@ -5,7 +5,8 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --aot",
+    "start": "ng serve --aot --progres --target=production",
+    "build": "ng build --aot --progres --target=production",
     "lint": "tslint \"src/**/*.ts\" --project src/tsconfig.json --type-check && tslint \"e2e/**/*.ts\" --project e2e/tsconfig.json --type-check",
     "test": "ng test",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
@@ -22,7 +23,7 @@
     "@angular/platform-browser-dynamic": "^2.3.1",
     "@angular/router": "^3.3.1",
     "@cloudinary/angular": "^2.1.1",
-    "cloudinary-core": "^2.1.9",
+    "cloudinary-core": "^2.3.0",
     "core-js": "^2.4.1",
     "lodash": "^4.17.4",
     "rxjs": "^5.0.1",
