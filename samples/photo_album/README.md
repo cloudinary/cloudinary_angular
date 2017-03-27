@@ -6,6 +6,7 @@ This sample project shows:
 1. How to use the Cloudinary Angular directives.
 2. How to upload files to Cloudinary in an unsigned manner, using an upload preset. The upload control is based on the open source file uploader [ng2-file-upload](https://github.com/valor-software/ng2-file-upload)
 3. How to use the dynamic list resource in order to maintain a short list of resources aggregated by tags.
+4. How to delete an image uploaded from the browser with an unsigned upload. You can find additional details in this [knowledge base article](https://support.cloudinary.com/hc/en-us/articles/202521132-How-to-delete-an-image-from-the-client-side-). Don't forget to set the `Return delete token` setting of your unsigned upload preset to `true`.
 
 ## Configuration ##
 
