@@ -3,11 +3,14 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { Cloudinary } from 'cloudinary-core';
 import { CloudinaryModule } from '@cloudinary/angular';
 
 import { AppComponent } from './app.component';
 
-import * as  Cloudinary from 'cloudinary-core';
+export const cloudinaryLib = {
+  Cloudinary: Cloudinary
+};
 
 @NgModule({
   declarations: [
@@ -17,7 +20,7 @@ import * as  Cloudinary from 'cloudinary-core';
     BrowserModule,
     FormsModule,
     HttpModule,
-    CloudinaryModule.forRoot(Cloudinary, { cloud_name: 'demo'}),
+    CloudinaryModule.forRoot(cloudinaryLib, { cloud_name: 'demo'}),
   ],
   providers: [],
   bootstrap: [AppComponent]
