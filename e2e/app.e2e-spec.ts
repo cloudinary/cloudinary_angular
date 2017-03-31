@@ -2,7 +2,7 @@ const path = require('path');
 
 import { browser, element, by } from 'protractor';
 
-// Using require instead of import until clodinary-core has typings and can be loaded by tsc 
+// Using require instead of import until clodinary-core has typings and can be loaded by tsc
 // Assumes CLOUDINARY_URL environment variable is set, see https://github.com/cloudinary/cloudinary_npm
 const cloudinary = require('cloudinary');
 
