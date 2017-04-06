@@ -1,10 +1,10 @@
-import { AngularCliSamplePage } from './app.po';
+import { Angular4CliSamplePage } from './app.po';
 
-describe('angular-cli-sample App', function() {
-  let page: AngularCliSamplePage;
+describe('angular4-cli-sample App', () => {
+  let page: Angular4CliSamplePage;
 
   beforeEach(() => {
-    page = new AngularCliSamplePage();
+    page = new Angular4CliSamplePage();
   });
 
   it('should display message saying app works', () => {

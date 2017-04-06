@@ -1,4 +1,4 @@
-import { Injectable, QueryList } from '@angular/core';
+import { QueryList } from '@angular/core';
 import CloudinaryConfiguration from './cloudinary-configuration.class';
 import { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
 
@@ -56,11 +56,10 @@ const transformKeyNamesFromKebabToSnakeCase = function (obj: any): any {
   return _obj;
 };
 
-@Injectable()
 export class Cloudinary {
   _cloudinaryInstance: any;
 
-  constructor(cloudinaryJsLib: any, configuration: any) {
+  constructor(cloudinaryJsLib: any, configuration: CloudinaryConfiguration) {
     // Cloudinary JS already clones the given configuration so no need to clone it here too
     if (cloudinaryJsLib.CloudinaryJQuery) {
       this._cloudinaryInstance = new cloudinaryJsLib.CloudinaryJQuery(configuration);

@@ -2,7 +2,7 @@ const path = require('path');
 
 import { browser, element, by } from 'protractor';
 
-// Using require instead of import until clodinary-core has typings and can be loaded by tsc 
+// Using require instead of import until clodinary-core has typings and can be loaded by tsc
 // Assumes CLOUDINARY_URL environment variable is set, see https://github.com/cloudinary/cloudinary_npm
 const cloudinary = require('cloudinary');
 
@@ -42,7 +42,7 @@ describe('Sample photo upload E2E Tests', function () {
     it(`should upload a new image successfully`, () => {
         element(by.className('upload_link')).click();
 
-        expect(element(by.className('upload_button')).getText()).toEqual('Upload');
+        expect<any>(element(by.className('upload_button')).getText()).toEqual('Upload');
 
         // Set properties of file to upload
         element(by.className('form-control')).sendKeys(tag);

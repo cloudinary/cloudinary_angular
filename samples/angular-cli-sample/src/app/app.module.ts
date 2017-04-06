@@ -15,7 +15,7 @@ export const cloudinaryLib = {
 @NgModule({
   declarations: [
     AppComponent
-    ],
+  ],
   imports: [
     BrowserModule,
     FormsModule,
