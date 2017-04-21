@@ -1,4 +1,11 @@
 
+2.1.2 / 2017-04-21
+==================
+
+*This patch version is published to bower only*
+
+  * Add `bower.json` definition to `angular_next` (Angular 2) branch.
+
 2.1.1 / 2017-01-18
 ==================
 
