@@ -43,19 +43,20 @@
   },
   "homepage": "https://github.com/cloudinary/cloudinary_angular",
   "dependencies": {
-    "@angular/common": "^2.4.3",
-    "@angular/compiler-cli": "^2.2.4",
-    "@angular/core": "^2.4.3",
-    "@angular/platform-server": "^2.4.3",
+    "@angular/common": "^4.0.0-rc.2",
+    "@angular/compiler": "^4.0.0-rc.2",
+    "@angular/compiler-cli": "^4.0.0-rc.2",
+    "@angular/core": "^4.0.0-rc.2",
+    "@angular/platform-server": "^4.0.0-rc.2",
     "core-js": "^2.4.1",
     "reflect-metadata": "^0.1.8",
-    "rxjs": "^5.0.1",
-    "zone.js": "^0.7.2"
+    "rxjs": "^5.1.1",
+    "zone.js": "^0.7.7"
   },
   "devDependencies": {
-    "@angular/compiler": "^2.4.3",
-    "@angular/platform-browser": "^2.4.3",
-    "@angular/platform-browser-dynamic": "^2.4.3",
+    "@angular/compiler": "^4.0.0-rc.2",
+    "@angular/platform-browser": "^4.0.0-rc.2",
+    "@angular/platform-browser-dynamic": "^4.0.0-rc.2",
     "@types/jasmine": "^2.5.36",
     "@types/node": "^6.0.46",
     "@types/selenium-webdriver": "^2.53.36",
@@ -73,8 +74,8 @@
     "karma-phantomjs-launcher": "^1.0.2",
     "protractor": "^4.0.12",
     "systemjs": "^0.19.41",
-    "tslint": "^4.2.0",
-    "typescript": "^2.0.10",
+    "tslint": "~4.4.2",
+    "typescript": "~2.1.6",
     "webdriver-manager": "^10.2.10"
   }
 }
