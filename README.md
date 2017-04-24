@@ -20,7 +20,7 @@ For AngularJS, Cloudinary provides a plugin for simplifying the integration even
 You can get it on bower.
 
 ```shell
-bower install cloudinary_ng --save
+bower install cloudinary_ng#1.x --save
 ```
 
 ## Setup ######################################################################
