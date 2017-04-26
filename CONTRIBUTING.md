@@ -34,7 +34,7 @@ Fork [project on Github](https://github.com/cloudinary/cloudinary_angular) and c
 ```
 git clone https://github.com/contributor/cloudinary_angular.git
 cd cloudinary_angular
-git checkout angular_next
+git checkout master
 git remote add upstream https://github.com/cloudinary/cloudinary_angular.git
 ```
 
@@ -43,8 +43,8 @@ git remote add upstream https://github.com/cloudinary/cloudinary_angular.git
 Make sure your fork is up-to-date and create a topic branch for your feature or bug fix.
 
 ```
-git checkout angular_next
-git pull upstream angular_next
+git checkout master
+git pull upstream master
 git checkout -b my-feature-branch
 ```
 #### Rebase
@@ -53,7 +53,7 @@ If you've been working on a change for a while, rebase with upstream/master.
 
 ```
 git fetch upstream
-git rebase upstream/angular_next
+git rebase upstream/master
 git push origin my-feature-branch -f
 ```
 
@@ -103,7 +103,7 @@ git push origin my-feature-branch
 Go to https://github.com/contributor/cloudinary_angular and select your feature branch. Click the 'Pull Request' button and fill out the form. 
 Pull requests are usually reviewed within a few days.
 
-Ensure that the PR title starts with "[angular_next]" and that the PR description clearly describes the problem and solution. Include the relevant issue number if applicable.
+Ensure the PR description clearly describes the problem and solution. Include the relevant issue number if applicable.
 
 #### Check on Your Pull Request
 
