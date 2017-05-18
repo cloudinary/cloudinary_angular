@@ -1,6 +1,6 @@
 {
-  "name": "@cloudinary/angular-PLACEHOLDER",
-  "version": "0.0.0-PLACEHOLDER",
+  "name": "@cloudinary/angular-4.x",
+  "version": "1.0.0",
   "description": "The formal Cloudinary Angular SDK to enhance your applications with image and video components powered by Cloudinary",
   "keywords": [
     "cloudinary",

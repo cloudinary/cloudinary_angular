@@ -1,4 +1,16 @@
 
+(4.x)1.0.0 / 2017-05-18
+=======================
+
+## Initial Support for Angular 4.x
+
+  * Use place holders for module name and version number
+  * Update README.md
+  * Update lib and samples to Angular 4
+  * Merge pull request #67 from cloudinary/isNamedNodeMap-fix-for-firefox
+  * Update README links with Angular2 SDK
+  * Update toCloudinaryAttributes to use MozNamedAttrMap for old versions of FireFox
+
 2.1.2 / 2017-04-21
 ==================
 
