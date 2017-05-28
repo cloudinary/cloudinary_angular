@@ -27,11 +27,16 @@ export class PhotoUploadComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Create the file uploader, wire it to upload to your account
     const uploaderOptions: FileUploaderOptions = {
       url: `https://api.cloudinary.com/v1_1/${this.cloudinary.config().cloud_name}/upload`,
+      // Upload files automatically upon addition to upload queue
       autoUpload: true,
+      // Use xhrTransport in favor of iframeTransport
       isHTML5: true,
+      // Calculate progress independently for each uploaded file
       removeAfterUpload: true,
+      // XHR request headers
       headers: [
         {
           name: 'X-Requested-With',
@@ -41,9 +46,10 @@ export class PhotoUploadComponent implements OnInit {
     };
     this.uploader = new FileUploader(uploaderOptions);
 
-    // Add custom tag for displaying the uploaded photo in the list
     this.uploader.onBuildItemForm = (fileItem: any, form: FormData): any => {
+      // Add Cloudinary's unsigned upload preset to the upload form
       form.append('upload_preset', this.cloudinary.config().upload_preset);
+      // Add built-in and custom tags for displaying the uploaded photo in the list
       let tags = 'myphotoalbum';
       if (this.title) {
         form.append('context', `photo=${this.title}`);
@@ -52,6 +58,7 @@ export class PhotoUploadComponent implements OnInit {
       form.append('tags', tags);
       form.append('file', fileItem);
 
+      // Use default "withCredentials" value for CORS requests
       fileItem.withCredentials = false;
       return { fileItem, form };
     };
@@ -82,6 +89,7 @@ export class PhotoUploadComponent implements OnInit {
       });
     };
 
+    // Update model on completion of uploading a file
     this.uploader.onCompleteItem = (item: any, response: string, status: number, headers: ParsedResponseHeaders) =>
       upsertResponse(
         {
@@ -91,6 +99,7 @@ export class PhotoUploadComponent implements OnInit {
         }
       );
 
+    // Update model on upload progress event
     this.uploader.onProgressItem = (fileItem: any, progress: any) =>
       upsertResponse(
         {
@@ -105,6 +114,9 @@ export class PhotoUploadComponent implements OnInit {
     this.title = value;
   }
 
+  // Delete an uploaded image
+  // Requires setting "Return delete token" to "Yes" in your upload preset configuration
+  // See also https://support.cloudinary.com/hc/en-us/articles/202521132-How-to-delete-an-image-from-the-client-side-
   deleteImage = function (data: any, index: number) {
     const url = `https://api.cloudinary.com/v1_1/${this.cloudinary.config().cloud_name}/delete_by_token`;
     let headers = new Headers({ 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' });
