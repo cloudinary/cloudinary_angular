@@ -40,6 +40,7 @@
     "lite": "lite-server",
     "ngc": "ngc -p tsconfig-aot.json",
     "clean-aot": "rm -rf aot && rm -f app/js/*.js* && rm -f app/js/photo-list/photo-list.component*.js* && rm -f app/js/photo-album/photo-upload-jquery.component*.js*",
-    "rollup": "rollup --silent -c rollup-config.js"
+    "rollup": "rollup --silent -c rollup-config.js",
+    "start": "npm run ngc && npm run rollup && npm run lite"
   }
 }

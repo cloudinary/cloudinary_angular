@@ -15,7 +15,7 @@ There are 2 settings you need to change for this demo to work. Copy or rename `a
 
 1. **cloud_name** - Should be change to the cloud name you received when you registered for a Cloudinary account.
 2. **upload_preset** - You should first "Enable unsigned uploads" in the ["Upload Settings"](https://cloudinary.com/console/settings/upload) of your Cloudinary console and assign the resulting preset name to that field. Note, you may want to tweak and modify the upload preset's parameters.
-3. Additionally, in your Cloudinary console in the ["Security Settings"](https://cloudinary.com/console/settings/security) section you should uncheck the "list" item.
+3. Additionally, in your Cloudinary console in the ["Security Settings"](https://cloudinary.com/console/settings/security) section you should uncheck the "Resource list" item.
 
 Learn more about [Angular AOT](https://angular.io/docs/ts/latest/cookbook/aot-compiler.html)
 
@@ -26,6 +26,10 @@ Run `npm install` to install the required dependencies for this module.
 Alternatively use `yarn install`
 
 ## Running ##
+
+Run `npm run start` to build the project and start the list server.
+
+Alternatively, run the individual scripts:
 
 Run `npm run clean-aot` to delete AOT compilation artifacts.
 
