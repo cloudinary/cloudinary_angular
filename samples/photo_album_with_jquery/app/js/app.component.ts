@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Cloudinary} from '@cloudinary/angular';
+import {Cloudinary} from '@cloudinary/angular-4.x';
 
 @Component({
     moduleId: module.id,
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
     }
 
     /**
-     * Hack for having Angular manipulate content in <head> section, which is not bootstrapped by it... 
+     * Hack for having Angular manipulate content in <head> section, which is not bootstrapped by it...
      */
     initializeFavicon() {
         // Change value of the meta tag

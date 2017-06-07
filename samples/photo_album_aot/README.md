@@ -27,9 +27,12 @@ Alternatively use `yarn install`
 
 ## Running ##
 
-Run `npm run clean-aot` to delete AOT compilation artifacts
-Run `npm run ngc` to run Angular's AOT compiler
-Run `npm run rollup` to bundle the application
+Run `npm run clean-aot` to delete AOT compilation artifacts.
+
+Run `npm run ngc` to run Angular's AOT compiler.
+
+Run `npm run rollup` to bundle the application.
+
 Run `npm run lite` to start the server and automatically open a browser and navigate to the application's url.
 
 ## Internals ##

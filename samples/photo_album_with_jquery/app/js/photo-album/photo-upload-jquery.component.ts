@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Cloudinary} from '@cloudinary/angular';
+import {Cloudinary} from '@cloudinary/angular-4.x';
 
 @Component({
     moduleId: module.id,

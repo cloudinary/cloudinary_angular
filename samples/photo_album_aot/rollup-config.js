@@ -12,7 +12,7 @@ export default {
       nodeResolve({jsnext: true, module: true}),
       commonjs({
         include: ['node_modules/rxjs/**',
-        'node_modules/@cloudinary/angular/**',
+        'node_modules/@cloudinary/angular-4.x/**',
         'node_modules/cloudinary-core/**',
         ],
         namedExports: {
@@ -20,7 +20,7 @@ export default {
           // relative to the current directory, or the name
           // of a module in node_modules
           'cloudinary-core/cloudinary-core-shrinkwrap': [ 'Cloudinary' ],
-          '@cloudinary/angular': [ 'CloudinaryModule', 'Cloudinary' ],
+          '@cloudinary/angular-4.x': [ 'CloudinaryModule', 'Cloudinary' ],
         }
       }),
   ]

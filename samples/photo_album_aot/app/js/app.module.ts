@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 // Cloudinary module
-import { CloudinaryModule } from '@cloudinary/angular';
+import { CloudinaryModule } from '@cloudinary/angular-4.x';
 import { Cloudinary } from 'cloudinary-core/cloudinary-core-shrinkwrap';
 // App modules
 import { AppComponent } from './app.component';
