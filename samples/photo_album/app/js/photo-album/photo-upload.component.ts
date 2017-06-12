@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, NgZone } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
+//import ng2-file-upload components
 import { FileUploader, FileUploaderOptions, ParsedResponseHeaders } from 'ng2-file-upload';
 import 'rxjs/add/operator/toPromise';
 import { Cloudinary } from '@cloudinary/angular-4.x';
@@ -27,7 +28,7 @@ export class PhotoUploadComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Create the file uploader, wire it to upload to your account
+    // Create a new instance of the file uploader, configure it to upload to the Cloudinary endpoint with your cloud name (defined in cloudinary.config) 
     const uploaderOptions: FileUploaderOptions = {
       url: `https://api.cloudinary.com/v1_1/${this.cloudinary.config().cloud_name}/upload`,
       // Upload files automatically upon addition to upload queue
@@ -114,9 +115,9 @@ export class PhotoUploadComponent implements OnInit {
     this.title = value;
   }
 
-  // Delete an uploaded image
+  // Delete an uploaded image within 10 minutes of upload
   // Requires setting "Return delete token" to "Yes" in your upload preset configuration
-  // See also https://support.cloudinary.com/hc/en-us/articles/202521132-How-to-delete-an-image-from-the-client-side-
+  // See also http://cloudinary.com/documentation/upload_images#deleting_client_side_uploaded_images
   deleteImage = function (data: any, index: number) {
     const url = `https://api.cloudinary.com/v1_1/${this.cloudinary.config().cloud_name}/delete_by_token`;
     let headers = new Headers({ 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' });
