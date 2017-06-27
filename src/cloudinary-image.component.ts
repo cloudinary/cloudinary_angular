@@ -54,7 +54,9 @@ export class CloudinaryImage implements AfterViewInit, OnInit, OnDestroy {
         const nativeElement = this.el.nativeElement;
         const image = nativeElement.children[0];
         const options = this.cloudinary.toCloudinaryAttributes(nativeElement.attributes, this.transformations);
-
+        if ('cld_responsive' in options) {
+          options.responsive = true;
+        }
         const imageTag = this.cloudinary.imageTag(this.publicId, options);
         this.setElementAttributes(image, imageTag.attributes());
         if (options.responsive) {
