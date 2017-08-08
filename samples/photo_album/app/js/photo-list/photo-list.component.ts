@@ -11,6 +11,7 @@ import {Photo} from '../model/photo';
 export class PhotoListComponent implements OnInit {
 
     private photos: Observable<Photo[]>;
+    private publicId: string = 'officialchucknorrispage';
 
     constructor(
         private photoAlbum: PhotoAlbum
@@ -18,5 +19,9 @@ export class PhotoListComponent implements OnInit {
 
     ngOnInit(): void {
         this.photos = this.photoAlbum.getPhotos();
+    }
+
+    changePublicId() {
+      this.publicId = (this.publicId === 'officialchucknorrispage') ? 'billclinton' : 'officialchucknorrispage';
     }
 }

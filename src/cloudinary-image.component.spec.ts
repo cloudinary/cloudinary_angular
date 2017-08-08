@@ -183,5 +183,40 @@ describe('CloudinaryImage', () => {
       expect(img.attributes.getNamedItem('data-src')).toBeNull();
     });
   });
+
+  describe('Bound public-id', () => {
+    @Component({
+      template: `<cl-image id="image1" [public-id]="publicId"></cl-image>`
+    })
+    class TestComponent {
+      publicId: string = 'sample';
+    }
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement;  // the elements w/ the directive
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: localCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+      // all elements with an attached CloudinaryImage
+      des = fixture.debugElement.query(By.directive(CloudinaryImage));
+    });
+
+    it('creates an img element with a bound public-id', () => {
+      const img = des.children[0].nativeElement as HTMLImageElement;
+      expect(img.src).toEqual(jasmine.stringMatching(/image\/upload\/sample/));
+
+      // Update data-bound publicId
+      fixture.componentInstance.publicId = 'updatedId';
+      fixture.detectChanges();
+
+      // Verify that the img src has updated
+      expect(img.src).toEqual(jasmine.stringMatching(/image\/upload\/updatedId/));
+    });
+  });
 });
 
