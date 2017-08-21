@@ -6,6 +6,8 @@ import {
     QueryList,
     AfterViewInit,
     OnInit,
+    OnChanges,
+    SimpleChanges,
     OnDestroy
 } from '@angular/core';
 import {Cloudinary} from './cloudinary.service';
@@ -16,7 +18,7 @@ import {CloudinaryTransformationDirective} from './cloudinary-transformation.dir
     template: '<video></video>'
 })
 // See also video reference - http://cloudinary.com/documentation/video_manipulation_and_delivery#video_transformations_reference
-export class CloudinaryVideo implements AfterViewInit, OnInit, OnDestroy {
+export class CloudinaryVideo implements AfterViewInit, OnInit, OnChanges, OnDestroy {
 
     @Input('public-id') publicId: string;
 
@@ -38,6 +40,14 @@ export class CloudinaryVideo implements AfterViewInit, OnInit, OnDestroy {
 
         // pass in the target node, as well as the observer options
         this.observer.observe(this.el.nativeElement, config);
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+      // Listen to changes on the data-bound property 'publicId'.
+      // Update component unless this is the first value assigned.
+      if (changes.publicId && !changes.publicId.isFirstChange()) {
+        this.loadVideo(changes.publicId.currentValue);
+      }
     }
 
     ngOnDestroy(): void {

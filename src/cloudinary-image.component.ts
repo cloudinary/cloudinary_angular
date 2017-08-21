@@ -6,6 +6,8 @@ import {
     QueryList,
     AfterViewInit,
     OnInit,
+    OnChanges,
+    SimpleChanges,
     OnDestroy
 } from '@angular/core';
 import {Cloudinary} from './cloudinary.service';
@@ -15,7 +17,7 @@ import {CloudinaryTransformationDirective} from './cloudinary-transformation.dir
     selector: 'cl-image',
     template: '<img>'
 })
-export class CloudinaryImage implements AfterViewInit, OnInit, OnDestroy {
+export class CloudinaryImage implements AfterViewInit, OnInit, OnChanges, OnDestroy {
 
     @Input('public-id') publicId: string;
 
@@ -37,6 +39,14 @@ export class CloudinaryImage implements AfterViewInit, OnInit, OnDestroy {
 
         // pass in the target node, as well as the observer options
         this.observer.observe(this.el.nativeElement, config);
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+      // Listen to changes on the data-bound property 'publicId'.
+      // Update component unless this is the first value assigned.
+      if (changes.publicId && !changes.publicId.isFirstChange()) {
+        this.loadImage();
+      }
     }
 
     ngOnDestroy(): void {
