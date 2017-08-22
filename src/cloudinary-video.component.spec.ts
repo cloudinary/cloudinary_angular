@@ -225,5 +225,58 @@ describe('CloudinaryVideo', () => {
       }
     });
   });
+
+  describe('Bound public-id', () => {
+    @Component({
+      template: `
+            <cl-video cloud-name="my_other_cloud" [public-id]="publicId" secure="true" class="my-videos">
+                <cl-transformation overlay="text:arial_60:watchme" gravity="north" y="20"></cl-transformation>
+            </cl-video>
+            `
+    })
+    class TestComponent {
+      publicId: string = 'watchme';
+    }
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement;  // the elements w/ the directive
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryVideo, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: localCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+
+      // Our element under test, which is attached to CloudinaryVideo
+      des = fixture.debugElement.query(By.directive(CloudinaryVideo));
+    });
+
+    it('creates a video element with a bound public-id', () => {
+      const video = des.children[0].nativeElement as HTMLVideoElement;
+      // Created <video> element should have 3 child <source> elements for mp4, webm, ogg
+      expect(video.childElementCount).toBe(3);
+
+      const testMarkup = (id: string) => {
+        for (let i = 0; i < 3; i++) {
+          expect(video.children[i].attributes.getNamedItem('src')).toBeDefined();
+          expect(video.children[i].attributes.getNamedItem('src').value).toEqual(
+            jasmine.stringMatching
+              (new RegExp(`https:\/\/res.cloudinary.com\/my_other_cloud\/video\/upload\/g_north,l_text:arial_60:watchme,y_20\/${id}`)));
+        }
+      };
+
+      // Check initial binding
+      testMarkup('watchme');
+
+      // Update data-bound publicId
+      fixture.componentInstance.publicId = 'updatedId';
+      fixture.detectChanges();
+
+      // Verify that the video elememnt has updated
+      testMarkup('updatedId');
+    });
+  });
 });
 

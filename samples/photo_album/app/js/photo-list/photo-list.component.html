@@ -2,19 +2,20 @@
     <div id="posterframe">
         <!-- This will render the fetched Facebook profile picture using Cloudinary according to the
       requested transformations. This also shows how to chain transformations -->
-        <cl-image
-                class="static-photo"
-                responsive
-                width="auto"
-                crop="scale"
-                public-id="officialchucknorrispage"
-                type="facebook"
-                angle="20"
-        >
-            <cl-transformation effect="art:hokusai"></cl-transformation>
-            <cl-transformation border="3px_solid_rgb:00390b" radius="20"></cl-transformation>
-        </cl-image>
-
+        <a (click)=changePublicId()>
+          <cl-image
+                  class="static-photo"
+                  responsive
+                  width="auto"
+                  crop="scale"
+                  [public-id]="publicId"
+                  type="facebook"
+                  angle="20"
+          >
+              <cl-transformation effect="art:hokusai"></cl-transformation>
+              <cl-transformation border="3px_solid_rgb:00390b" radius="20"></cl-transformation>
+          </cl-image>
+        </a>
     </div>
 
     <h1 class="welcome">Welcome!</h1>
