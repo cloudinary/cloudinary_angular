@@ -102,6 +102,8 @@ describe('CloudinaryImage', () => {
             <cl-transformation width="300" crop="scale" overlay="text:roboto_35_bold:SDK"></cl-transformation>
             <cl-transformation effect="art:hokusai"></cl-transformation>
             <cl-transformation fetch-format="auto"></cl-transformation>
+            <cl-transformation if="initialWidth > 400" effect="grayscale"></cl-transformation>
+            <cl-transformation if="initialHeight < 200" effect="blur"></cl-transformation>
             </cl-image>`
     })
     class TestComponent { }
@@ -124,7 +126,7 @@ describe('CloudinaryImage', () => {
     it('creates an img element which encodes the directive attributes to the URL', () => {
       const img = des.children[0].nativeElement as HTMLImageElement;
       expect(img.src).toEqual(jasmine.stringMatching
-        (/c_scale,l_text:roboto_35_bold:SDK,w_300\/e_art:hokusai\/f_auto\/responsive_sample.jpg/));
+        (/c_scale,l_text:roboto_35_bold:SDK,w_300\/e_art:hokusai\/f_auto\/if_iw_gt_400,e_grayscale\/if_ih_lt_200,e_blur\/responsive_sample.jpg/));
       expect(img.attributes.getNamedItem('data-src')).toBeNull();
     });
 
@@ -135,7 +137,7 @@ describe('CloudinaryImage', () => {
       const observer = new MutationObserver(() => {
         const img = des.children[0].nativeElement as HTMLImageElement;
         expect(img.src).toEqual(jasmine.stringMatching
-          (/c_scale,l_text:roboto_35_bold:SDK,w_300\/e_art:hokusai\/f_auto\/o_50\/responsive_sample.jpg/));
+          (/c_scale,l_text:roboto_35_bold:SDK,w_300\/e_art:hokusai\/f_auto\/if_iw_gt_400,e_grayscale\/if_ih_lt_200,e_blur\/o_50\/responsive_sample.jpg/));
         observer.disconnect();
         done();
       });
