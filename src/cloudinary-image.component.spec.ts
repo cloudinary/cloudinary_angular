@@ -128,6 +128,46 @@ describe('CloudinaryImage', () => {
     });
   });
 
+  describe('transformation attributes: quality', () => {
+    @Component({
+      template: `
+        <cl-image responsive id="image1" public-id="responsive_sample.jpg">
+          <cl-transformation quality="0.4"></cl-transformation>
+        </cl-image>
+        <cl-image responsive id="image2" public-id="responsive_sample.jpg">
+          <cl-transformation quality="auto"></cl-transformation>
+        </cl-image>
+        <cl-image responsive id="image3" public-id="responsive_sample.jpg">
+          <cl-transformation quality="auto:good"></cl-transformation>
+        </cl-image>
+      `
+    })
+    class TestComponent { }
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement[];  // the elements w/ the directive
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: localCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+
+      // all elements with an attached CloudinaryImage
+      des = fixture.debugElement.queryAll(By.directive(CloudinaryImage));
+    });
+
+    it('creates an img element which encodes the quality parameter to URL', () => {
+      const testResults = ['q_0.4', 'q_auto', 'q_auto:good'];
+      testResults.forEach((result, index) => {
+        const img = des[index].children[0].nativeElement as HTMLImageElement;
+        expect(img.src).toEqual(jasmine.stringMatching (new RegExp(`\/${result}\/responsive_sample.jpg`)));
+      });
+    });
+  });
+
   describe('missing public-id', () => {
     @Component({
       template: '<cl-image responsive id="image1"></cl-image>'
