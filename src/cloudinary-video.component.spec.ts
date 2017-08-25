@@ -74,7 +74,7 @@ describe('CloudinaryVideo', () => {
   describe('videos with nested transformations', () => {
     @Component({
       template: `<cl-video id="video1" public-id="sample_video">
-            <cl-transformation width="300" crop="scale" overlay="text:roboto_35_bold:SDK"></cl-transformation>
+            <cl-transformation width="300" crop="scale" keyframe_interval="12" overlay="text:roboto_35_bold:SDK"></cl-transformation>
             <cl-transformation effect="art:hokusai"></cl-transformation>
             <cl-transformation fetch_format="auto"></cl-transformation>
             </cl-video>`
@@ -106,7 +106,7 @@ describe('CloudinaryVideo', () => {
         expect(video.children[i].attributes.getNamedItem('src')).toBeDefined();
         expect(video.children[i].attributes.getNamedItem('src').value).toEqual(
           jasmine.stringMatching
-            (/c_scale,l_text:roboto_35_bold:SDK,w_300\/e_art:hokusai\/f_auto\/sample_video/));
+            (/c_scale,ki_12,l_text:roboto_35_bold:SDK,w_300\/e_art:hokusai\/f_auto\/sample_video/));
         expect(video.children[i].attributes.getNamedItem('src').value).toEqual(
           jasmine.stringMatching(/video\/upload/));
       }
