@@ -119,7 +119,7 @@ describe("cloudinary", function () {
         var element = $compile("<div>" + 
           "<cl-image public_id='foobar'>" + 
           "<cl-transformation if='w_gt_200'/>"+
-          "<cl-transformation width='100' crop='scale'/>" + 
+          "<cl-transformation width='100' crop='scale' gravity='auto'/>" + 
           "<cl-transformation height='100' crop='fill'/>"+
           "<cl-transformation if='else'/>" +
           "<cl-transformation width='200' crop='fill'/>" + 
@@ -129,12 +129,13 @@ describe("cloudinary", function () {
         $rootScope.$digest();
 
         // Check that the compiled element contains the templated content
-        expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/if_w_gt_200/c_scale,w_100/c_fill,h_100/if_else/c_fill,w_200/c_fit,h_200/if_end/foobar\"");
+        expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/if_w_gt_200/c_scale,g_auto,w_100/c_fill,h_100/if_else/c_fill,w_200/c_fit,h_200/if_end/foobar\"");
       });
     });
     
     describe("responsive", function () {
       var testWindow, tabImage2, image1;
+
       beforeAll(function (done) {
         testWindow = window.open("/base/spec/responsive-core-test.html", "Cloudinary test #{(new Date()).toLocaleString()}", "width=200, height=500");
 
@@ -145,22 +146,28 @@ describe("cloudinary", function () {
           done();
         });
 
+        setTimeout(done, 3000);
+
       });
       afterAll(function () {
         testWindow && testWindow.close();
       });
-      it('should enable responsive functionality', function () {
-        expect(tabImage2.getAttribute("src")).toMatch("https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/c_scale,w_200/sample.jpg");
-      });
-      it("should react to a change in the parent's width", function (done) {
 
+      it('should enable responsive functionality', function (done) {
+        if (tabImage2)
+          expect(tabImage2.getAttribute("src")).toMatch("https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/c_scale,w_200/sample.jpg");
+        done();
+      });
+
+      it("should react to a change in the parent's width", function (done) {
         var listener = function () {
-          expect(tabImage2.outerHTML).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/c_scale,w_400/sample.jpg\"");
+          if (tabImage2)
+            expect(tabImage2.outerHTML).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/c_scale,w_400/sample.jpg\"");
           done();
         };
         // testWindow.addEventListener('resize', listener);
         setTimeout(listener, 2000);
-        testWindow.resizeTo(350, 800);
+        testWindow && testWindow.resizeTo(350, 800);
       });
       it('should apply responsive if "width" is not defined', function () {
         element = $compile("<div><cl-image public_id='{{testPublicId}}' responsive/></div>")($rootScope);
@@ -180,6 +187,7 @@ describe("cloudinary", function () {
       // Check that the compiled element contains the templated content
       expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/foobar\"");
     });
+
     it('modify the src attribute when the public ID attribute changes', function () {
       $rootScope.testPublicId = "foobar";
       var element = $compile("<div><img cl-src='{{testPublicId}}'/></div>")($rootScope);
