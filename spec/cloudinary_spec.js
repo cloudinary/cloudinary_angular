@@ -79,7 +79,24 @@ describe("cloudinary", function () {
 
       });
     });
-    
+    describe ('gravity', function(){
+      it('should support predefined modes', function () {
+        var modes = [
+            ['west', 'g_west'],
+            ['auto', 'g_auto'],
+            ['auto:good', 'g_auto:good'],
+            ['auto:ocr_text', 'g_auto:ocr_text'],
+            ['ocr_text', 'g_ocr_text'],
+            ['ocr_text:adv_ocr', 'g_ocr_text:adv_ocr']
+        ];
+        modes.forEach(function (mode) {
+          var element = $compile("<div><cl-image public_id='foobar' gravity='" + mode[0] + "'/></div>")($rootScope);
+          $rootScope.$digest();
+          expect(element.html()).toMatch(
+              "src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/" + mode[1] + "/foobar\"");
+        });
+      })
+    });
     describe ('conditional transformation', function(){
       it ('should add if (condition) to the result URL', function() {
         // Compile a piece of HTML containing the directive
