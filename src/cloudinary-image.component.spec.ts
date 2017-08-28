@@ -50,7 +50,7 @@ describe('CloudinaryImage', () => {
     @Component({
       template: `<cl-image responsive id="image1" public-id="responsive_sample.jpg">
             <cl-transformation width="300" crop="scale" overlay="text:roboto_25_bold:SDK"></cl-transformation>
-            <cl-transformation effect="art:hokusai"></cl-transformation>
+            <cl-transformation effect="art:hokusai" gravity="auto"></cl-transformation>
             <cl-transformation fetch-format="auto"></cl-transformation>
             </cl-image>`
     })
@@ -74,9 +74,9 @@ describe('CloudinaryImage', () => {
     it('creates an img element which encodes the directive attributes to the URL', () => {
       const img = des.children[0].nativeElement as HTMLImageElement;
       expect(img.src).toEqual(jasmine.stringMatching
-        (/c_scale,l_text:roboto_25_bold:SDK,w_300\/e_art:hokusai\/f_auto\/responsive_sample.jpg/));
+        (/c_scale,l_text:roboto_25_bold:SDK,w_300\/e_art:hokusai,g_auto\/f_auto\/responsive_sample.jpg/));
       expect(img.attributes.getNamedItem('data-src').value).toEqual(jasmine.stringMatching(
-        /c_scale,l_text:roboto_25_bold:SDK,w_300\/e_art:hokusai\/f_auto\/responsive_sample.jpg/));
+        /c_scale,l_text:roboto_25_bold:SDK,w_300\/e_art:hokusai,g_auto\/f_auto\/responsive_sample.jpg/));
     });
   });
 
