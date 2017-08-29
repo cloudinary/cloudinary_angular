@@ -80,6 +80,36 @@ describe('CloudinaryImage', () => {
     });
   });
 
+  describe('images with overlay/underlay', () => {
+    @Component({
+      template: `<cl-image responsive id="image2" public-id="responsive_sample.jpg">
+            <cl-transformation overlay="fetch:http://cloudinary.com/images/old_logo.png"></cl-transformation>
+            <cl-transformation underlay="fetch:http://cloudinary.com/images/old_logo.png"></cl-transformation>
+            </cl-image>`
+    })
+    class TestComponent { }
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement;  // the elements w/ the directive
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: localCloudinary }]
+      }).createComponent(TestComponent);
+      fixture.detectChanges(); // initial binding
+      // all elements with an attached CloudinaryImage
+      des = fixture.debugElement.query(By.directive(CloudinaryImage));
+    });
+
+    it('creates an img element which encodes the directive attributes to the URL', () => {
+      const img = des.children[0].nativeElement as HTMLImageElement;
+      expect(img.src).toEqual(jasmine.stringMatching
+        (/l_fetch:aHR0cDovL2Nsb3VkaW5hcnkuY29tL2ltYWdlcy9vbGRfbG9nby5wbmc=\/u_fetch:aHR0cDovL2Nsb3VkaW5hcnkuY29tL2ltYWdlcy9vbGRfbG9nby5wbmc=\/responsive_sample.jpg/));
+      expect(img.attributes.getNamedItem('data-src').value).toEqual(jasmine.stringMatching(
+        /l_fetch:aHR0cDovL2Nsb3VkaW5hcnkuY29tL2ltYWdlcy9vbGRfbG9nby5wbmc=\/u_fetch:aHR0cDovL2Nsb3VkaW5hcnkuY29tL2ltYWdlcy9vbGRfbG9nby5wbmc=\/responsive_sample.jpg/));
+    });
+  });
+
   describe('missing public-id', () => {
     @Component({
       template: '<cl-image responsive id="image1"></cl-image>'

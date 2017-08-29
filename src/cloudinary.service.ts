@@ -29,6 +29,17 @@ const namedNodeMapToObject = function (source: NamedNodeMap): any {
   return target;
 };
 
+const transformStringValue = function (value: string): string {
+  if (!value)
+    return value;
+
+  if (value.match(/^fetch:/)) {
+    return `fetch:${btoa(value.substr(6))}`;
+  }
+
+  return value;
+}
+
 const transformKeyNamesFromKebabToSnakeCase = function (obj: any): any {
   let _obj = obj;
   if (isJsonLikeString(obj)) {
@@ -52,6 +63,9 @@ const transformKeyNamesFromKebabToSnakeCase = function (obj: any): any {
       delete _obj[key];
       _obj[kebabKey] = kebabValue;
     });
+  }
+  if (typeof(_obj) === 'string') {
+    return transformStringValue(_obj);
   }
   return _obj;
 };

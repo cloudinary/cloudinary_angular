@@ -75,7 +75,7 @@
     "protractor": "^4.0.12",
     "systemjs": "^0.19.41",
     "tslint": "^4.2.0",
-    "typescript": "^2.0.10",
+    "typescript": "^2.3.4",
     "webdriver-manager": "^10.2.10"
   }
 }
