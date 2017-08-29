@@ -81,6 +81,53 @@ describe('CloudinaryImage', () => {
     });
   });
 
+  describe('images with overlay/underlay', () => {
+    @Component({
+      template: `
+        <cl-image responsive id="image1" public-id="responsive_sample.jpg">
+          <cl-transformation overlay="fetch:http://cloudinary.com/images/old_logo.png"></cl-transformation>
+          <cl-transformation underlay="fetch:http://cloudinary.com/images/old_logo.png"></cl-transformation>
+        </cl-image>
+        <cl-image responsive id="image2" public-id="responsive_sample.jpg">
+          <cl-transformation overlay="fetch:https://upload.wikimedia.org/wikipedia/commons/2/2b/고창갯벌.jpg"></cl-transformation>
+          <cl-transformation underlay="fetch:https://upload.wikimedia.org/wikipedia/commons/2/2b/고창갯벌.jpg"></cl-transformation>
+        </cl-image>
+      `
+    })
+    class TestComponent { }
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement[];
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: localCloudinary }]
+      }).createComponent(TestComponent);
+      fixture.detectChanges(); // initial binding
+      // all elements with an attached CloudinaryImage
+      des = fixture.debugElement.queryAll(By.directive(CloudinaryImage));
+    });
+
+    it('should serialize a fetch URL', () => {
+      const img = des[0].children[0].nativeElement as HTMLImageElement;
+      expect(img.src).toEqual(jasmine.stringMatching
+        (/l_fetch:aHR0cDovL2Nsb3VkaW5hcnkuY29tL2ltYWdlcy9vbGRfbG9nby5wbmc=\/u_fetch:aHR0cDovL2Nsb3VkaW5hcnkuY29tL2ltYWdlcy9vbGRfbG9nby5wbmc=\/responsive_sample.jpg/));
+      expect(img.attributes.getNamedItem('data-src').value).toEqual(jasmine.stringMatching(
+        /l_fetch:aHR0cDovL2Nsb3VkaW5hcnkuY29tL2ltYWdlcy9vbGRfbG9nby5wbmc=\/u_fetch:aHR0cDovL2Nsb3VkaW5hcnkuY29tL2ltYWdlcy9vbGRfbG9nby5wbmc=\/responsive_sample.jpg/));
+    });
+    it('should support unicode URLs', () => {
+      const img = des[1].children[0].nativeElement as HTMLImageElement;
+      expect(img.src).toEqual(jasmine.stringMatching(
+        new RegExp('l_fetch:aHR0cHM6Ly91cGxvYWQud2lraW1lZGlhLm9yZy93aWtpcGVkaWEvY29tbW9ucy8yLzJiLyVFQSVCMyVB' +
+        'MCVFQyVCMCVCRCVFQSVCMCVBRiVFQiVCMiU4Qy5qcGc=/u_fetch:aHR0cHM6Ly91cGxvYWQud2lraW1lZGlhLm9yZy93aWtpcGVkaWEv' +
+        'Y29tbW9ucy8yLzJiLyVFQSVCMyVBMCVFQyVCMCVCRCVFQSVCMCVBRiVFQiVCMiU4Qy5qcGc=/responsive_sample.jpg')));
+      expect(img.attributes.getNamedItem('data-src').value).toEqual(jasmine.stringMatching(
+        new RegExp('l_fetch:aHR0cHM6Ly91cGxvYWQud2lraW1lZGlhLm9yZy93aWtpcGVkaWEvY29tbW9ucy8yLzJiLyVFQSVCMyVB' +
+        'MCVFQyVCMCVCRCVFQSVCMCVBRiVFQiVCMiU4Qy5qcGc=/u_fetch:aHR0cHM6Ly91cGxvYWQud2lraW1lZGlhLm9yZy93aWtpcGVkaWEv' +
+        'Y29tbW9ucy8yLzJiLyVFQSVCMyVBMCVFQyVCMCVCRCVFQSVCMCVBRiVFQiVCMiU4Qy5qcGc=/responsive_sample.jpg')));
+    });
+  });
+
   describe('missing public-id', () => {
     @Component({
       template: '<cl-image responsive id="image1"></cl-image>'
