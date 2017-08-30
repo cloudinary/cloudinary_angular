@@ -86,7 +86,7 @@ module.exports = function (config) {
       "/app/": appAssets
     },
 
-    exclude: [],
+    exclude: ['node_modules/**/*spec.js', 'node_modules/**/*spec.ts'],
     preprocessors: {},
     // disabled HtmlReporter; suddenly crashing w/ strange socket error
     reporters: ['progress', 'kjhtml'],//'html'],
