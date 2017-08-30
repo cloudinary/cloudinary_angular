@@ -66,7 +66,7 @@ Example Coudinary configuration in your application's module definition:
 ```javascript
 import { NgModule } from '@angular/core';
 // ...
-import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular';
+import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular-4.x';
 import { Cloudinary } from 'cloudinary-core';
 
 @NgModule({
