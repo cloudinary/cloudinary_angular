@@ -116,9 +116,7 @@
         var options = toCloudinaryAttributes(attrs);
         var publicId = null;
 
-        if (scope.transformations) {
-          options.transformation = scope.transformations;
-        }
+        options.transformation = scope.transformations;
 
         // store public id and load image
         attrs.$observe('publicId', function(value){
@@ -159,6 +157,53 @@
           }
         };
 
+      }
+    };
+  }]);
+
+  cloudinaryModule.directive('clVideo', ['cloudinary', function(cloudinary) {
+    var Controller = function($scope) {
+      this.addTransformation = function(ts) {
+        $scope.transformations = $scope.transformations || [];
+        $scope.transformations.push(ts);
+      }
+    };
+    Controller.$inject = ['$scope'];
+    return {
+      restrict : 'E',
+      replace: true,
+      transclude : true,
+      template: "<video ng-transclude/>",
+      scope: {},
+      priority: 99,
+      controller: Controller,
+      // The linking function will add behavior to the template
+      link : function(scope, element, attrs) {
+        var options = toCloudinaryAttributes(attrs);
+        var publicId = null;
+
+        if (scope.transformations) {
+          options.transformation = scope.transformations;
+        }
+
+        // store public id and load image
+        attrs.$observe('publicId', function(value){
+          if (!value) return;
+          publicId = value;
+          loadProps();
+        });
+
+        var loadProps = function() {
+          var url = cloudinary.video_url(publicId, options);
+          console.log('url', url)
+          if (options.responsive) {
+            cloudinary.Util.setData(element[0], "src", url);
+            cloudinary.cloudinary_update(element[0], options);
+            cloudinary.responsive(options, false);
+          } else {
+            element.attr('src', url);
+          }
+        };
       }
     };
   }]);

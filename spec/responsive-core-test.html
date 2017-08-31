@@ -1,12 +1,13 @@
 <html>
 <head>
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-
+    
     <!-- Custom CSS -->
     <!--<link href="css/logo-nav.css" rel="stylesheet">-->
     <script src="../bower_components/lodash/lodash.js" type="text/javascript"></script>
     <script src="../bower_components/angular/angular.js" type="text/javascript"></script>
+    <script src="../bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="../bower_components/cloudinary-core/cloudinary-core.js" type="text/javascript"></script>
     <script src="../js/angular.cloudinary.js" type="text/javascript"></script>
     <script src="config.js" type="text/javascript"></script>
@@ -30,6 +31,9 @@
                 <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab" style="display: block">
                     <cl-image id="image2" width="auto" crop="scale" public_id="sample.png" responsive></cl-image>
                 </a></li>
+                <li role="presentation">
+                  <a href="#video" aria-controls="video" role="tab" data-toggle="tab" style="display: block">video</a>
+                </li>
                 <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a>
                 </li>
             </ul>
@@ -37,12 +41,18 @@
             <!-- Tab panes -->
             <div class="tab-content row">
                 <div role="tabpanel" class="tab-pane active" id="home">
-                    <a href="#"><cl-image id="tabImage2" width="auto" crop="{{ cropValue || 'scale'}}" public_id="sample.jpg" responsive class="col-xs-12"/>
-                    </a>
-                    <cl-image id="tabImage3" public_id="sample.jpg" width="auto" crop="scale" effect="sepia" responsive class="col-xs-12"/>
+                  <cl-image id="tabImage1" width="auto" crop="{{ cropValue || 'scale'}}" public_id="sample.jpg" responsive class="col-xs-12"></cl-image>             
+                  <cl-image id="tabImage2" width="auto" public_id="sample.jpg" crop="scale" effect="sepia" responsive class="col-xs-12"></cl-image>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="profile">...</div>
-                <div role="tabpanel" class="tab-pane" id="messages">...</div>
+                <div role="tabpanel" class="tab-pane" id="profile">
+                  <cl-image id="tabImage3" public_id="sample.jpg" width="auto" crop="scale" effect="sepia" responsive class="col-xs-12"></cl-image>        
+                </div>
+                <div role="tabpanel" class="tab-pane" id="messages">
+                  <cl-image id="tabImage4" width="auto" crop="{{ cropValue || 'scale'}}" public_id="sample.jpg" responsive class="col-xs-12"></cl-image>             
+                </div>
+                <div role="tabpanel" class="tab-pane" id="video">
+                  <cl-video controls id="tabVideo1" public_id="sample.mp4" crop="scale" overlay="text:roboto_35_bold:SDK" class="col-xs-12"/>
+                </div>
                 <div role="tabpanel" class="tab-pane" id="settings">...</div>
             </div>
 

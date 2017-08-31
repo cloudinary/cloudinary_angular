@@ -1,4 +1,4 @@
-const CLOUD_NAME = "sdk-test";
+const CLOUD_NAME = "rtlstudio";
 
 describe("cloudinary", function () {
 
@@ -134,33 +134,46 @@ describe("cloudinary", function () {
     });
     
     describe("responsive", function () {
-      var testWindow, tabImage2, image1;
+      var testWindow, tabImage1, image1, tabImage2, tabVideo1;
       beforeAll(function (done) {
         testWindow = window.open("/base/spec/responsive-core-test.html", "Cloudinary test #{(new Date()).toLocaleString()}", "width=200, height=500");
 
         testWindow.addEventListener('load', function () {
           image1 = testWindow.document.getElementById("image1");
+          tabImage1 = testWindow.document.getElementById("tabImage1");
           tabImage2 = testWindow.document.getElementById("tabImage2");
+          tabVideo1 = testWindow.document.getElementById("tabVideo1");
+          expect(tabImage1).toBeDefined();
           expect(tabImage2).toBeDefined();
+          expect(tabVideo1).toBeDefined();
           done();
         });
+
+        setTimeout(done, 3000);
 
       });
       afterAll(function () {
         testWindow && testWindow.close();
       });
-      it('should enable responsive functionality', function () {
-        expect(tabImage2.getAttribute("src")).toMatch("https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/c_scale,w_200/sample.jpg");
+      it('should enable responsive functionality', function (done) {
+        if (tabImage1)
+          expect(tabImage1.getAttribute("src")).toMatch("https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/c_scale,w_200/sample.jpg");
+        done();
+      });
+      it('should load video', function (done) {
+        if (tabVideo1)
+          expect(tabVideo1.getAttribute("src")).toMatch("https?://res\.cloudinary\.com/" + CLOUD_NAME + "/video/upload/c_scale,l_text:roboto_35_bold:SDK/sample.mp4");
+        done();
       });
       it("should react to a change in the parent's width", function (done) {
-
         var listener = function () {
-          expect(tabImage2.outerHTML).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/c_scale,w_400/sample.jpg\"");
+          if (tabImage1)
+            expect(tabImage1.outerHTML).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/c_scale,w_400/sample.jpg\"");
           done();
         };
         // testWindow.addEventListener('resize', listener);
         setTimeout(listener, 2000);
-        testWindow.resizeTo(350, 800);
+        testWindow && testWindow.resizeTo(350, 800);
       });
       it('should apply responsive if "width" is not defined', function () {
         element = $compile("<div><cl-image public_id='{{testPublicId}}' responsive/></div>")($rootScope);

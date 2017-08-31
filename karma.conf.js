@@ -43,7 +43,7 @@ module.exports = function (config) {
     logLevel: config.LOG_DEBUG,
     autoWatch: false,
     //browsers: ['Chrome', 'Firefox', 'Safari'],
-    browsers: ['PhantomJS', "Chrome"],
+    browsers: ['PhantomJS', 'Chrome'],
     //browsers: ['Chrome'],
     singleRun: true,
     plugins: [
