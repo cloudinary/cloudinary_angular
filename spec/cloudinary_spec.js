@@ -188,6 +188,60 @@ describe("cloudinary", function () {
       })
     })
   });
+  describe('clVideo', function () {
+    it('throws an exception with missing publicId', function () {
+      expect(function() {
+        $compile('<div><cl-video /></div>')($rootScope);
+        $rootScope.$digest();
+      }).toThrow(new Error(
+          'You must set the public id of the video to load, e.g. <cl-video public-id={{video.public_id}}...></cl-video>'
+      ));
+    });
+    describe('videos with nested transformations', function () {
+      it('creates a <video> element which encodes the directive attributes to the URL', function() {
+        var element = $compile('<cl-video id="video1" public-id="sample_video">\n' +
+            '<cl-transformation width="300" crop="scale" overlay="text:roboto_35_bold:SDK"></cl-transformation>\n' +
+            '<cl-transformation effect="art:hokusai"></cl-transformation>\n' +
+            '<cl-transformation fetch_format="auto"></cl-transformation>\n' +
+            '</cl-video>')($rootScope);
+        $rootScope.$digest();
+
+        const video = element[0];
+        // Created <video> element should have 3 child <source> elements for mp4, webm, ogg
+        expect(video.childElementCount).toBe(3);
+
+        for (var i = 0; i < 3; i++) {
+          expect(video.children[i].attributes.getNamedItem('src')).toBeDefined();
+          expect(video.children[i].attributes.getNamedItem('src').value).toEqual(
+              jasmine.stringMatching
+              (/c_scale,l_text:roboto_35_bold:SDK,w_300\/e_art:hokusai\/f_auto\/sample_video/));
+          expect(video.children[i].attributes.getNamedItem('src').value).toEqual(
+              jasmine.stringMatching(/video\/upload/));
+        }
+      });
+    });
+    it('creates a video element with a bound public-id', function () {
+      $rootScope.testPublicId = 'test-public-id';
+      var element = $compile(
+          '<cl-video cloud-name="my_other_cloud" public-id="{{testPublicId}}" secure="true" class="my-videos">\n' +
+          '  <cl-transformation overlay="text:arial_60:watchme" gravity="north" y="20"></cl-transformation>\n' +
+          '</cl-video>')($rootScope);
+      $rootScope.$digest();
+      testMarkup('test-public-id');
+      $rootScope.testPublicId = 'another-id';
+      $rootScope.$digest();
+      testMarkup('another-id');
+
+      function testMarkup(id) {
+        for (var i = 0; i < 3; i++) {
+          expect(element[0].children[i].attributes.getNamedItem('src')).toBeDefined();
+          expect(element[0].children[i].attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching(
+              new RegExp('https:\/\/res.cloudinary.com\/my_other_cloud\/video\/upload\/g_north,l_text:arial_60:watchme,y_20\/'+id))
+          );
+        }
+      }
+    })
+  });
   describe("clSrc", function () {
     it('populates the src attribute with the cloudinary URL for the public ID', function () {
       var element = $compile("<div><img cl-src='foobar'/></div>")($rootScope);
