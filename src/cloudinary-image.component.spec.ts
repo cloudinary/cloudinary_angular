@@ -149,6 +149,46 @@ describe('CloudinaryImage', () => {
 
   });
 
+  describe('responsive images with nested conditional transformations', () => {
+    @Component({
+      template: `<cl-image id="image1" public-id="responsive_sample.jpg">
+            <cl-transformation
+              if="!sale!_in_tags"
+              color="rgb:FF007F"
+              effect="colorize"
+              overlay="sale_icon"
+              gravity="south_east"
+              width="200"
+              x="30"
+              y="30"
+            ></cl-transformation>
+            </cl-image>`
+    })
+    class TestComponent { }
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement;  // the elements w/ the directive
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: localCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+
+      // all elements with an attached CloudinaryImage
+      des = fixture.debugElement.query(By.directive(CloudinaryImage));
+    });
+
+    it('creates an img element which encodes the directive attributes to the URL', () => {
+      const img = des.children[0].nativeElement as HTMLImageElement;
+      expect(img.src).toEqual(jasmine.stringMatching
+        (/if_!sale!_in_tags,co_rgb:FF007F,e_colorize,g_south_east,l_sale_icon,w_200,x_30,y_30\/responsive_sample.jpg/));
+      expect(img.attributes.getNamedItem('data-src')).toBeNull();
+    });
+  });
+
   describe('Sample code presented in README', () => {
     @Component({
       template:
