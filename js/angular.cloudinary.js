@@ -88,6 +88,7 @@
     return {
       restrict : 'E',
       transclude : false,
+      priority: 600,
       require: '^clImage',
       link : function (scope, element, attrs, clImageCtrl) {
         clImageCtrl.addTransformation(toCloudinaryAttributes(attrs, /^[^$]/));
