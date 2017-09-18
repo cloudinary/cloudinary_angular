@@ -10,6 +10,6 @@ install:
   - npm install bower
   - bower install
 cache:
-  yarn: true
   directories:
     - bower_components
+    - node_modules
