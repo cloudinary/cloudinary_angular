@@ -144,14 +144,14 @@ The following example from the sample projects demonstrates setting the opacity 
 These directives transform the given URI to a cloudinary URL. For example:
 
 ```html
-    <img clSrc="http://cloudinary.com/images/logo.png" type="fetch" fetch-format="auto" quality="auto">
+    <img clSrc="https://cloudinary.com/images/logo.png" type="fetch" fetch-format="auto" quality="auto">
 ```
 
 Will be compiled by Angular to:
 
 ```html
-    <img clSrc="http://cloudinary.com/images/logo.png" fetch-format="auto" quality="auto" type="fetch" ng-reflect-clSrc="http://cloudinary.com/images/logo.png" 
-    src="http://res.cloudinary.com/{your_cloud_name}/image/fetch/f_auto,q_auto/http://cloudinary.com/images/logo.png">
+    <img clSrc="https://cloudinary.com/images/logo.png" fetch-format="auto" quality="auto" type="fetch" ng-reflect-clSrc="https://cloudinary.com/images/logo.png" 
+    src="http://res.cloudinary.com/{your_cloud_name}/image/fetch/f_auto,q_auto/https://cloudinary.com/images/logo.png">
 ```
 
 See additional usage examples [here](src/cloudinary-image-source.directive.spec.ts) and in the sample projects.
@@ -172,7 +172,7 @@ The samples differ by their bundling solution and upload implementation:
     * Uses [ng2-file-upload](https://github.com/valor-software/ng2-file-upload) for uploading files using an opensource file uploader
     * Uses [Webpack](https://webpack.github.io) for bundling and serving the application
 * [Photo album sample app with jQuery](samples/photo_album_with_jquery) 
-    * Uses [Cloudinary's jQuery plugin](http://cloudinary.com/blog/direct_upload_made_easy_from_browser_or_mobile_app_to_the_cloud#direct_uploading_from_the_browser_using_jquery) for uploading files using jQuery and blueimp.
+    * Uses [Cloudinary's jQuery plugin](https://cloudinary.com/blog/direct_upload_made_easy_from_browser_or_mobile_app_to_the_cloud#direct_uploading_from_the_browser_using_jquery) for uploading files using jQuery and blueimp.
     * Uses [SystemJS](https://github.com/systemjs/systemjs) for bundling the application and [lite-server](https://github.com/johnpapa/lite-server) for serving the application. 
 * [Photo Album AOT compilation](samples/photo_album_aot) 
     * Demonstrates usage of Cloudinary SDK in an [Angular AOT](https://angular.io/docs/ts/latest/cookbook/aot-compiler.html) application
@@ -203,9 +203,10 @@ Please consult with the respective README file of each sample for usage and addi
 Additional resources are available at:
 
 * [Website](https://cloudinary.com)
+* [Interactive demo](https://demo.cloudinary.com/default)
 * [Documentation](https://cloudinary.com/documentation)
-* [Knowledge Base](https://support.cloudinary.com/forums)
-* [Documentation for jQuery integration](https://cloudinary.com/documentation/jquery_integration)
+* [Knowledge Base](https://support.cloudinary.com/hc/en-us)
+* [Documentation for Angular integration](https://cloudinary.com/documentation/angular_integration)
 * [Image upload documentation](https://cloudinary.com/documentation/upload_images)
 * [Image transformations documentation](https://cloudinary.com/documentation/image_transformations)
 
