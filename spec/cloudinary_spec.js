@@ -1,10 +1,9 @@
+
 const CLOUD_NAME = "sdk-test";
-
 describe("cloudinary", function () {
-
   var $compile,
-      $rootScope,
-      $window;
+    $rootScope,
+    $window;
   beforeEach(function () {
     module('cloudinary');
     angular.module('cloudinary').config(['cloudinaryProvider', function (cloudinaryProvider) {
@@ -54,9 +53,9 @@ describe("cloudinary", function () {
         expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/barfoo\"");
       });
     });
-    describe("html-width", function(){
+    describe("html-width", function () {
       var element;
-      beforeEach(function(){
+      beforeEach(function () {
         $rootScope.testPublicId = "sample";
         element = $compile("<div><cl-image public_id='{{testPublicId}}'/></div>")($rootScope);
         $rootScope.$digest();
@@ -79,9 +78,9 @@ describe("cloudinary", function () {
 
       });
     });
-    
-    describe ('conditional transformation', function(){
-      it ('should add if (condition) to the result URL', function() {
+
+    describe('conditional transformation', function () {
+      it('should add if (condition) to the result URL', function () {
         // Compile a piece of HTML containing the directive
         var element = $compile("<div><cl-image public_id='foobar' if='w_gt_200' width='100' crop='scale'/></div>")($rootScope);
         $rootScope.$digest();
@@ -89,42 +88,42 @@ describe("cloudinary", function () {
         // Check that the compiled element contains the templated content
         expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/if_w_gt_200,c_scale,w_100/foobar\"");
       });
-      
-      it ('should add if (condition) to the result URL', function() {
+
+      it('should add if (condition) to the result URL', function () {
         // Compile a piece of HTML containing the directive
         var element = $compile("<div><cl-image public_id='foobar'><cl-transformation if='w_gt_200' width='100' crop='scale'/></cl-image></div>")($rootScope);
         $rootScope.$digest();
 
         // Check that the compiled element contains the templated content
         expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/if_w_gt_200,c_scale,w_100/foobar\"");
-      });    
-      
-      it ('should add if (condition) to the result URL', function() {
+      });
+
+      it('should add if (condition) to the result URL', function () {
         // Compile a piece of HTML containing the directive
-        var element = $compile("<div>" + 
-          "<cl-image public_id='foobar'>" + 
-          "<cl-transformation if='w_gt_200'/>"+
-          "<cl-transformation width='100' crop='scale'/>" + 
-          "<cl-transformation height='100' crop='fill'/>"+
-          "<cl-transformation if='end'/>" + 
+        var element = $compile("<div>" +
+          "<cl-image public_id='foobar'>" +
+          "<cl-transformation if='w_gt_200'/>" +
+          "<cl-transformation width='100' crop='scale'/>" +
+          "<cl-transformation height='100' crop='fill'/>" +
+          "<cl-transformation if='end'/>" +
           "</cl-image></div>")($rootScope);
         $rootScope.$digest();
 
         // Check that the compiled element contains the templated content
         expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/if_w_gt_200/c_scale,w_100/c_fill,h_100/if_end/foobar\"");
       });
-      
-      it ('should add if (condition) to the result URL', function() {
+
+      it('should add if (condition) to the result URL', function () {
         // Compile a piece of HTML containing the directive
-        var element = $compile("<div>" + 
-          "<cl-image public_id='foobar'>" + 
-          "<cl-transformation if='w_gt_200'/>"+
-          "<cl-transformation width='100' crop='scale'/>" + 
-          "<cl-transformation height='100' crop='fill'/>"+
+        var element = $compile("<div>" +
+          "<cl-image public_id='foobar'>" +
+          "<cl-transformation if='w_gt_200'/>" +
+          "<cl-transformation width='100' crop='scale'/>" +
+          "<cl-transformation height='100' crop='fill'/>" +
           "<cl-transformation if='else'/>" +
-          "<cl-transformation width='200' crop='fill'/>" + 
-          "<cl-transformation height='200' crop='fit'/>"+
-          "<cl-transformation if='end'/>" +          
+          "<cl-transformation width='200' crop='fill'/>" +
+          "<cl-transformation height='200' crop='fit'/>" +
+          "<cl-transformation if='end'/>" +
           "</cl-image></div>")($rootScope);
         $rootScope.$digest();
 
@@ -132,17 +131,17 @@ describe("cloudinary", function () {
         expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/if_w_gt_200/c_scale,w_100/c_fill,h_100/if_else/c_fill,w_200/c_fit,h_200/if_end/foobar\"");
       });
     });
-    
+
     describe("responsive", function () {
       var testWindow, tabImage2, image1;
+      const isPhantomJS = /PhantomJS/.test(window.navigator.userAgent);
       beforeAll(function (done) {
         testWindow = window.open("/base/spec/responsive-core-test.html", "Cloudinary test #{(new Date()).toLocaleString()}", "width=200, height=500");
 
         testWindow.addEventListener('load', function () {
           image1 = testWindow.document.getElementById("image1");
-          tabImage2 = testWindow.document.getElementById("tabImage2")
+          tabImage2 = testWindow.document.getElementById("tabImage2");
 
-          console.log(tabImage2, '(load) tabImage2');
           expect(tabImage2).toBeDefined();
           done();
         });
@@ -154,7 +153,8 @@ describe("cloudinary", function () {
         testWindow && testWindow.close();
       });
       it('should enable responsive functionality', function (done) {
-        if (tabImage2){
+        if (!isPhantomJS) {
+          expect(tabImage2).toBeDefined();
           expect(tabImage2.outerHTML).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/c_scale,w_200/sample.jpg\"");
         }
         done();
@@ -162,7 +162,8 @@ describe("cloudinary", function () {
 
       it("should react to a change in the parent's width", function (done) {
         var listener = function () {
-          if (tabImage2){
+          if (!isPhantomJS) {
+            expect(tabImage2).toBeDefined();
             expect(tabImage2.outerHTML).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/c_scale,w_400/sample.jpg\"");
           }
           done();
