@@ -3,7 +3,7 @@ import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {Photo} from './photo';
-import {Cloudinary} from '@cloudinary/angular-4.x';
+import {Cloudinary} from '@cloudinary/angular-5.x';
 
 @Injectable()
 export class PhotoAlbum {

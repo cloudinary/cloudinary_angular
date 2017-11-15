@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Cloudinary} from '@cloudinary/angular-4.x';
+import {Cloudinary} from '@cloudinary/angular-5.x';
 
 @Component({
     selector: '.content',

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, NgZone } from '@angular/core';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { FileUploader, FileUploaderOptions, ParsedResponseHeaders } from 'ng2-file-upload';
 import 'rxjs/add/operator/toPromise';
-import { Cloudinary } from '@cloudinary/angular-4.x';
+import { Cloudinary } from '@cloudinary/angular-5.x';
 
 @Component({
   selector: 'photo-list',

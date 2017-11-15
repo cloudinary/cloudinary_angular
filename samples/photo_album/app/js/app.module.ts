@@ -6,7 +6,7 @@ import {HttpModule} from '@angular/http';
 // File upload module
 import {FileUploadModule} from 'ng2-file-upload';
 // Cloudinary module
-import {CloudinaryModule, CloudinaryConfiguration, provideCloudinary} from '@cloudinary/angular-4.x';
+import {CloudinaryModule, CloudinaryConfiguration, provideCloudinary} from '@cloudinary/angular-5.x';
 // Application modules
 import {AppComponent} from './app.component';
 import {PhotoListComponent} from './photo-list/photo-list.component';
