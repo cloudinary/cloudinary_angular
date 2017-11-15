@@ -83,5 +83,7 @@
       "check-separator",
       "check-type"
     ]
+  },
+  "linterOptions": { "exclude": ["**/*.d.ts"]
   }
 }

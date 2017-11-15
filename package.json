@@ -18,7 +18,7 @@
   "main": "index.js",
   "types": "index.ts",
   "scripts": {
-    "lint": "tslint **/*.ts -t verbose --exclude=**/*.d.ts",
+    "lint": "tslint **/*.ts -t verbose --project tsconfig.json ",
     "test": "tsc && concurrently \"tsc -w\" \"karma start karma.conf.js\"",
     "test-once": "tsc && karma start karma.conf.js --single-run --no-auto-watch --browsers PhantomJS",
     "install-sample-from-source": "node ./scripts/install-sample-from-source.js samples/photo_album",
