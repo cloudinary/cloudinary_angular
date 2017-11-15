@@ -1,13 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 
-import * as cloudinary from 'cloudinary-core';
-import { CloudinaryModule } from '@cloudinary/angular-4.x';
+import { Cloudinary as CloudinaryCore } from 'cloudinary-core';
+import { CloudinaryConfiguration, CloudinaryModule } from '@cloudinary/angular-5.x';
 import cloudinaryConfiguration from './config';
 import { AppComponent } from './app.component';
+import { Cloudinary } from '@cloudinary/angular-5.x/src/cloudinary.service';
 
+export const cloudinary = {
+  Cloudinary: CloudinaryCore
+};
+export const config: CloudinaryConfiguration = cloudinaryConfiguration;
 
 @NgModule({
   declarations: [
@@ -15,9 +18,7 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    HttpModule,
-    CloudinaryModule.forRoot(cloudinary, cloudinaryConfiguration),
+    CloudinaryModule.forRoot(cloudinary, config),
   ],
   providers: [],
   bootstrap: [AppComponent]
