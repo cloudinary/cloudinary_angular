@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, NgZone } from '@angular/core';
-import { Http, Response, RequestOptions, Headers } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { FileUploader, FileUploaderOptions, ParsedResponseHeaders } from 'ng2-file-upload';
 import 'rxjs/add/operator/toPromise';
 import { Cloudinary } from '@cloudinary/angular-5.x';
@@ -20,7 +20,7 @@ export class PhotoUploadComponent implements OnInit {
   constructor(
     private cloudinary: Cloudinary,
     private zone: NgZone,
-    private http: Http
+    private http: HttpClient
   ) {
     this.responses = [];
     this.title = '';
@@ -119,8 +119,8 @@ export class PhotoUploadComponent implements OnInit {
   // See also https://support.cloudinary.com/hc/en-us/articles/202521132-How-to-delete-an-image-from-the-client-side-
   deleteImage = function (data: any, index: number) {
     const url = `https://api.cloudinary.com/v1_1/${this.cloudinary.config().cloud_name}/delete_by_token`;
-    let headers = new Headers({ 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' });
-    let options = new RequestOptions({ headers: headers });
+    const headers = new Headers({ 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' });
+    const options = { headers: headers };
     const body = {
       token: data.delete_token
     };

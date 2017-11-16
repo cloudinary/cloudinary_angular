@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
+import {Response} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {Photo} from './photo';
@@ -8,7 +9,7 @@ import {Cloudinary} from '@cloudinary/angular-5.x';
 @Injectable()
 export class PhotoAlbum {
 
-    constructor(private http: Http, private cloudinary: Cloudinary) {
+    constructor(private http: HttpClient, private cloudinary: Cloudinary) {
     }
 
     getPhotos(): Observable<Photo[]> {
@@ -27,6 +28,6 @@ export class PhotoAlbum {
 
         return this.http
             .get(url)
-            .map((r: Response) => r.json().resources as Photo[]);
+            .map((data: any) => data.resources);
     }
 }

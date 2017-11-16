@@ -2,7 +2,7 @@
 // Angular modules
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpModule} from '@angular/http';
+import {HttpClientModule} from '@angular/common/http';
 // File upload module
 import {FileUploadModule} from 'ng2-file-upload';
 // Cloudinary module
@@ -19,7 +19,7 @@ import * as cloudinary from 'cloudinary-core';
 @NgModule({
     imports: [
         BrowserModule,
-        HttpModule,
+        HttpClientModule,
         CloudinaryModule.forRoot(cloudinary, cloudinaryConfiguration),
         FileUploadModule,
         routing
