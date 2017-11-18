@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FileUploader, FileUploaderOptions, ParsedResponseHeaders } from 'ng2-file-upload';
-import 'rxjs/add/operator/toPromise';
 import { Cloudinary } from '@cloudinary/angular-5.x';
 
 @Component({
@@ -55,7 +54,14 @@ export class PhotoUploadComponent implements OnInit {
         form.append('context', `photo=${this.title}`);
         tags = `myphotoalbum,${this.title}`;
       }
+      // Upload to a custom folder
+      // Note that by default, when uploading via the API, folders are not automatically created in your Media Library.
+      // In order to automatically create the folders based on the API requests,
+      // please go to your account upload settings and set the 'Auto-create folders' option to enabled.
+      form.append('folder', 'angular_sample');
+      // Add custom tags
       form.append('tags', tags);
+      // Add file to upload
       form.append('file', fileItem);
 
       // Use default "withCredentials" value for CORS requests
@@ -124,15 +130,11 @@ export class PhotoUploadComponent implements OnInit {
     const body = {
       token: data.delete_token
     };
-    this.http.post(url, body, options)
-      .toPromise()
-      .then((response) => {
-        console.log(`Deleted image - ${data.public_id} ${response.json().result}`);
-        // Remove deleted item for responses
-        this.responses.splice(index, 1);
-      }).catch((err: any) => {
-        console.log(`Failed to delete image ${data.public_id} ${err}`);
-      });
+    this.http.post(url, body, options).subscribe(response => {
+      console.log(`Deleted image - ${data.public_id} ${response.result}`);
+      // Remove deleted item for responses
+      this.responses.splice(index, 1);
+    });
   };
 
   fileOverBase(e: any): void {

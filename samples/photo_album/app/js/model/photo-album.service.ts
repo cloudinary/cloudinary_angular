@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Response} from '@angular/http';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import {map} from 'rxjs/operators';
 import {Photo} from './photo';
 import {Cloudinary} from '@cloudinary/angular-5.x';
 
@@ -28,6 +28,6 @@ export class PhotoAlbum {
 
         return this.http
             .get(url)
-            .map((data: any) => data.resources);
+            .pipe(map((data: any) => data.resources));
     }
 }
