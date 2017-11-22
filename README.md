@@ -34,7 +34,7 @@ Start experimenting right away with one these live examples:
 ## Installation ######################################################################
 Install the SDK version that matches your Angular version
 ```shell
-npm install @cloudinary/angular-4.x --save
+npm install @cloudinary/angular-5.x --save
 ```
 
 ## Setup ######################################################################
@@ -66,7 +66,7 @@ Example Coudinary configuration in your application's module definition:
 ```javascript
 import { NgModule } from '@angular/core';
 // ...
-import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular-4.x';
+import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular-5.x';
 import { Cloudinary } from 'cloudinary-core';
 
 @NgModule({
