@@ -73,9 +73,9 @@
   dependencies:
     tslib "^1.7.1"
 
-"@cloudinary/angular-5.x@../../cloudinary-angular-5.x-v1.0.11.tgz":
-  version "1.0.11"
-  resolved "../../cloudinary-angular-5.x-v1.0.11.tgz#a4ebb6b23343c3a88f023574521ea1c0d40b26f0"
+"@cloudinary/angular-5.x@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@cloudinary/angular-5.x/-/angular-5.x-1.0.0.tgz#2f8c909235f8ccfb811f0ee7c7bc2c095aa0a831"
 
 "@types/node@8.0.51":
   version "8.0.51"

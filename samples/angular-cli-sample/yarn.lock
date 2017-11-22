@@ -101,7 +101,7 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/compiler-cli@^5.0.0", "@angular/compiler-cli@^5.0.1":
+"@angular/compiler-cli@^5.0.1":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-5.0.1.tgz#526dc1bb394fb16ad916601eea9aa00eb44b4fff"
   dependencies:
@@ -150,53 +150,15 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/platform-server@^5.0.0":
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/@angular/platform-server/-/platform-server-5.0.1.tgz#005a64eb657e670d265fdfae9473f19a764f8737"
-  dependencies:
-    domino "^1.0.29"
-    tslib "^1.7.1"
-    xhr2 "^0.1.4"
-
 "@angular/router@^5.0.0":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@angular/router/-/router-5.0.1.tgz#9ac08f29302ef60cdfd3c7810d96c265dec463d6"
   dependencies:
     tslib "^1.7.1"
 
-"@cloudinary/angular-5.x@../../cloudinary-angular-5.x-v1.0.0.tgz":
+"@cloudinary/angular-5.x@^1.0.0":
   version "1.0.0"
-  resolved "../../cloudinary-angular-5.x-v1.0.0.tgz#c154a6204a8d361448ff7c20c5753dbc13048531"
-  dependencies:
-    "@angular/common" "^5.0.0"
-    "@angular/compiler-cli" "^5.0.0"
-    "@angular/core" "^5.0.0"
-    "@angular/forms" "^5.0.0"
-    "@angular/http" "^5.0.0"
-    "@angular/platform-server" "^5.0.0"
-    "@angular/router" "^5.0.0"
-    core-js "^2.5.1"
-    karma-html "^1.0.5"
-    reflect-metadata "^0.1.10"
-    rxjs "^5.5.2"
-    zone.js "^0.8.18"
-
-"@cloudinary/angular-5.x@../../cloudinary-angular-5.x-v1.0.8.tgz":
-  version "1.0.8"
-  resolved "../../cloudinary-angular-5.x-v1.0.8.tgz#6cb50de35208dd5546bd3faef9822163b664783d"
-  dependencies:
-    "@angular/common" "^5.0.0"
-    "@angular/compiler-cli" "^5.0.0"
-    "@angular/core" "^5.0.0"
-    "@angular/forms" "^5.0.0"
-    "@angular/http" "^5.0.0"
-    "@angular/platform-server" "^5.0.0"
-    "@angular/router" "^5.0.0"
-    core-js "^2.5.1"
-    karma-html "^1.0.5"
-    reflect-metadata "^0.1.10"
-    rxjs "^5.5.2"
-    zone.js "^0.8.18"
+  resolved "https://registry.yarnpkg.com/@cloudinary/angular-5.x/-/angular-5.x-1.0.0.tgz#2f8c909235f8ccfb811f0ee7c7bc2c095aa0a831"
 
 "@ngtools/json-schema@1.1.0", "@ngtools/json-schema@^1.1.0":
   version "1.1.0"
@@ -1217,7 +1179,7 @@ copy-webpack-plugin@^4.1.1:
     minimatch "^3.0.4"
     node-dir "^0.1.10"
 
-core-js@^2.2.0, core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.1:
+core-js@^2.2.0, core-js@^2.4.0, core-js@^2.4.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.1.tgz#ae6874dc66937789b80754ff5428df66819ca50b"
 
@@ -1646,10 +1608,6 @@ domhandler@2.1:
   resolved "https://registry.yarnpkg.com/domhandler/-/domhandler-2.1.0.tgz#d2646f5e57f6c3bab11cf6cb05d3c0acf7412594"
   dependencies:
     domelementtype "1"
-
-domino@^1.0.29:
-  version "1.0.30"
-  resolved "https://registry.yarnpkg.com/domino/-/domino-1.0.30.tgz#54a4154ecae968616680f8feba3cedff355c71f4"
 
 domutils@1.1:
   version "1.1.6"
@@ -3154,12 +3112,6 @@ karma-coverage-istanbul-reporter@^1.2.1:
   dependencies:
     istanbul-api "^1.1.8"
     minimatch "^3.0.4"
-
-karma-html@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/karma-html/-/karma-html-1.0.5.tgz#08d47d8afb374f9e100efe5f38694d2efd56b46a"
-  dependencies:
-    glob "^7.1.2"
 
 karma-jasmine-html-reporter@^0.2.2:
   version "0.2.2"
@@ -4671,7 +4623,7 @@ reduce-function-call@^1.0.1:
   dependencies:
     balanced-match "^0.4.2"
 
-reflect-metadata@^0.1.10, reflect-metadata@^0.1.2:
+reflect-metadata@^0.1.2:
   version "0.1.10"
   resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.10.tgz#b4f83704416acad89988c9b15635d47e03b9344a"
 
@@ -6046,10 +5998,6 @@ wtf-8@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/wtf-8/-/wtf-8-1.0.0.tgz#392d8ba2d0f1c34d1ee2d630f15d0efb68e1048a"
 
-xhr2@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/xhr2/-/xhr2-0.1.4.tgz#7f87658847716db5026323812f818cadab387a5f"
-
 xml-char-classes@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/xml-char-classes/-/xml-char-classes-1.0.0.tgz#64657848a20ffc5df583a42ad8a277b4512bbc4d"
@@ -6181,6 +6129,6 @@ yn@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/yn/-/yn-2.0.0.tgz#e5adabc8acf408f6385fc76495684c88e6af689a"
 
-zone.js@^0.8.14, zone.js@^0.8.18:
+zone.js@^0.8.14:
   version "0.8.18"
   resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.8.18.tgz#8cecb3977fcd1b3090562ff4570e2847e752b48d"
