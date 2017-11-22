@@ -55,9 +55,9 @@
   dependencies:
     tsickle "^0.21.0"
 
-"@cloudinary/angular-4.x@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@cloudinary/angular-4.x/-/angular-4.x-1.0.0.tgz#1a293e8d78fe3954983087b08046166357b7fac8"
+"@cloudinary/angular-4.x@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@cloudinary/angular-4.x/-/angular-4.x-1.1.0.tgz#d0794e72744f9674f0beaa757cbe7d1fc5dfedb1"
   dependencies:
     "@angular/common" "^4.0.1"
     "@angular/compiler-cli" "^4.0.1"

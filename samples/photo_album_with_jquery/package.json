@@ -15,7 +15,7 @@
     "@angular/platform-browser-dynamic": "^4.0.1",
     "@angular/platform-server": "^4.0.1",
     "@angular/router": "^4.0.1",
-    "@cloudinary/angular-4.x": "^1.0.0",
+    "@cloudinary/angular-4.x": "^1.1.0",
     "blueimp-file-upload": "^9.11.2",
     "cloudinary-jquery-file-upload": "^2.3.0",
     "core-js": "^2.4.1",
