@@ -2,9 +2,9 @@
 // Angular modules
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpModule} from '@angular/http';
+import {HttpClientModule} from '@angular/common/http';
 // Cloudinary module
-import {CloudinaryModule, CloudinaryConfiguration, provideCloudinary} from '@cloudinary/angular-4.x';
+import {CloudinaryModule, CloudinaryConfiguration, provideCloudinary} from '@cloudinary/angular-5.x';
 // App modules
 import {AppComponent} from './app.component';
 import {PhotoListComponent} from './photo-list/photo-list.component';
@@ -16,7 +16,7 @@ import {routing} from './app.routing';
 @NgModule({
     imports: [
         BrowserModule,
-        HttpModule,
+        HttpClientModule,
         CloudinaryModule,
         routing
     ],

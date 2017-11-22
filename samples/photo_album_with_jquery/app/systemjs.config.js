@@ -12,7 +12,7 @@
       // our app is within the app folder
       app: 'app',
       // Cloudinary lib
-      '@cloudinary/angular-4.x': 'npm:@cloudinary/angular-4.x',
+      '@cloudinary/angular-5.x': 'npm:@cloudinary/angular-5.x',
       'cloudinary-jquery-file-upload': 'npm:cloudinary-jquery-file-upload',
       // angular bundles
       '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
@@ -41,7 +41,7 @@
       rxjs: {
         defaultExtension: 'js'
       },
-      "@cloudinary/angular-4.x": {
+      "@cloudinary/angular-5.x": {
         main: 'index.js',
         defaultExtension: 'js'
       },

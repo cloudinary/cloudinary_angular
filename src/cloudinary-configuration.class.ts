@@ -1,6 +1,6 @@
 // Cloudinary configuration options.
 // Only 'cloud_name' is mandatory
-interface CloudinaryConfiguration {
+export default interface CloudinaryConfiguration {
     readonly cloud_name: string;
     readonly upload_preset?: string;
     readonly api_key?: string;
@@ -23,5 +23,3 @@ interface CloudinaryConfiguration {
     readonly use_root_path?: boolean;
     readonly version?: string;
 }
-
-export default CloudinaryConfiguration;

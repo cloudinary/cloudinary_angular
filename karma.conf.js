@@ -28,6 +28,9 @@ module.exports = function (config) {
       }
     },
     files: [
+      // Promise polyfill for Phantom
+      'node_modules/promise-polyfill/promise.js',
+
       // System.js Polyfills
       'node_modules/systemjs/dist/system-polyfills.src.js',
 

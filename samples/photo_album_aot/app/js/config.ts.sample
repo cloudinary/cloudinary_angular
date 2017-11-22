@@ -1,6 +1,0 @@
-export const config = {
-    cloud_name: 'CCCCCCC',
-    upload_preset: 'UUUUUUUU'
-};
-
-export default config;
