@@ -1,4 +1,17 @@
 
+(4.x)1.1.0 / 2017-11-22
+=======================
+
+  * Update Readme to point to HTTPS URLs of cloudinary.com
+  * Angular: Unit Test for gravity:auto (#99)
+  * Update README.md
+  * Fix handling of dynamic updates to public-id. Fixes #83 (#94)
+  * Add links to online samples to README
+  * Add `start` to npm scripts.
+  * Update sample apps to Angular 4.x. Make all projects use config.ts.
+  * Fix https://github.com/cloudinary/cloudinary_angular/issues/89
+  * Add comments to ng2-file-upload usage
+
 (4.x)1.0.0 / 2017-05-18
 =======================
 
