@@ -1,7 +1,9 @@
 import {
     Component,
     ElementRef,
+    EventEmitter,
     Input,
+    Output,
     ContentChildren,
     QueryList,
     AfterViewInit,
@@ -20,6 +22,9 @@ import {CloudinaryTransformationDirective} from './cloudinary-transformation.dir
 export class CloudinaryImage implements AfterViewInit, OnInit, OnChanges, OnDestroy {
 
     @Input('public-id') publicId: string;
+
+    @Output() onLoad: EventEmitter<boolean> = new EventEmitter(); // Callback when an image is loaded successfully
+    @Output() onError: EventEmitter<boolean> = new EventEmitter(); // Callback when an image is loaded with error
 
     @ContentChildren(CloudinaryTransformationDirective)
     transformations: QueryList<CloudinaryTransformationDirective>;
@@ -58,17 +63,26 @@ export class CloudinaryImage implements AfterViewInit, OnInit, OnChanges, OnDest
     }
 
     loadImage() {
-        if (!this.publicId) {
+      if (!this.publicId) {
             throw new Error('You must set the public id of the image to load, e.g. <cl-image public-id={{photo.public_id}}...></cl-image>');
         }
         const nativeElement = this.el.nativeElement;
         const image = nativeElement.children[0];
+        // Add onload and onerror handlers
+        image.onload = e => {
+          this.onLoad.emit(e);
+        }
+        image.onerror = e => {
+          this.onError.emit(e);
+        }
+
+        image.onLoad = this.onLoad.emit;
         const options = this.cloudinary.toCloudinaryAttributes(nativeElement.attributes, this.transformations);
 
         const imageTag = this.cloudinary.imageTag(this.publicId, options);
         this.setElementAttributes(image, imageTag.attributes());
         if (options.responsive) {
-            this.cloudinary.responsive(image, options);
+          this.cloudinary.responsive(image, options);
         }
     };
 

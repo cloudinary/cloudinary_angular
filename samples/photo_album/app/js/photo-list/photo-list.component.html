@@ -11,9 +11,15 @@
                   [public-id]="publicId"
                   type="facebook"
                   angle="20"
+                  (onLoad)="onLoadImage($event)"
           >
               <cl-transformation effect="art:hokusai"></cl-transformation>
               <cl-transformation border="3px_solid_rgb:00390b" radius="20"></cl-transformation>
+          </cl-image>
+          <cl-image
+                  public-id="non-existing"
+                  (onError)="onErrorImage($event)"
+          >
           </cl-image>
         </a>
     </div>
