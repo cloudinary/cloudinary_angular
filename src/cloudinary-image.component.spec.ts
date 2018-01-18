@@ -250,7 +250,6 @@ describe('CloudinaryImage', () => {
       const img = des.children[0].nativeElement as HTMLImageElement;
       expect(img.src).toEqual(jasmine.stringMatching
         (/c_scale,l_text:roboto_25_bold:SDK,w_300\/e_art:hokusai\/f_auto\/responsive_sample.jpg/));
-      console.log('img', img);
       expect(img.attributes.getNamedItem('data-src').value).toEqual(jasmine.stringMatching(
         /c_scale,l_text:roboto_25_bold:SDK,w_300\/e_art:hokusai\/f_auto\/responsive_sample.jpg/));
     });
