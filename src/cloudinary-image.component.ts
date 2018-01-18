@@ -65,6 +65,7 @@ export class CloudinaryImage
 
   loadImage() {
     // https://github.com/angular/universal#universal-gotchas
+    // Fetch the image only for client side rendering by the browser
     if (isPlatformBrowser(this.platformId)) {
       if (!this.publicId) {
         throw new Error(

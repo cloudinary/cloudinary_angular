@@ -5,7 +5,7 @@ import {
     Cloudinary,
     isJsonLikeString,
     isNamedNodeMap,
-    transformKeyNamesFromKebabToSnakeCase
+    transformKeyNames
 } from './cloudinary.service';
 import CloudinaryConfiguration from './cloudinary-configuration.class';
 
@@ -70,9 +70,9 @@ describe('Cloudinary service', () => {
         });
     });
 
-    describe('transformKeyNamesFromKebabToSnakeCase', () => {
+    describe('transformKeyNames', () => {
         it('Transforms property names of json-like strings from kebab-case to snake_case', () => {
-            expect(transformKeyNamesFromKebabToSnakeCase('{"aaa-aaa":"1", "bbb-bbb":"2", "cc": "ccc-ccc"}')).toEqual(
+            expect(transformKeyNames('{"aaa-aaa":"1", "bbb-bbb":"2", "cc": "ccc-ccc"}')).toEqual(
                 {
                     aaa_aaa: '1',
                     bbb_bbb: '2',
@@ -81,7 +81,7 @@ describe('Cloudinary service', () => {
             );
         });
         it('Transforms property names of json-like strings spanning multi-lines from kebab-case to snake_case', () => {
-            expect(transformKeyNamesFromKebabToSnakeCase(`{"aaa-aaa":"1",
+            expect(transformKeyNames(`{"aaa-aaa":"1",
             "bbb-bbb":"2",
             "cc": "ccc-ccc"}`)).toEqual(
                 {
@@ -92,7 +92,7 @@ describe('Cloudinary service', () => {
             );
         });
         it('Transforms property names of objects from kebab-case to snake_case', () => {
-            expect(transformKeyNamesFromKebabToSnakeCase({'aaa-aaa': 1, 'bbb-bbb': 2, cc: 'ccc-ccc'})).toEqual(
+            expect(transformKeyNames({'aaa-aaa': 1, 'bbb-bbb': 2, cc: 'ccc-ccc'})).toEqual(
                 {
                     aaa_aaa: 1,
                     bbb_bbb: 2,
@@ -100,14 +100,24 @@ describe('Cloudinary service', () => {
                 }
             );
         });
+        it('Transforms property names by stripping cld prefix', () => {
+          // "cld" prefix can be followed by an optional dash or underscore
+          expect(transformKeyNames('{"cldResponsive":"1", "cld-width":"2", "cld_height": "ccc-ccc"}')).toEqual(
+            {
+              responsive: '1',
+              width: '2',
+              height: 'ccc-ccc'
+            }
+          );
+        });
         it('does not affect primitive values', () => {
-            expect(transformKeyNamesFromKebabToSnakeCase(123)).toEqual(123);
-            expect(transformKeyNamesFromKebabToSnakeCase(undefined)).toBeUndefined();
-            expect(transformKeyNamesFromKebabToSnakeCase('')).toEqual('');
-            expect(transformKeyNamesFromKebabToSnakeCase('a b c')).toEqual('a b c');
+            expect(transformKeyNames(123)).toEqual(123);
+            expect(transformKeyNames(undefined)).toBeUndefined();
+            expect(transformKeyNames('')).toEqual('');
+            expect(transformKeyNames('a b c')).toEqual('a b c');
         });
         it('iterates over array elements to transform its members', () => {
-            expect(transformKeyNamesFromKebabToSnakeCase([{
+            expect(transformKeyNames([{
                 'aaa-aaa': 'aaa-aaa',
                 'bbb-bbb': 'bbb-bbb',
                 'ccc': 'ccc'
@@ -125,7 +135,7 @@ describe('Cloudinary service', () => {
             ]);
         });
         it('transforms complex json-like objects into options', () => {
-            expect(transformKeyNamesFromKebabToSnakeCase(`{"aaa-aaa":"1",
+            expect(transformKeyNames(`{"aaa-aaa":"1",
             "bbb-bbb":"2",
             "transform-ation": [{ "effect": "sepia", "fetch_format": "auto"}]
             }`)).toEqual(
