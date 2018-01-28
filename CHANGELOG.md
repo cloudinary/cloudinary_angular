@@ -1,3 +1,12 @@
+
+1.0.1 / 2018-01-28
+==================
+
+  * Add onLoad and onError event emitters (#128)
+  * Universal rendering (#120)
+  * Add cld-responsive as an alias for responsive attribute (#91)
+  * Update samples to use SDK for Angular 5
+
 (5.x)1.0.0 / 2017-11-22
 =======================
 

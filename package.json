@@ -1,6 +1,6 @@
 {
   "name": "@cloudinary/angular-5.x",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The formal Cloudinary Angular SDK to enhance your applications with image and video components powered by Cloudinary",
   "keywords": [
     "cloudinary",
@@ -20,7 +20,7 @@
   "main": "index.js",
   "types": "index.ts",
   "scripts": {
-    "lint": "tslint **/*.ts -t verbose --project tsconfig.json ",
+    "lint": "tslint **/*.ts --exclude \"**/*.d.ts\" -t verbose --project tsconfig.json",
     "test": "tsc && concurrently \"tsc -w\" \"karma start karma.conf.js\"",
     "test-once": "tsc && karma start karma.conf.js --single-run --no-auto-watch --browsers PhantomJS",
     "install-sample-from-source": "node ./scripts/install-sample-from-source.js samples/photo_album",
