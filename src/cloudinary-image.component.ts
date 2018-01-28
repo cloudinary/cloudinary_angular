@@ -29,8 +29,6 @@ export class CloudinaryImage
   @Output() onLoad: EventEmitter<boolean> = new EventEmitter(); // Callback when an image is loaded successfully
   @Output() onError: EventEmitter<boolean> = new EventEmitter(); // Callback when an image is loaded with error
 
-  @ContentChildren(CloudinaryTransformationDirective)
-
   observer: MutationObserver;
 
   constructor(private el: ElementRef, private cloudinary: Cloudinary) {}
