@@ -29,7 +29,7 @@ const namedNodeMapToObject = function (source: NamedNodeMap): any {
   return target;
 };
 
-const transformKeyNamesFromKebabToSnakeCase = function (obj: any): any {
+const transformKeyNames = function (obj: any): any {
   let _obj = obj;
   if (isJsonLikeString(obj)) {
     // Given attribute value is in the form of a JSON object -
@@ -42,13 +42,14 @@ const transformKeyNamesFromKebabToSnakeCase = function (obj: any): any {
   if (Array.isArray(_obj)) {
     // Transform all the array values (e.g. transformation array)
     _obj = _obj.map(currentValue => {
-      return transformKeyNamesFromKebabToSnakeCase(currentValue);
+      return transformKeyNames(currentValue);
     });
   } else if (typeof _obj === 'object') {
     Object.keys(_obj).forEach(key => {
       // Replace the key name with the snake_case
-      const kebabKey = key.replace(/-/g, '_').toLocaleLowerCase();
-      const kebabValue = transformKeyNamesFromKebabToSnakeCase(_obj[key]);
+      // Then strip cld prefix if it exists (with an optional dash or underscore)
+      const kebabKey = key.replace(/-/g, '_').toLocaleLowerCase().replace(/^cld(-|_)?/, '');
+      const kebabValue = transformKeyNames(_obj[key]);
       delete _obj[key];
       _obj[kebabKey] = kebabValue;
     });
@@ -104,7 +105,7 @@ export class Cloudinary {
    */
   toCloudinaryAttributes(attributes: NamedNodeMap,
     childTransformations?: QueryList<CloudinaryTransformationDirective>): any {
-    const options = transformKeyNamesFromKebabToSnakeCase(attributes);
+    const options = transformKeyNames(attributes);
 
     // Add chained transformations
     if (childTransformations && childTransformations.length > 0) {
@@ -126,8 +127,8 @@ export class Cloudinary {
 
 /* Return a provider object that creates our configurable service */
 export function provideCloudinary(cloudinaryJsLib: any, configuration: CloudinaryConfiguration) {
-    return { provide: Cloudinary, useFactory: () => new Cloudinary(cloudinaryJsLib, configuration) };
+  return { provide: Cloudinary, useFactory: () => new Cloudinary(cloudinaryJsLib, configuration) };
 };
 
 // For unit tests
-export { isJsonLikeString, isNamedNodeMap, transformKeyNamesFromKebabToSnakeCase, namedNodeMapToObject };
+export { isJsonLikeString, isNamedNodeMap, transformKeyNames, namedNodeMapToObject };
