@@ -55,7 +55,7 @@ export class CloudinaryVideo
   }
 
   ngOnDestroy(): void {
-    if (this.observer) {
+    if (this.observer && this.observer.disconnect) {
       this.observer.disconnect();
     }
   }

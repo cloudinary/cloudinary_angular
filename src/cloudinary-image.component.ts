@@ -1,14 +1,16 @@
 import {
-  Component,
-  ElementRef,
-  Input,
-  ContentChildren,
-  QueryList,
-  AfterViewInit,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-  OnDestroy,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    Output,
+    ContentChildren,
+    QueryList,
+    AfterViewInit,
+    OnInit,
+    OnChanges,
+    SimpleChanges,
+    OnDestroy
 } from '@angular/core';
 import { Cloudinary } from './cloudinary.service';
 import { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
@@ -23,6 +25,9 @@ export class CloudinaryImage
 
   @ContentChildren(CloudinaryTransformationDirective)
   transformations: QueryList<CloudinaryTransformationDirective>;
+
+  @Output() onLoad: EventEmitter<boolean> = new EventEmitter(); // Callback when an image is loaded successfully
+  @Output() onError: EventEmitter<boolean> = new EventEmitter(); // Callback when an image is loaded with error
 
   observer: MutationObserver;
 
@@ -55,7 +60,7 @@ export class CloudinaryImage
   }
 
   ngOnDestroy(): void {
-    if (this.observer) {
+    if (this.observer && this.observer.disconnect) {
       this.observer.disconnect();
     }
   }
@@ -75,6 +80,13 @@ export class CloudinaryImage
       }
       const nativeElement = this.el.nativeElement;
       const image = nativeElement.children[0];
+      // Add onload and onerror handlers
+      image.onload = e => {
+        this.onLoad.emit(e);
+      }
+      image.onerror = e => {
+        this.onError.emit(e);
+      }
       const options = this.cloudinary.toCloudinaryAttributes(
         nativeElement.attributes,
         this.transformations

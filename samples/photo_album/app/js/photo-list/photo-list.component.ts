@@ -22,6 +22,13 @@ export class PhotoListComponent implements OnInit {
     }
 
     changePublicId() {
-      this.publicId = (this.publicId === 'officialchucknorrispage') ? 'billclinton' : 'officialchucknorrispage';
+        this.publicId = (this.publicId === 'officialchucknorrispage') ? 'billclinton' : 'officialchucknorrispage';
+    }
+
+    onLoadImage(success) {
+        console.log('On load', success);
+    }
+    onErrorImage(err) {
+        console.log('On error!!', err);
     }
 }

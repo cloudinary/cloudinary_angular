@@ -220,6 +220,52 @@ describe('CloudinaryImage', () => {
     });
   });
 
+  describe('event emitters', () => {
+    let onImageLoad;
+    let onImageError;
+    let des: DebugElement;  // the elements w/ the directive
+
+    @Component({
+      template: `<cl-image id="image1" [public-id]="publicId"></cl-image>`
+    })
+    class TestComponent {
+      publicId: string = 'sample';
+    }
+
+    let fixture: ComponentFixture<TestComponent>;
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: localCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+      // all elements with an attached CloudinaryImage
+      des = fixture.debugElement.query(By.directive(CloudinaryImage));
+      onImageLoad = jasmine.createSpy('onImageLoad');
+      onImageError = jasmine.createSpy('onImageError');
+      des.componentInstance.onLoad.subscribe(onImageLoad);
+      des.componentInstance.onError.subscribe(onImageError);
+    });
+
+    it('calls the onLoad callback when image loads successfully', () => {
+      // Simulate the load event
+      const img = des.children[0].nativeElement as HTMLImageElement;
+      img.dispatchEvent(new Event('load'));
+      expect(onImageLoad).toHaveBeenCalled();
+      expect(onImageError).not.toHaveBeenCalled();
+    });
+
+    it('calls the onError callback when image fails to load', () => {
+      // Simulate the error event
+      const img = des.children[0].nativeElement as HTMLImageElement;
+      img.dispatchEvent(new CustomEvent('error', { detail: 'Eitan was here' }));
+      expect(onImageLoad).not.toHaveBeenCalled();
+      expect(onImageError).toHaveBeenCalled();
+    });
+  });
+
   describe('responsive images with nested transformations using the cld-responsive attribute', () => {
     @Component({
       template: `<cl-image cld-responsive id="image1" public-id="responsive_sample.jpg">
@@ -254,5 +300,4 @@ describe('CloudinaryImage', () => {
         /c_scale,l_text:roboto_25_bold:SDK,w_300\/e_art:hokusai\/f_auto\/responsive_sample.jpg/));
     });
   });
-
 });
