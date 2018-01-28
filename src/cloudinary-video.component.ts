@@ -1,92 +1,106 @@
 import {
-    Component,
-    ElementRef,
-    Input,
-    ContentChildren,
-    QueryList,
-    AfterViewInit,
-    OnInit,
-    OnChanges,
-    SimpleChanges,
-    OnDestroy
+  Component,
+  ElementRef,
+  Input,
+  ContentChildren,
+  QueryList,
+  AfterViewInit,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  OnDestroy,
+  PLATFORM_ID,
+  Inject,
 } from '@angular/core';
-import {Cloudinary} from './cloudinary.service';
-import {CloudinaryTransformationDirective} from './cloudinary-transformation.directive';
+import { isPlatformBrowser } from '@angular/common';
+import { Cloudinary } from './cloudinary.service';
+import { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
 
 @Component({
-    selector: 'cl-video',
-    template: '<video></video>'
+  selector: 'cl-video',
+  template: '<video></video>'
 })
 // See also video reference - http://cloudinary.com/documentation/video_manipulation_and_delivery#video_transformations_reference
-export class CloudinaryVideo implements AfterViewInit, OnInit, OnChanges, OnDestroy {
+export class CloudinaryVideo
+  implements AfterViewInit, OnInit, OnChanges, OnDestroy {
+  @Input('public-id') publicId: string;
 
-    @Input('public-id') publicId: string;
+  @ContentChildren(CloudinaryTransformationDirective)
+  transformations: QueryList<CloudinaryTransformationDirective>;
 
-    @ContentChildren(CloudinaryTransformationDirective)
-    transformations: QueryList<CloudinaryTransformationDirective>;
+  observer: MutationObserver;
 
-    observer: MutationObserver;
+  constructor(private el: ElementRef, private cloudinary: Cloudinary, @Inject(PLATFORM_ID) private platformId: Object) {}
 
-    constructor(private el: ElementRef, private cloudinary: Cloudinary) {
-    }
-
-    ngOnInit(): void {
-        // Create an observer instance
-        this.observer = new MutationObserver(() => {
-            this.loadVideo(this.publicId);
-        });
-        // Observe changes to attributes or child transformations to re-render the image
-        const config = {attributes: true, childList: true};
-
-        // pass in the target node, as well as the observer options
-        this.observer.observe(this.el.nativeElement, config);
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-      // Listen to changes on the data-bound property 'publicId'.
-      // Update component unless this is the first value assigned.
-      if (changes.publicId && !changes.publicId.isFirstChange()) {
-        this.loadVideo(changes.publicId.currentValue);
-      }
-    }
-
-    ngOnDestroy(): void {
-        this.observer.disconnect();
-    }
-
-    ngAfterViewInit() {
-        if (!this.publicId) {
-            throw new Error('You must set the public id of the video to load, e.g. <cl-video public-id={{video.public_id}}...></cl-video>');
-        }
+  ngOnInit(): void {
+    if (typeof MutationObserver !== 'undefined') {
+      // Create an observer instance
+      this.observer = new MutationObserver(() => {
         this.loadVideo(this.publicId);
+      });
+      // Observe changes to attributes or child transformations to re-render the image
+      const config = { attributes: true, childList: true };
+
+      // pass in the target node, as well as the observer options
+      this.observer.observe(this.el.nativeElement, config);
     }
+  }
 
-    loadVideo(publicId: string) {
-        const nativeElement = this.el.nativeElement;
-        const video = nativeElement.children[0];
-        const options = this.cloudinary.toCloudinaryAttributes(nativeElement.attributes, this.transformations);
-
-        const videoTag = this.cloudinary.videoTag(publicId, options);
-
-        // Replace template with the custom video tag created by Cloudinary
-        this.appendSourceElements(video, videoTag.content());
-        // Add attributes
-        this.setElementAttributes(video, videoTag.attributes());
-    };
-
-    setElementAttributes(element, attributesLiteral) {
-        Object.keys(attributesLiteral).forEach(attrName => {
-            element.setAttribute(attrName, attributesLiteral[attrName]);
-        });
+  ngOnChanges(changes: SimpleChanges) {
+    // Listen to changes on the data-bound property 'publicId'.
+    // Update component unless this is the first value assigned.
+    if (changes.publicId && !changes.publicId.isFirstChange()) {
+      this.loadVideo(changes.publicId.currentValue);
     }
+  }
 
-    appendSourceElements(element, html) {
-        const fragment = document.createDocumentFragment();
-        element.innerHTML = html;
-
-        while (element.childNodes[0]) {
-            fragment.appendChild(element.childNodes[0]);
-        }
-        element.appendChild(fragment);
+  ngOnDestroy(): void {
+    if (this.observer) {
+      this.observer.disconnect();
     }
+  }
+
+  ngAfterViewInit() {
+    if (!this.publicId) {
+      throw new Error(
+        'You must set the public id of the video to load, e.g. <cl-video public-id={{video.public_id}}...></cl-video>'
+      );
+    }
+    this.loadVideo(this.publicId);
+  }
+
+  loadVideo(publicId: string) {
+    // https://github.com/angular/universal#universal-gotchas
+    if (isPlatformBrowser(this.platformId)) {
+      const nativeElement = this.el.nativeElement;
+      const video = nativeElement.children[0];
+      const options = this.cloudinary.toCloudinaryAttributes(
+        nativeElement.attributes,
+        this.transformations
+      );
+
+      const videoTag = this.cloudinary.videoTag(publicId, options);
+
+      // Replace template with the custom video tag created by Cloudinary
+      this.appendSourceElements(video, videoTag.content());
+      // Add attributes
+      this.setElementAttributes(video, videoTag.attributes());
+    }
+  }
+
+  setElementAttributes(element, attributesLiteral) {
+    Object.keys(attributesLiteral).forEach(attrName => {
+      element.setAttribute(attrName, attributesLiteral[attrName]);
+    });
+  }
+
+  appendSourceElements(element, html) {
+    const fragment = document.createDocumentFragment();
+    element.innerHTML = html;
+
+    while (element.childNodes[0]) {
+      fragment.appendChild(element.childNodes[0]);
+    }
+    element.appendChild(fragment);
+  }
 }
