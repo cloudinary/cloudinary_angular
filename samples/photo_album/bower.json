@@ -11,7 +11,7 @@
     "angular-route": "1.4.x",
     "angular-resource": "1.4.x",
     "angular-animate": "1.4.x",
-    "cloudinary_ng": "~1.0.0"
+    "cloudinary_ng": "~1.x"
   },
   "ignore": {}
 }
