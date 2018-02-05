@@ -3,6 +3,7 @@ logs
 *.log
 npm-debug.log*
 config.ts
+.env
 
 # Ignore AOT compiler output
 /compiled
