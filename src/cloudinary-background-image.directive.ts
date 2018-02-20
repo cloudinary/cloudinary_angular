@@ -16,9 +16,11 @@ export class CloudinaryBackgroundImageDirective implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        const nativeElement = this.el.nativeElement;
-        const options = this.cloudinary.toCloudinaryAttributes(nativeElement.attributes, this.transformations);
-        const imageUrl = this.cloudinary.url(this.clBackgroundImage, options);
-        this.renderer.setStyle(this.el.nativeElement, 'background-image', `url('${imageUrl}')`);
-    };
+      const nativeElement = this.el.nativeElement;
+      const options = this.cloudinary.toCloudinaryAttributes(nativeElement.attributes, this.transformations);
+      const imageUrl = this.cloudinary.url(this.clBackgroundImage, options);
+      this.renderer.setStyle(nativeElement, 'background-image', `url('${imageUrl}')`);
+      this.renderer.setStyle(nativeElement, 'background-repeat', 'no-repeat');
+      this.renderer.setStyle(nativeElement, 'background-position', 'center');
+  }
 }
