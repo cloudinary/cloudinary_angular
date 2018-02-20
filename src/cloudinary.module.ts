@@ -6,6 +6,7 @@ import { CloudinaryImage } from './cloudinary-image.component';
 import { CloudinaryVideo } from './cloudinary-video.component';
 import { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
 import { CloudinaryImageSourceDirective } from './cloudinary-image-source.directive';
+import { CloudinaryBackgroundImageDirective } from './cloudinary-background-image.directive'
 import CloudinaryConfiguration from './cloudinary-configuration.class';
 
 // Export for lib consumers
@@ -13,6 +14,7 @@ export { CloudinaryImage } from './cloudinary-image.component';
 export { CloudinaryVideo } from './cloudinary-video.component';
 export { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
 export { CloudinaryImageSourceDirective } from './cloudinary-image-source.directive';
+export { CloudinaryBackgroundImageDirective } from './cloudinary-background-image.directive';
 
 export { Cloudinary, provideCloudinary } from './cloudinary.service';
 
@@ -29,12 +31,14 @@ export function createCloudinary(cloudinaryJsLib: any, configuration: Cloudinary
 @NgModule({
   declarations: [
     CloudinaryImageSourceDirective,
+    CloudinaryBackgroundImageDirective,
     CloudinaryImage,
     CloudinaryVideo,
     CloudinaryTransformationDirective
   ],
   exports: [
     CloudinaryImageSourceDirective,
+    CloudinaryBackgroundImageDirective,
     CloudinaryImage,
     CloudinaryVideo,
     CloudinaryTransformationDirective
