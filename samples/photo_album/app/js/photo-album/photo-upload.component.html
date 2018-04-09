@@ -14,14 +14,19 @@
 			<label>Image:</label>
 			<div class="form_controls">
 				<div class="upload_button_holder">
-					<label class="upload_button" for="fileupload">Upload</label>
+					<label class="upload_button" for="fileupload">Choose file</label>
 					<!-- onChange hanlder resets the input value to get the change event when uploading the same file consecutively -->
-					<input type="file" id="fileupload" #fileInput ng2FileSelect [style.display]="'none'" [uploader]="uploader" (change)="fileInput.value=''"
-						multiple />
+          <input type="file" id="fileupload" #fileInput ng2FileSelect [style.display]="'none'" [uploader]="uploader" multiple />
 				</div>
-
 			</div>
-		</div>
+    </div>
+    <!-- upload files only when button is clicked -->
+    <button class="upload_button" (click)="uploader.uploadAll(); false" [disabled]="!uploader.getNotUploadedItems().length">Upload selected files</button>
+    <div>Selected files:
+    <tr *ngFor="let item of uploader.queue">
+      <td><strong>{{ item?.file?.name }}</strong></td>
+    </tr>
+    </div>
 	</form>
 	<h2>Status</h2>
 	<div class="file" *ngFor="let response of responses; let i = index">

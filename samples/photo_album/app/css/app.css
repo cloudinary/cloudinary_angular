@@ -100,7 +100,6 @@ form .error { color: #c55; margin: 0 10px; }
     padding: 5px 0;
     border: 1px solid #000;
     border-radius: 4px;
-    width: 100px;
     height: 18px;
     text-decoration: none;
     text-align: center;
@@ -109,7 +108,7 @@ form .error { color: #c55; margin: 0 10px; }
 
 .upload_button_holder .upload_button {
     display: block;
-} 
+}
 
 .upload_button:hover {
     background-color: rgb(17, 133, 240);

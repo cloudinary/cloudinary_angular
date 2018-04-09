@@ -29,8 +29,6 @@ export class PhotoUploadComponent implements OnInit {
     // Create the file uploader, wire it to upload to your account
     const uploaderOptions: FileUploaderOptions = {
       url: `https://api.cloudinary.com/v1_1/${this.cloudinary.config().cloud_name}/upload`,
-      // Upload files automatically upon addition to upload queue
-      autoUpload: true,
       // Use xhrTransport in favor of iframeTransport
       isHTML5: true,
       // Calculate progress independently for each uploaded file
@@ -96,7 +94,8 @@ export class PhotoUploadComponent implements OnInit {
     };
 
     // Update model on completion of uploading a file
-    this.uploader.onCompleteItem = (item: any, response: string, status: number, headers: ParsedResponseHeaders) =>
+    this.uploader.onCompleteItem = (item: any, response: string, status: number, headers: ParsedResponseHeaders) => {
+      console.log('XXXXXXXXXXXXXXXXX', 'item', item, 'response', response, 'status', status, 'headers', headers);
       upsertResponse(
         {
           file: item.file,
@@ -104,6 +103,7 @@ export class PhotoUploadComponent implements OnInit {
           data: JSON.parse(response)
         }
       );
+    }
 
     // Update model on upload progress event
     this.uploader.onProgressItem = (fileItem: any, progress: any) =>

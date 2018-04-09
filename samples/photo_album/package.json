@@ -17,7 +17,7 @@
     "@angular/platform-server": "^5.0.1",
     "@angular/router": "^5.0.1",
     "@cloudinary/angular-5.x": "^1.0.1",
-    "cloudinary-core": "^2.3.0",
+    "cloudinary-core": "^2.5.0",
     "core-js": "^2.5.1",
     "ng2-file-upload": "^1.2.0",
     "reflect-metadata": "^0.1.8",
@@ -39,7 +39,7 @@
     "raw-loader": "^0.5.1",
     "style-loader": "^0.19.0",
     "to-string-loader": "^1.1.5",
-    "typescript": "^2.6.1"
+    "typescript": "2.4.x"
   },
   "scripts": {
     "start": "webpack-dev-server --open",
