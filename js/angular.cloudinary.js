@@ -92,7 +92,11 @@
       link : function (scope, element, attrs, ctrl) {
         var tagController = ctrl.clImage || ctrl.clVideo;
         if (tagController) {
-          tagController.addTransformation(toCloudinaryAttributes(attrs, /^[^$]/));
+            var transformation = toCloudinaryAttributes(attrs, /^[^$]/);
+            tagController.addTransformation(transformation);
+            scope.$on('$destroy', function (event) {
+                tagController.removeTransformation(transformation);
+            })
         } else {
           console.warn("cl-transformation should be a child of cl-image or cl-video")
         }
@@ -105,6 +109,15 @@
       this.addTransformation = function(ts) {
         $scope.transformations = $scope.transformations || [];
         $scope.transformations.push(ts);
+        $scope.transformations = $scope.transformations.slice()
+      };
+      this.removeTransformation = function (ts) {
+        $scope.transformations = $scope.transformations || [];
+        var index = $scope.transformations.indexOf(ts);
+        if (index >= 0) {
+          $scope.transformations.splice(index, 1);
+          $scope.transformations = $scope.transformations.slice()
+        }
       }
     };
     Controller.$inject = ['$scope'];
@@ -124,6 +137,12 @@
         if (scope.transformations) {
           options.transformation = scope.transformations;
         }
+
+        scope.$watch('transformations', function(value){
+          if (!value) return;
+          options.transformation = value;
+          loadImage();
+        });
 
         // store public id and load image
         attrs.$observe('publicId', function(value){
@@ -173,6 +192,15 @@
       this.addTransformation = function(ts) {
         $scope.transformations = $scope.transformations || [];
         $scope.transformations.push(ts);
+        $scope.transformations = $scope.transformations.slice()
+      };
+      this.removeTransformation = function (ts) {
+        $scope.transformations = $scope.transformations || [];
+        var index = $scope.transformations.indexOf(ts);
+        if (index >= 0) {
+          $scope.transformations.splice(index, 1);
+          $scope.transformations = $scope.transformations.slice()
+        }
       }
     };
     Controller.$inject = ['$scope'];
