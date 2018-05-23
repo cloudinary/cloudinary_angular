@@ -11,7 +11,7 @@ module.exports = {
     path: IS_PROD ? path(process.cwd(), "./demo") : process.cwd()
   },
   module: {
-    loaders: [
+    rules: [
       {
         enforce: "pre",
         test: /\.ts$/,
@@ -48,7 +48,6 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
       ENV: JSON.stringify(IS_PROD ? "production" : "development")
     }),

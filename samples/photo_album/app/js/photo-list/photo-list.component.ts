@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {PhotoAlbum} from '../model/photo-album.service';
 import {Photo} from '../model/photo';
 
