@@ -32,7 +32,14 @@ Start experimenting right away with one these live examples:
 * [Glitch example](https://glitch.com/edit/#!/cloudinary-angular-sdk)
 
 ## Installation ######################################################################
-Install the SDK version that matches your Angular version
+Install the SDK version that supports the Angular version you are using:
+
+* For Angular 2, use `2.x`
+* For Angular 4, use `4.x`
+* For Angular 5 or 6, use `5.x`.  
+
+For example: 
+
 ```shell
 npm install @cloudinary/angular-5.x --save
 ```
