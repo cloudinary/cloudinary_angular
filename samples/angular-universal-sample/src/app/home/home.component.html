@@ -3,3 +3,13 @@
   <cl-transformation angle="180"></cl-transformation>
   <cl-transformation effect="sepia"></cl-transformation>
 </cl-image>
+<div id="logo">
+  <!-- This will render the image fetched from a remote HTTP URL using Cloudinary -->
+  <img clSrc="http://cloudinary.com/images/logo.png" type="fetch" fetch_format="auto" quality="auto">
+</div>
+<!-- This embeds a <video> element in the page, retrieved from a different cloud -->
+<cl-video public-id="manipulation_video" cloud_name="cloudinary" controls="true" preload="none" width="925" crop="scale"
+  class="manipulation-video" poster='{ "cloud_name": "cloudinary", "gravity": "north", "start_offset": "28", "transformation": [{"effect": "sepia"}]}'
+  source_transformation='{ "webm": { "quality": "70"}, "mp4": { "overlay": "text:verdana_30:Greetings!" } }' fallback_content="Your browser does not support HTML5 video tags">
+  <cl-transformation overlay="text:arial_20:Cloudinary%20features" color="red" gravity="north" y="12"></cl-transformation>
+</cl-video>
