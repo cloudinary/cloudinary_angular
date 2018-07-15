@@ -130,5 +130,9 @@ export function provideCloudinary(cloudinaryJsLib: any, configuration: Cloudinar
   return { provide: Cloudinary, useFactory: () => new Cloudinary(cloudinaryJsLib, configuration) };
 };
 
+const isBrowser = function (): boolean {
+  return typeof window !== 'undefined';
+}
+
 // For unit tests
-export { isJsonLikeString, isNamedNodeMap, transformKeyNames, namedNodeMapToObject };
+export { isJsonLikeString, isNamedNodeMap, transformKeyNames, namedNodeMapToObject, isBrowser };
