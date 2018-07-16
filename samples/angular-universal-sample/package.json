@@ -40,6 +40,7 @@
     "@angular/platform-browser": "^6.0.0",
     "@angular/platform-browser-dynamic": "^6.0.0",
     "@angular/platform-server": "^6.0.0",
+    "@angular/pwa": "^0.6.8",
     "@angular/router": "^6.0.0",
     "@nguniversal/common": "^6.0.0",
     "@nguniversal/express-engine": "^6.0.0",
@@ -47,7 +48,8 @@
     "core-js": "^2.4.1",
     "rxjs": "6.0.0",
     "webpack-cli": "^2.0.14",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "@angular/service-worker": "^6.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.6.0",

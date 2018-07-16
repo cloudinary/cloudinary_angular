@@ -176,8 +176,8 @@
     tslib "^1.9.0"
 
 "@cloudinary/angular-5.x@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@cloudinary/angular-5.x/-/angular-5.x-1.0.1.tgz#64ca4d1f516c780147c17e3d80d281299c0af79c"
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@cloudinary/angular-5.x/-/angular-5.x-1.0.2.tgz#b13c269faabaca88abd27e48af99c8b8102f01cf"
 
 "@ngtools/webpack@6.0.3":
   version "6.0.3"

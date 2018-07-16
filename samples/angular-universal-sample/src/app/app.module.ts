@@ -9,6 +9,8 @@ import { HomeComponent } from './home/home.component';
 import {TransferHttpCacheModule} from '@nguniversal/common';
 
 import cloudinaryConfiguration from './config';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 export const cloudinary = {
   Cloudinary: CloudinaryCore
@@ -29,6 +31,7 @@ export const config: CloudinaryConfiguration = cloudinaryConfiguration;
     ]),
     TransferHttpCacheModule,
     CloudinaryModule.forRoot(cloudinary, config),
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [],
   bootstrap: [AppComponent]
