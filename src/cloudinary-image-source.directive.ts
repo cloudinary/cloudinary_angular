@@ -1,6 +1,7 @@
 import {Directive, ElementRef, AfterViewInit, Input, QueryList, ContentChildren} from '@angular/core';
 import {Cloudinary} from './cloudinary.service';
 import {CloudinaryTransformationDirective} from './cloudinary-transformation.directive';
+import { isBrowser } from './cloudinary.service';
 
 @Directive({
     selector: '[clHref], [clSrc], [clSrcset]'
@@ -18,6 +19,7 @@ export class CloudinaryImageSourceDirective implements AfterViewInit {
     }
 
     ngAfterViewInit() {
+      if (isBrowser()) {
         let attrName: string;
         let propertyValue: string;
         if (this.clHref) {
@@ -62,5 +64,6 @@ export class CloudinaryImageSourceDirective implements AfterViewInit {
             // IE logic here
             this.el.nativeElement[attrName] = attrValue;
         }
+      }
     };
 }

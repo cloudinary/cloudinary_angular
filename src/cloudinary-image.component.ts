@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 import { Cloudinary } from './cloudinary.service';
 import { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
+import { isBrowser } from './cloudinary.service';
 
 @Component({
   selector: 'cl-image',
@@ -33,12 +34,8 @@ export class CloudinaryImage
 
   constructor(private el: ElementRef, private cloudinary: Cloudinary) {}
 
-  isBrowser(): boolean {
-    return typeof window !== 'undefined';
-  }
-
   ngOnInit(): void {
-    if (this.isBrowser()) {
+    if (isBrowser()) {
       // Create an observer instance
       this.observer = new MutationObserver(() => {
         this.loadImage();
@@ -72,7 +69,7 @@ export class CloudinaryImage
   loadImage() {
     // https://github.com/angular/universal#universal-gotchas
     // Fetch the image only for client side rendering by the browser
-    if (this.isBrowser()) {
+    if (isBrowser()) {
       if (!this.publicId) {
         throw new Error(
           'You must set the public id of the image to load, e.g. <cl-image public-id={{photo.public_id}}...></cl-image>'
