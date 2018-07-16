@@ -1,4 +1,20 @@
 
+1.0.2 / 2018-07-16
+==================
+
+  * Update sample to Angular 6. Fixes #138
+  * Add isBrowser check for SSR. Fixes #150
+  * Avoid errors in angular-universal server rendering
+  * Set common background properties for CloudinaryBackgroundImageDirective
+  * export CloudinaryBackgroundImageDirective
+  * Add background image directive
+  * Add tests for `quality:auto` parameter
+  * Add a test of keyframe_interval (ki) parameter
+  * Add tests of overlay/underlay with a fetched image
+  * Add tests of initialWidth and initialHeight params
+  * Exclude *.d.ts files from lint check
+  * Update samples to latest Angular 5 SDK version 1.0.1
+
 1.0.1 / 2018-01-28
 ==================
 
