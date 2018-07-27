@@ -23,6 +23,7 @@ import { isBrowser } from './cloudinary.service';
 export class CloudinaryImage
   implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   @Input('public-id') publicId: string;
+  @Input('client-hints') clientHints?: boolean;
 
   @ContentChildren(CloudinaryTransformationDirective)
   transformations: QueryList<CloudinaryTransformationDirective>;
@@ -88,7 +89,11 @@ export class CloudinaryImage
         nativeElement.attributes,
         this.transformations
       );
-
+      if (this.clientHints || (typeof this.clientHints === 'undefined' && this.cloudinary.config().client_hints)) {
+        delete options['class'];
+        delete options['data-src'];
+        delete options['responsive'];
+      }
       const imageTag = this.cloudinary.imageTag(this.publicId, options);
       this.setElementAttributes(image, imageTag.attributes());
       if (options.responsive) {
