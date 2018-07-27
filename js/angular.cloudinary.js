@@ -169,12 +169,21 @@
           element.removeAttr("height");
         }
 
+        var isClientHints =
+            (options.client_hints === "true" || options.client_hints === true || options.client_hints === "") ||
+            (typeof options.client_hints === 'undefined' && cloudinary.config().client_hints);
+
+        if (isClientHints) {
+          element.removeAttr("class");
+          element.removeAttr("data-src");
+        }
+
         var loadImage = function() {
           if (options.responsive === "" || options.responsive === "true" || options.responsive === true) {
             options.responsive = true;
           }
           var url = cloudinary.url(publicId, options);
-          if (options.responsive) {
+          if (options.responsive && !isClientHints) {
             cloudinary.Util.setData(element[0], "src", url);
             cloudinary.cloudinary_update(element[0], options);
             cloudinary.responsive(options, false);

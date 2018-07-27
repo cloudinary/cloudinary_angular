@@ -8,7 +8,6 @@ describe("cloudinary", function () {
   beforeEach(function () {
     module('cloudinary');
     angular.module('cloudinary').config(['cloudinaryProvider', function (cloudinaryProvider) {
-
       cloudinaryProvider.set("cloud_name", CLOUD_NAME);
     }]);
     //angular.module('testApp');
@@ -299,6 +298,51 @@ describe("cloudinary", function () {
       $rootScope.$digest();
       expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/barfoo\"");
 
+    });
+  });
+  describe('responsive images with global configured client hints', function () {
+    beforeAll(function () {
+      angular.module('cloudinary').config(['cloudinaryProvider', function (cloudinaryProvider) {
+        cloudinaryProvider.set("client_hints", true);
+      }]);
+    });
+
+    it('should not implement responsive behaviour if client hints set in config', function () {
+      // Compile a piece of HTML containing the directive
+      var element = $compile("<div><cl-image public_id='sample.jpg' responsive>" +
+          "<cl-transformation crop='scale' width='auto' dpr='auto'/>" +
+          "<cl-image/></div>")($rootScope);
+      $rootScope.$digest();
+      const img = element[0].children[0];
+      expect(img.hasAttribute('class')).toBe(false);
+      expect(img.hasAttribute('data-src')).toBe(false);
+      expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/c_scale,dpr_auto,w_auto/sample.jpg\"");
+    });
+
+    it('should allow to override global client_hints option with tag attribute', function () {
+      // Compile a piece of HTML containing the directive
+      var element = $compile("<div><cl-image public_id='sample.jpg' client_hints='false' responsive>" +
+          "<cl-transformation crop='scale' width='auto' dpr='auto'/>" +
+          "<cl-image/></div>")($rootScope);
+      $rootScope.$digest();
+      const img = element[0].children[0];
+      expect(img.hasAttribute('class')).toBe(true);
+      expect(img.hasAttribute('data-src')).toBe(true);
+      expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/c_scale,dpr_auto,w_auto/sample.jpg\"");
+    });
+  });
+
+  describe("responsive images with locally configured client hints", function () {
+    it('should not implement responsive behaviour if client hints attribute is true', function () {
+      // Compile a piece of HTML containing the directive
+      var element = $compile("<div><cl-image public_id='sample.jpg' client_hints='true' responsive>" +
+          "<cl-transformation crop='scale' width='auto' dpr='auto'/>" +
+          "<cl-image/></div>")($rootScope);
+      $rootScope.$digest();
+      const img = element[0].children[0];
+      expect(img.hasAttribute('class')).toBe(false);
+      expect(img.hasAttribute('data-src')).toBe(false);
+      expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/c_scale,dpr_auto,w_auto/sample.jpg\"");
     });
   });
 });
