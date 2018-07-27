@@ -389,4 +389,72 @@ describe('CloudinaryImage', () => {
         /c_scale,l_text:roboto_25_bold:SDK,w_300\/e_art:hokusai\/f_auto\/responsive_sample.jpg/));
     });
   });
+
+  describe('responsive images with locally configured client hints', () => {
+    @Component({
+      template: `<cl-image public-id="sample.jpg" [client-hints]="true" responsive>
+           <cl-transformation crop='scale' width='auto' dpr='auto'></cl-transformation>
+      </cl-image>`
+    })
+    class TestComponent { }
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement;  // the elements w/ the directive
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: localCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+      // all elements with an attached CloudinaryImage
+      des = fixture.debugElement.query(By.directive(CloudinaryImage));
+    });
+
+    it('should not implement responsive behaviour if client hints attribute is true', () => {
+      const img = des.children[0].nativeElement as HTMLImageElement;
+      expect(img.hasAttribute('class')).toBe(false);
+      expect(img.hasAttribute('data-src')).toBe(false);
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching(/c_scale,dpr_auto,w_auto/));
+    });
+  });
+
+  describe('responsive images with global configured client hints', () => {
+    @Component({
+      template: `<cl-image id="image_1" public-id="sample.jpg" responsive>
+                   <cl-transformation crop='scale' width='auto' dpr='auto'></cl-transformation>
+                 </cl-image>
+                 <cl-image id="image_2" public-id="sample.jpg" [client-hints]="false" responsive>
+                   <cl-transformation crop='scale' width='auto' dpr='auto'></cl-transformation>
+                 </cl-image>`
+    })
+    class TestComponent {}
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement[];  // the elements w/ the directive
+    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
+      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+      // all elements with an attached CloudinaryImage
+      des = fixture.debugElement.queryAll(By.directive(CloudinaryImage));
+    });
+
+    it('should not implement responsive behaviour if client hints set in config', () => {
+      const img = des[0].children[0].nativeElement as HTMLImageElement;
+      expect(img.hasAttribute('class')).toBe(false);
+      expect(img.hasAttribute('data-src')).toBe(false);
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching(/c_scale,dpr_auto,w_auto/));
+    });
+    it('should allow to override global client_hints option with tag attribute', () => {
+      const img = des[1].children[0].nativeElement as HTMLImageElement;
+      expect(img.hasAttribute('class')).toBe(true);
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching(/c_scale,dpr_auto,w_auto/));
+    });
+  });
 });
