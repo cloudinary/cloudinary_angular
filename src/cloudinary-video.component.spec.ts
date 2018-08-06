@@ -299,5 +299,39 @@ describe('CloudinaryVideo', () => {
       testMarkup('updatedId');
     });
   });
+
+  describe('Poster with start-offset set to auto', () => {
+    @Component({
+      template: `
+            <cl-video cloud_name="demo" public-id="dog" secure="true" class="my-videos"
+            poster='{ "cloud_name": "demo", "start_offset": "auto" }'>
+            </cl-video>
+            `
+    })
+    class TestComponent {
+    }
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement;  // the elements w/ the directive
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryVideo, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: localCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+
+      // Our element under test, which is attached to CloudinaryVideo
+      des = fixture.debugElement.query(By.directive(CloudinaryVideo));
+    });
+
+    it('creates a <video> element which encodes the directive attributes to the URL', () => {
+      const video = des.children[0].nativeElement as HTMLVideoElement;
+      // Created <video> element should have 3 child <source> elements for mp4, webm, ogg
+      expect(video.attributes.getNamedItem('poster').value).toEqual(
+        jasmine.stringMatching(/demo\/video\/upload\/so_auto\/dog.jpg/));
+    });
+  });
 });
 
