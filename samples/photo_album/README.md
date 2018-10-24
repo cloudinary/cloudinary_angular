@@ -1,4 +1,4 @@
-Cloudinary AngularJS Photo Album Sample
+Cloudinary Angular Photo Album Sample
 =======================================
 
 This sample project shows:
