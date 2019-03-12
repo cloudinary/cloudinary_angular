@@ -106,7 +106,7 @@ describe("cloudinary", function () {
         // Check that the compiled element contains the templated content
         expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/if_w_gt_200,c_scale,w_100/foobar\"");
       });
-      
+
       it ('should add if (condition) to the result URL', function() {
         // Compile a piece of HTML containing the directive
         var element = $compile("<div><cl-image public_id='foobar'><cl-transformation if='w_gt_200' width='100' crop='scale'/></cl-image></div>")($rootScope);
@@ -114,34 +114,34 @@ describe("cloudinary", function () {
 
         // Check that the compiled element contains the templated content
         expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/if_w_gt_200,c_scale,w_100/foobar\"");
-      });    
-      
+      });
+
       it ('should add if (condition) to the result URL', function() {
         // Compile a piece of HTML containing the directive
-        var element = $compile("<div>" + 
-          "<cl-image public_id='foobar'>" + 
+        var element = $compile("<div>" +
+          "<cl-image public_id='foobar'>" +
           "<cl-transformation if='w_gt_200'/>"+
-          "<cl-transformation width='100' crop='scale'/>" + 
+          "<cl-transformation width='100' crop='scale'/>" +
           "<cl-transformation height='100' crop='fill'/>"+
-          "<cl-transformation if='end'/>" + 
+          "<cl-transformation if='end'/>" +
           "</cl-image></div>")($rootScope);
         $rootScope.$digest();
 
         // Check that the compiled element contains the templated content
         expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/if_w_gt_200/c_scale,w_100/c_fill,h_100/if_end/foobar\"");
       });
-      
+
       it ('should add if (condition) to the result URL', function() {
         // Compile a piece of HTML containing the directive
-        var element = $compile("<div>" + 
-          "<cl-image public_id='foobar'>" + 
+        var element = $compile("<div>" +
+          "<cl-image public_id='foobar'>" +
           "<cl-transformation if='w_gt_200'/>"+
-          "<cl-transformation width='100' crop='scale'/>" + 
+          "<cl-transformation width='100' crop='scale'/>" +
           "<cl-transformation height='100' crop='fill'/>"+
           "<cl-transformation if='else'/>" +
-          "<cl-transformation width='200' crop='fill'/>" + 
+          "<cl-transformation width='200' crop='fill'/>" +
           "<cl-transformation height='200' crop='fit'/>"+
-          "<cl-transformation if='end'/>" +          
+          "<cl-transformation if='end'/>" +
           "</cl-image></div>")($rootScope);
         $rootScope.$digest();
 
@@ -149,7 +149,7 @@ describe("cloudinary", function () {
         expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/if_w_gt_200/c_scale,w_100/c_fill,h_100/if_else/c_fill,w_200/c_fit,h_200/if_end/foobar\"");
       });
     });
-    
+
     describe("responsive", function () {
       var testWindow, tabImage2, image1;
       beforeAll(function (done) {
@@ -188,63 +188,95 @@ describe("cloudinary", function () {
       })
     })
   });
+  describe('child transformation with ng-if', function () {
+    it('should include transformation with ng-if="true"', function () {
+      var template = '<div><cl-image public_id="foobar">' +
+          '<cl-transformation ng-if="true" gravity="north" effect="sepia" radius="20" />' +
+          '</cl-image></div>';
+      var element = $compile(template)($rootScope);
+      $rootScope.$digest();
+      expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/e_sepia,g_north,r_20/foobar\"");
+    });
+    it('should exclude transformation with ng-if="false"', function () {
+      var template = '<div><cl-image public_id="foobar">' +
+          '<cl-transformation ng-if="false" gravity="north" effect="sepia" radius="20" />' +
+          '</cl-image></div>';
+      var element = $compile(template)($rootScope);
+      $rootScope.$digest();
+      expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/foobar\"");
+    });
+    it('should update transformation on ng-if condition changed', function () {
+      var template = '<div><cl-image public_id="foobar">' +
+          '<cl-transformation ng-if="ngIfVisible" gravity="north" effect="sepia" radius="20" />' +
+          '</cl-image></div>';
+      var element = $compile(template)($rootScope);
+
+      $rootScope.ngIfVisible = true;
+      $rootScope.$digest();
+      expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/e_sepia,g_north,r_20/foobar\"");
+
+      $rootScope.ngIfVisible = false;
+      $rootScope.$digest();
+      expect(element.html()).toMatch("src=\"https?://res\.cloudinary\.com/" + CLOUD_NAME + "/image/upload/foobar\"");
+    });
+  });
   describe('clVideo', function () {
-    it('throws an exception with missing publicId', function () {
-      expect(function() {
-        $compile('<div><cl-video /></div>')($rootScope);
-        $rootScope.$digest();
-      }).toThrow(new Error(
-          'You must set the public id of the video to load, e.g. <cl-video public-id={{video.public_id}}...></cl-video>'
-      ));
-    });
-    it('does not throw an error if transformation is not in video or image tag', function () {
-      $compile('<cl-transformation effect="art:hokusai"></cl-transformation>')($rootScope);
-      $rootScope.$digest();
-    });
-    describe('videos with nested transformations', function () {
-      it('creates a <video> element which encodes the directive attributes to the URL', function() {
-        var element = $compile('<cl-video id="video1" public-id="sample_video">\n' +
-            '<cl-transformation width="300" crop="scale" overlay="text:roboto_35_bold:SDK"></cl-transformation>\n' +
-            '<cl-transformation effect="art:hokusai"></cl-transformation>\n' +
-            '<cl-transformation fetch_format="auto"></cl-transformation>\n' +
-            '</cl-video>')($rootScope);
-        $rootScope.$digest();
-
-        const video = element[0];
-        // Created <video> element should have 3 child <source> elements for mp4, webm, ogg
-        expect(video.childElementCount).toBe(3);
-
-        for (var i = 0; i < 3; i++) {
-          expect(video.children[i].attributes.getNamedItem('src')).toBeDefined();
-          expect(video.children[i].attributes.getNamedItem('src').value).toEqual(
-              jasmine.stringMatching
-              (/c_scale,l_text:roboto_35_bold:SDK,w_300\/e_art:hokusai\/f_auto\/sample_video/));
-          expect(video.children[i].attributes.getNamedItem('src').value).toEqual(
-              jasmine.stringMatching(/video\/upload/));
-        }
+      it('throws an exception with missing publicId', function () {
+          expect(function() {
+              $compile('<div><cl-video /></div>')($rootScope);
+              $rootScope.$digest();
+          }).toThrow(new Error(
+              'You must set the public id of the video to load, e.g. <cl-video public-id={{video.public_id}}...></cl-video>'
+          ));
       });
-    });
-    it('creates a video element with a bound public-id', function () {
-      $rootScope.testPublicId = 'test-public-id';
-      var element = $compile(
-          '<cl-video cloud-name="my_other_cloud" public-id="{{testPublicId}}" secure="true" class="my-videos">\n' +
-          '  <cl-transformation overlay="text:arial_60:watchme" gravity="north" y="20"></cl-transformation>\n' +
-          '</cl-video>')($rootScope);
-      $rootScope.$digest();
-      testMarkup('test-public-id');
-      $rootScope.testPublicId = 'another-id';
-      $rootScope.$digest();
-      testMarkup('another-id');
+      it('does not throw an error if transformation is not in video or image tag', function () {
+          $compile('<cl-transformation effect="art:hokusai"></cl-transformation>')($rootScope);
+          $rootScope.$digest();
+      });
+      describe('videos with nested transformations', function () {
+          it('creates a <video> element which encodes the directive attributes to the URL', function() {
+              var element = $compile('<cl-video id="video1" public-id="sample_video">\n' +
+                  '<cl-transformation width="300" crop="scale" overlay="text:roboto_35_bold:SDK"></cl-transformation>\n' +
+                  '<cl-transformation effect="art:hokusai"></cl-transformation>\n' +
+                  '<cl-transformation fetch_format="auto"></cl-transformation>\n' +
+                  '</cl-video>')($rootScope);
+              $rootScope.$digest();
 
-      function testMarkup(id) {
-        for (var i = 0; i < 3; i++) {
-          expect(element[0].children[i].attributes.getNamedItem('src')).toBeDefined();
-          expect(element[0].children[i].attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching(
-              new RegExp('https:\/\/res.cloudinary.com\/my_other_cloud\/video\/upload\/g_north,l_text:arial_60:watchme,y_20\/'+id))
-          );
-        }
-      }
-    })
+              const video = element[0];
+              // Created <video> element should have 3 child <source> elements for mp4, webm, ogg
+              expect(video.childElementCount).toBe(3);
+
+              for (var i = 0; i < 3; i++) {
+                  expect(video.children[i].attributes.getNamedItem('src')).toBeDefined();
+                  expect(video.children[i].attributes.getNamedItem('src').value).toEqual(
+                      jasmine.stringMatching
+                      (/c_scale,l_text:roboto_35_bold:SDK,w_300\/e_art:hokusai\/f_auto\/sample_video/));
+                  expect(video.children[i].attributes.getNamedItem('src').value).toEqual(
+                      jasmine.stringMatching(/video\/upload/));
+              }
+          });
+      });
+      it('creates a video element with a bound public-id', function () {
+          $rootScope.testPublicId = 'test-public-id';
+          var element = $compile(
+              '<cl-video cloud-name="my_other_cloud" public-id="{{testPublicId}}" secure="true" class="my-videos">\n' +
+              '  <cl-transformation overlay="text:arial_60:watchme" gravity="north" y="20"></cl-transformation>\n' +
+              '</cl-video>')($rootScope);
+          $rootScope.$digest();
+          testMarkup('test-public-id');
+          $rootScope.testPublicId = 'another-id';
+          $rootScope.$digest();
+          testMarkup('another-id');
+
+          function testMarkup(id) {
+              for (var i = 0; i < 3; i++) {
+                  expect(element[0].children[i].attributes.getNamedItem('src')).toBeDefined();
+                  expect(element[0].children[i].attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching(
+                      new RegExp('https:\/\/res.cloudinary.com\/my_other_cloud\/video\/upload\/g_north,l_text:arial_60:watchme,y_20\/'+id))
+                  );
+              }
+          }
+      })
   });
   describe("clSrc", function () {
     it('populates the src attribute with the cloudinary URL for the public ID', function () {
