@@ -90,7 +90,12 @@
       transclude : false,
       require: {clImage: '?^clImage', clVideo: '?^clVideo'},
       link : function (scope, element, attrs, ctrl) {
-        (ctrl.clImage || ctrl.clVideo).addTransformation(toCloudinaryAttributes(attrs, /^[^$]/));
+        var tagController = ctrl.clImage || ctrl.clVideo;
+        if (tagController) {
+          tagController.addTransformation(toCloudinaryAttributes(attrs, /^[^$]/));
+        } else {
+          console.warn("cl-transformation should be a child of cl-image or cl-video")
+        }
       }
     }
   }]);

@@ -197,6 +197,10 @@ describe("cloudinary", function () {
           'You must set the public id of the video to load, e.g. <cl-video public-id={{video.public_id}}...></cl-video>'
       ));
     });
+    it('does not throw an error if transformation is not in video or image tag', function () {
+      $compile('<cl-transformation effect="art:hokusai"></cl-transformation>')($rootScope);
+      $rootScope.$digest();
+    });
     describe('videos with nested transformations', function () {
       it('creates a <video> element which encodes the directive attributes to the URL', function() {
         var element = $compile('<cl-video id="video1" public-id="sample_video">\n' +
