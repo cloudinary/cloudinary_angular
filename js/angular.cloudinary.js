@@ -88,9 +88,14 @@
     return {
       restrict : 'E',
       transclude : false,
-      require: '^clImage',
-      link : function (scope, element, attrs, clImageCtrl) {
-        clImageCtrl.addTransformation(toCloudinaryAttributes(attrs, /^[^$]/));
+      require: {clImage: '?^clImage', clVideo: '?^clVideo'},
+      link : function (scope, element, attrs, ctrl) {
+        var tagController = ctrl.clImage || ctrl.clVideo;
+        if (tagController) {
+          tagController.addTransformation(toCloudinaryAttributes(attrs, /^[^$]/));
+        } else {
+          console.warn("cl-transformation should be a child of cl-image or cl-video")
+        }
       }
     }
   }]);
@@ -159,6 +164,67 @@
           }
         };
 
+      }
+    };
+  }]);
+
+  cloudinaryModule.directive('clVideo', ['cloudinary', function(cloudinary) {
+    var Controller = function($scope) {
+      this.addTransformation = function(ts) {
+        $scope.transformations = $scope.transformations || [];
+        $scope.transformations.push(ts);
+      }
+    };
+    Controller.$inject = ['$scope'];
+    return {
+      restrict : 'E',
+      replace: true,
+      transclude : true,
+      template: "<video ng-transclude/>",
+      scope: {},
+      priority: 99,
+      controller: Controller,
+      link : function(scope, element, attrs) {
+        var options = toCloudinaryAttributes(attrs);
+
+        if (scope.transformations) {
+          options.transformation = scope.transformations;
+        }
+
+        attrs.$observe('publicId', function(value){
+          loadVideo(value);
+        });
+
+        if (!attrs.publicId) {
+          throw new Error(
+              'You must set the public id of the video to load, e.g. <cl-video public-id={{video.public_id}}...></cl-video>'
+          );
+        }
+        loadVideo(attrs.publicId);
+
+        function loadVideo(publicId) {
+          var videoTag = cloudinary.videoTag(publicId, options);
+          // Replace template with the custom video tag created by Cloudinary
+          appendSourceElements(element[0], videoTag.content());
+          // Add attributes
+          setElementAttributes(element[0], videoTag.attributes());
+        }
+        function appendSourceElements(element, html) {
+          const fragment = document.createDocumentFragment();
+          element.innerHTML = html;
+
+          while (element.childNodes[0]) {
+            fragment.appendChild(element.childNodes[0]);
+          }
+          element.appendChild(fragment);
+        }
+        function setElementAttributes(element, attributesLiteral) {
+          Object.keys(attributesLiteral).forEach(function (attrName) {
+            if(attrName.substr(0,2) !== '$$') {
+              element.setAttribute(attrName, attributesLiteral[attrName]);
+            }
+          });
+        }
       }
     };
   }]);
