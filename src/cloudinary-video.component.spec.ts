@@ -90,6 +90,15 @@ describe('CloudinaryVideo', () => {
         <cl-video id="video4" public-id="sample_video">
           <cl-transformation keyframe_interval="300"></cl-transformation>
         </cl-video>
+        <cl-video id="video4" public-id="sample_video">
+          <cl-transformation fps="24"></cl-transformation>
+        </cl-video>
+        <cl-video id="video4" public-id="sample_video">
+          <cl-transformation fps="24-29.97"></cl-transformation>
+        </cl-video>
+        <cl-video id="video4" public-id="sample_video">
+          <cl-transformation fps="25-"></cl-transformation>
+        </cl-video>
       `
     })
     class TestComponent {
@@ -117,6 +126,9 @@ describe('CloudinaryVideo', () => {
           /c_scale,ki_0\.05,l_text:roboto_35_bold:SDK,w_300\/e_art:hokusai\/f_auto\/sample_video/,
           /ki_3\.45\/sample_video/,
           /ki_300\/sample_video/,
+          /fps_24\/sample_video/,
+          /fps_24-29.97\/sample_video/,
+          /fps_25-\/sample_video/,
 
         ];
         const video = element.children[0].nativeElement as HTMLVideoElement;
@@ -133,7 +145,7 @@ describe('CloudinaryVideo', () => {
       });
 
       // verify interaction with underlying cloudinary-core lib
-      expect(localCloudinary.videoTag).toHaveBeenCalledTimes(4);
+      expect(localCloudinary.videoTag).toHaveBeenCalledTimes(7);
     });
   });
 
