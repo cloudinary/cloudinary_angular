@@ -1,5 +1,6 @@
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 const path = require("path");
 const IS_PROD = process.argv.indexOf("-p") > -1;
 
@@ -51,6 +52,10 @@ module.exports = {
     new webpack.DefinePlugin({
       ENV: JSON.stringify(IS_PROD ? "production" : "development")
     }),
-    new ExtractTextPlugin("stylesheets/[name].css")
+    new ExtractTextPlugin("stylesheets/[name].css"),
+    new FilterWarningsPlugin({
+      exclude: /System.import/
+    }),
+    new webpack.ContextReplacementPlugin(/\@angular(\\|\/)core(\\|\/)fesm5/, path.join(__dirname, './client')),
   ]
 };
