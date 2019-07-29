@@ -25,14 +25,21 @@ The SDK serves as a layer on top of one of Cloudinary's Javascript libraries:
 <a href="https://cloudinary.com/signup" style="background-color:#ff7829; border:1px solid; color: white; border-color: black; padding: 8px; text-decoration: none; box-shadow: 1px 1px 3px #224488; width: 500px">Signup for free</a>
 
 ## Live examples ##################################################################
-Start experimenting right away with one these live examples:
+Start experimenting right away with one of these live examples:
 
 * [Codepen example](https://codepen.io/team/Cloudinary/project/editor/AxrvPZ/)
 * [Plunker example](https://plnkr.co/edit/Tvrwxt2AW8K5DEhuTKhB?p=preview)
 * [Glitch example](https://glitch.com/edit/#!/cloudinary-angular-sdk)
 
 ## Installation ######################################################################
-Install the SDK version that matches your Angular version
+Install the SDK version that supports the Angular version you are using:
+
+* For Angular 2, use `2.x`
+* For Angular 4, use `4.x`
+* For Angular 5-7, use `5.x`.  
+
+For example: 
+
 ```shell
 npm install @cloudinary/angular-5.x --save
 ```
@@ -217,6 +224,11 @@ You can [open an issue through GitHub](https://github.com/cloudinary/cloudinary_
 Contact us [https://cloudinary.com/contact](https://cloudinary.com/contact)
 
 Stay tuned for updates, tips and tutorials: [Blog](https://cloudinary.com/blog), [Twitter](https://twitter.com/cloudinary), [Facebook](https://www.facebook.com/Cloudinary).
+
+## Join the Community ##########################################################
+
+Impact the product, hear updates, test drive new features and more! Join [here](https://www.facebook.com/groups/CloudinaryCommunity).
+
 
 ## License #######################################################################
 

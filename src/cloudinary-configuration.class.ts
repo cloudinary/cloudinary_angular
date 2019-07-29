@@ -22,4 +22,5 @@ export default interface CloudinaryConfiguration {
     readonly url_suffix?: string;
     readonly use_root_path?: boolean;
     readonly version?: string;
+    readonly client_hints?: boolean;
 }

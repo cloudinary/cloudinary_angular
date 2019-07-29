@@ -1,4 +1,4 @@
-Cloudinary AngularJS Photo Album Sample
+Cloudinary Angular Photo Album Sample
 =======================================
 
 This sample project shows:
@@ -24,7 +24,7 @@ Run `npm install` to install the required dependencies for this module.
 
 Run `npm start` to start the server and automatically open a browser and navigate to the application's url.
 
-The application is deplyoed at http://localhost:8002/
+The application is deployed at http://localhost:8002/
 
 ## Internals ##
 This sample is using [Webpack](https://webpack.github.io) for bundling and serving the application.
