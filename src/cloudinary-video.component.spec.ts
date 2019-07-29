@@ -333,5 +333,44 @@ describe('CloudinaryVideo', () => {
         jasmine.stringMatching(/demo\/video\/upload\/so_auto\/dog.jpg/));
     });
   });
+  describe('Video with font antialiasing and hinting', () => {
+    @Component({
+      template: `
+            <cl-video cloud-name="my_other_cloud" public-id="watchme" secure="true" class="my-videos">
+                <cl-transformation overlay="text:Arial_18_bold_italic_letter_spacing_4_line_spacing_2_antialiasing_best_hinting_medium"></cl-transformation>
+            </cl-video>
+            `
+    })
+    class TestComponent {
+    }
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement;  // the elements w/ the directive
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryVideo, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: localCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+
+      // Our element under test, which is attached to CloudinaryVideo
+      des = fixture.debugElement.query(By.directive(CloudinaryVideo));
+    });
+
+    it('creates a <video> element which encodes the directive attributes to the URL', () => {
+      const video = des.children[0].nativeElement as HTMLVideoElement;
+      // Created <video> element should have 3 child <source> elements for mp4, webm, ogg
+      expect(video.childElementCount).toBe(3);
+
+      for (let i = 0; i < 3; i++) {
+        expect(video.children[i].attributes.getNamedItem('src')).toBeDefined();
+        expect(video.children[i].attributes.getNamedItem('src').value).toEqual(
+          jasmine.stringMatching
+          (/https:\/\/res.cloudinary.com\/my_other_cloud\/video\/upload\/l_text:Arial_18_bold_italic_letter_spacing_4_line_spacing_2_antialiasing_best_hinting_medium\/watchme/));
+      }
+    });
+  });
 });
 
