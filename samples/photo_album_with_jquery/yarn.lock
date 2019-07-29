@@ -248,17 +248,9 @@ blueimp-canvas-to-blob@3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/blueimp-canvas-to-blob/-/blueimp-canvas-to-blob-3.5.0.tgz#5679ac32f6a2835821f0c3ad661719ff85a9236b"
 
-blueimp-file-upload@^9.11.2:
-  version "9.19.1"
-  resolved "https://registry.yarnpkg.com/blueimp-file-upload/-/blueimp-file-upload-9.19.1.tgz#9d46af945c41cefdd043f2fcb9c0a204d8e06337"
-  optionalDependencies:
-    blueimp-canvas-to-blob "3.5.0"
-    blueimp-load-image "2.12.2"
-    blueimp-tmpl "3.6.0"
-
-blueimp-file-upload@^9.21.0:
-  version "9.21.0"
-  resolved "https://registry.yarnpkg.com/blueimp-file-upload/-/blueimp-file-upload-9.21.0.tgz#bf7bfc3e28970e8be0f8789f68026e0dca98f6e0"
+blueimp-file-upload@^9.11.2, blueimp-file-upload@^9.22.1:
+  version "9.22.1"
+  resolved "https://registry.yarnpkg.com/blueimp-file-upload/-/blueimp-file-upload-9.22.1.tgz#08a9fccbaf1ec930acf6242c217620b057f0ecc6"
   optionalDependencies:
     blueimp-canvas-to-blob "3.5.0"
     blueimp-load-image "2.12.2"
