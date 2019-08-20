@@ -62,7 +62,7 @@
     "@types/selenium-webdriver": "^3.0.8",
     "canonical-path": "^0.0.2",
     "cloudinary": "^1.9.1",
-    "cloudinary-core": "^2.3.0",
+    "cloudinary-core": "^2.7.3",
     "concurrently": "^3.5.0",
     "core-js": "^2.5.1",
     "jasmine-core": "^3.4.0",
