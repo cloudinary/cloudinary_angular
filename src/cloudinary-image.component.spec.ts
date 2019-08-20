@@ -238,6 +238,73 @@ describe('CloudinaryImage', () => {
     });
 
   });
+  describe('should support custom function remote', () => {
+    @Component({
+      template:
+        `
+        <cl-image public-id="sample">
+          <cl-transformation  custom_function='{"function_type":"remote", "source": "https://df34ra4a.execute-api.us-west-2.amazonaws.com/default/cloudinaryFunction"}'></cl-transformation>
+        </cl-image>
+      `
+    })
+    class TestComponent { }
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement;  // the elements w/ the directive
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: localCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+
+      // Our element under test, which is attached to CloudinaryImage
+      des = fixture.debugElement.query(By.directive(CloudinaryImage));
+    });
+
+    it('creates an img element which encodes the directive attributes to the URL', () => {
+      const img = des.children[0].nativeElement as HTMLImageElement;
+      expect(img.src).toEqual(jasmine.stringMatching
+      (/fn_remote:aHR0cHM6Ly9kZjM0cmE0YS5leGVjdXRlLWFwaS51cy13ZXN0LTIuYW1hem9uYXdzLmNvbS9kZWZhdWx0L2Nsb3VkaW5hcnlGdW5jdGlvbg==\/sample/));
+      expect(img.attributes.getNamedItem('data-src')).toBeNull();
+    });
+  });
+
+  describe('should support custom function wasm', () => {
+    @Component({
+      template:
+        `
+        <cl-image public-id="sample">
+          <cl-transformation  custom_function='{"function_type":"wasm", "source": "blur.wasm"}'></cl-transformation>
+        </cl-image>
+      `
+    })
+    class TestComponent { }
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement;  // the elements w/ the directive
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: localCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+
+      // Our element under test, which is attached to CloudinaryImage
+      des = fixture.debugElement.query(By.directive(CloudinaryImage));
+    });
+
+    it('creates an img element which encodes the directive attributes to the URL', () => {
+      const img = des.children[0].nativeElement as HTMLImageElement;
+      expect(img.src).toEqual(jasmine.stringMatching
+      (/fn_wasm:blur.wasm\/sample/));
+      expect(img.attributes.getNamedItem('data-src')).toBeNull();
+    });
+  });
 
   describe('Sample code presented in README', () => {
     @Component({
