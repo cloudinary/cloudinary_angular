@@ -90,6 +90,27 @@ describe('CloudinaryVideo', () => {
         <cl-video id="video4" public-id="sample_video">
           <cl-transformation keyframe_interval="300"></cl-transformation>
         </cl-video>
+        <cl-video id="video5" public-id="sample_video">
+          <cl-transformation fps="24-29.97"></cl-transformation>
+        </cl-video>
+        <cl-video id="video6" public-id="sample_video">
+          <cl-transformation fps="24"></cl-transformation>
+        </cl-video>
+        <cl-video id="video7" public-id="sample_video">
+          <cl-transformation fps="24.973"></cl-transformation>
+        </cl-video>
+        <cl-video id="video8" public-id="sample_video">
+          <cl-transformation fps="24"></cl-transformation>
+        </cl-video>
+        <cl-video id="video9" public-id="sample_video">
+          <cl-transformation fps="-24"></cl-transformation>
+        </cl-video>
+        <cl-video id="video10" public-id="sample_video">
+          <cl-transformation fps="$v"></cl-transformation>
+        </cl-video>
+        <cl-video id="video11" public-id="sample_video">
+          <cl-transformation fps="24-$v"></cl-transformation>
+        </cl-video>
       `
     })
     class TestComponent {
@@ -117,7 +138,13 @@ describe('CloudinaryVideo', () => {
           /c_scale,ki_0\.05,l_text:roboto_35_bold:SDK,w_300\/e_art:hokusai\/f_auto\/sample_video/,
           /ki_3\.45\/sample_video/,
           /ki_300\/sample_video/,
-
+          /fps_24-29.97\/sample_video/,
+          /fps_24\/sample_video/,
+          /fps_24.973\/sample_video/,
+          /fps_24\/sample_video/,
+          /fps_-24\/sample_video/,
+          /fps_\$v\/sample_video/,
+          /fps_24-\$v\/sample_video/,
         ];
         const video = element.children[0].nativeElement as HTMLVideoElement;
         // Created <video> element should have 3 child <source> elements for mp4, webm, ogg
@@ -133,7 +160,7 @@ describe('CloudinaryVideo', () => {
       });
 
       // verify interaction with underlying cloudinary-core lib
-      expect(localCloudinary.videoTag).toHaveBeenCalledTimes(4);
+      expect(localCloudinary.videoTag).toHaveBeenCalledTimes(11);
     });
   });
 
