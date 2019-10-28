@@ -11,7 +11,6 @@
     "noUnusedLocals": true,
     "declaration": true,
     "skipLibCheck": true,
-    "outDir": "target",
     "lib": [
       "es2015",
       "dom"
@@ -20,8 +19,7 @@
   "exclude": [
     "node_modules",
     "samples",
-    "compiled",
-    "target"
+    "compiled"
   ],
   "angularCompilerOptions": {
     "strictMetadataEmit": true,
