@@ -8,6 +8,7 @@ import { CloudinaryTransformationDirective } from './cloudinary-transformation.d
 import { CloudinaryImageSourceDirective } from './cloudinary-image-source.directive';
 import { CloudinaryBackgroundImageDirective } from './cloudinary-background-image.directive'
 import CloudinaryConfiguration from './cloudinary-configuration.class';
+import {LazyLoadDirective } from './cloudinary-lazy-load.directive';
 
 // Export for lib consumers
 export { CloudinaryImage } from './cloudinary-image.component';
@@ -15,6 +16,7 @@ export { CloudinaryVideo } from './cloudinary-video.component';
 export { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
 export { CloudinaryImageSourceDirective } from './cloudinary-image-source.directive';
 export { CloudinaryBackgroundImageDirective } from './cloudinary-background-image.directive';
+export { LazyLoadDirective } from './cloudinary-lazy-load.directive';
 
 export { Cloudinary, provideCloudinary } from './cloudinary.service';
 
@@ -34,14 +36,16 @@ export function createCloudinary(cloudinaryJsLib: any, configuration: Cloudinary
     CloudinaryBackgroundImageDirective,
     CloudinaryImage,
     CloudinaryVideo,
-    CloudinaryTransformationDirective
+    CloudinaryTransformationDirective,
+    LazyLoadDirective
   ],
   exports: [
     CloudinaryImageSourceDirective,
     CloudinaryBackgroundImageDirective,
     CloudinaryImage,
     CloudinaryVideo,
-    CloudinaryTransformationDirective
+    CloudinaryTransformationDirective,
+    LazyLoadDirective
   ]
 })
 export class CloudinaryModule {

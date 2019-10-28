@@ -18,12 +18,13 @@ import { isBrowser } from './cloudinary.service';
 
 @Component({
   selector: 'cl-image',
-  template: '<img>'
+  template: '<img>',
 })
 export class CloudinaryImage
   implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   @Input('public-id') publicId: string;
   @Input('client-hints') clientHints?: boolean;
+  @Input('loading') loading: string;
 
   @ContentChildren(CloudinaryTransformationDirective)
   transformations: QueryList<CloudinaryTransformationDirective>;
@@ -104,7 +105,8 @@ export class CloudinaryImage
 
   setElementAttributes(element, attributesLiteral) {
     Object.keys(attributesLiteral).forEach(attrName => {
-      element.setAttribute(attrName, attributesLiteral[attrName]);
+      const attr = attrName === 'src' && this.loading === 'lazy' ? 'data-src' : attrName;
+      element.setAttribute(attr, attributesLiteral[attrName]);
     });
   }
 }
