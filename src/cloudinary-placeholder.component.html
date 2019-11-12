@@ -1,0 +1,4 @@
+<div  class="image_container" [style.width.px]="this.width">
+  <img class="placeholder" [src]="getSmallImage()">
+  <img #image_container class="picture" [src]="getLargeImag()" (load)="doSomething()">
+</div>

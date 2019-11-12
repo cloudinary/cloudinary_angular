@@ -25,6 +25,7 @@ export class CloudinaryImage
   @Input('public-id') publicId: string;
   @Input('client-hints') clientHints?: boolean;
   @Input('loading') loading: string;
+  @Input('placeholder') placeholder: string;
 
   @ContentChildren(CloudinaryTransformationDirective)
   transformations: QueryList<CloudinaryTransformationDirective>;
