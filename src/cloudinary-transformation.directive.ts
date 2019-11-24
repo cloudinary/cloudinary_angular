@@ -12,3 +12,4 @@ export class CloudinaryTransformationDirective {
     return this.el.nativeElement.attributes;
   }
 }
+

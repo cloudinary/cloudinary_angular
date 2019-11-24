@@ -1,6 +1,7 @@
 'use strict';
 /* App Module */
 import { NgModule, ModuleWithProviders, InjectionToken } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Cloudinary } from './cloudinary.service';
 import { CloudinaryImage } from './cloudinary-image.component';
 import { CloudinaryVideo } from './cloudinary-video.component';
@@ -36,6 +37,9 @@ export function createCloudinary(cloudinaryJsLib: any, configuration: Cloudinary
 };
 
 @NgModule({
+  imports: [
+    CommonModule,
+  ],
   declarations: [
     CloudinaryImageSourceDirective,
     CloudinaryBackgroundImageDirective,

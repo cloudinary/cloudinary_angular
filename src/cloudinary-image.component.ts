@@ -1,16 +1,16 @@
 import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    Output,
-    ContentChildren,
-    QueryList,
-    AfterViewInit,
-    OnInit,
-    OnChanges,
-    SimpleChanges,
-    OnDestroy
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ContentChildren,
+  QueryList,
+  AfterViewInit,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  OnDestroy,
 } from '@angular/core';
 import { Cloudinary } from './cloudinary.service';
 import { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
@@ -18,14 +18,16 @@ import { isBrowser } from './cloudinary.service';
 
 @Component({
   selector: 'cl-image',
-  template: '<img>',
+  styles: [`img {width: 100%}`],
+  template: `<img (load)="hasLoaded()">`,
 })
 export class CloudinaryImage
-  implements AfterViewInit, OnInit, OnChanges, OnDestroy {
+  implements AfterViewInit, OnInit, AfterViewInit, OnChanges, OnDestroy {
   @Input('public-id') publicId: string;
   @Input('client-hints') clientHints?: boolean;
   @Input('loading') loading: string;
-  @Input('placeholder') placeholder: string;
+  @Input('width') width?: string;
+  @Input('height') height?: string;
 
   @ContentChildren(CloudinaryTransformationDirective)
   transformations: QueryList<CloudinaryTransformationDirective>;
@@ -34,6 +36,7 @@ export class CloudinaryImage
   @Output() onError: EventEmitter<boolean> = new EventEmitter(); // Callback when an image is loaded with error
 
   observer: MutationObserver;
+  sholdShowPlaceHolder: boolean = true;
 
   constructor(private el: ElementRef, private cloudinary: Cloudinary) {}
 
@@ -69,6 +72,12 @@ export class CloudinaryImage
     this.loadImage();
   }
 
+  hasLoaded() {
+    console.log('image has loaded');
+    this.sholdShowPlaceHolder = false;
+    // this.placeholderComponent.publicId = null;
+  }
+
   loadImage() {
     // https://github.com/angular/universal#universal-gotchas
     // Fetch the image only for client side rendering by the browser
@@ -97,10 +106,10 @@ export class CloudinaryImage
         delete options['responsive'];
       }
       const imageTag = this.cloudinary.imageTag(this.publicId, options);
-      this.setElementAttributes(image, imageTag.attributes());
-      if (options.responsive) {
-        this.cloudinary.responsive(image, options);
-      }
+        this.setElementAttributes(image, imageTag.attributes());
+        if (options.responsive) {
+          this.cloudinary.responsive(image, options);
+        }
     }
   }
 

@@ -1,40 +1,54 @@
 import {
   Component,
   Input,
-  ViewChild,
-  ElementRef
+  ContentChild,
+  ContentChildren, QueryList,
 } from '@angular/core';
+import {Cloudinary} from './cloudinary.service';
+import { CloudinaryImage } from './cloudinary-image.component';
 
 @Component({
-  styleUrls: ['./cloudinary-placeholder.component.css'],
-  templateUrl: './cloudinary-placeholder.component.html'
+  selector: 'placeholder',
+  template: `<div style="position: relative; overflow:hidden" [style.width.px]="this.width" [style.height.px]="this.height"><img style="width: 100%; position: relative; transform: scale(1)" [src]="getSmallImage()">
+  <div style="position: absolute;top: 0;left: 0; width: 100%;height: 100%;transition: opacity 1s linear;" [style.opacity]="cloudinaryImage.sholdShowPlaceHolder ? 0 : 1">
+      <ng-content></ng-content>
+  </div></div>
+  `
+  ,
+// <div *ngIf="this.cloudinaryImage.sholdHidePlaceHolder">  should make image disappear once loaded?
 })
 export class CloudinaryPlaceHolder {
   // @ts-ignore
-  @ViewChild('image_container') image_container: ElementRef<any>;
   @Input('public-id') publicId: string;
   @Input() width: string;
+  @Input('height') height: string;
   @Input() placeholder_type: string;
-  // @Input() placeholder = true;
 
+  showImage: boolean = true;
 
+  @ContentChild(CloudinaryImage) cloudinaryImage: CloudinaryImage;
+  @ContentChildren(CloudinaryImage)
+  transformations: QueryList<CloudinaryImage>;
 
-  doSomething() {
-    const largePicture = this.image_container.nativeElement;
-    largePicture.classList.add('loaded');
+  constructor(private cloudinary: Cloudinary) {}
+
+  toggleImage() {
+    this.showImage = !this.showImage;
   }
+  ngAfterViewInit() {
+    console.log('width', this.width);
+    this.width = this.cloudinaryImage.width;
+    this.height = this.cloudinaryImage.height;
+    this.publicId = this.cloudinaryImage.publicId;
+    console.log('transformations', this.transformations);
+    console.log('cloudinary-image', this.cloudinaryImage);
+  }
+
   getSmallImage() { // blur cartoonify pixelate
+    // take percentagge of original image with limit 200
     if (this.placeholder_type) {
-      return `https://res.cloudinary.com/rcstraus/image/upload/e_${this.placeholder_type},q_auto,w_50,f_auto/${this.publicId}`;
+      return this.cloudinary.url(this.publicId, {effect: this.placeholder_type, quality: 'auto', fetch_format: 'auto', width: '50', crop: 'fit'});
     }
-    return `https://res.cloudinary.com/rcstraus/image/upload/e_blur,q_auto,w_50,f_auto/${this.publicId}`;
+    return this.cloudinary.url(this.publicId, {quality: 'auto', fetch_format: 'auto', width: '50', crop: 'fit', effect: 'blur'});
   }
-
-  getLargeImag() {
-    if (this.width) {
-      return `https://res.cloudinary.com/rcstraus/image/upload/w_${this.width}/${this.publicId}`;
-    }
-    return `https://res.cloudinary.com/rcstraus/image/upload/${this.publicId}`;
-  }
-
 }

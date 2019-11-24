@@ -1,17 +1,15 @@
-import {AfterViewInit, Directive, ViewChild} from '@angular/core';
+import {AfterContentInit, ContentChild, Directive} from '@angular/core';
 import { CloudinaryPlaceHolder } from'./cloudinary-placeholder.component';
 
 @Directive({
-  selector: 'cl-image[placeholder]'
+  selector: 'h3[placeholder]'
 })
-export class PlaceHolderDirective implements AfterViewInit {
-  @ViewChild(CloudinaryPlaceHolder) placeholder: CloudinaryPlaceHolder;
+export class PlaceHolderDirective implements AfterContentInit {
+  @ContentChild(CloudinaryPlaceHolder) placeholderComponent: CloudinaryPlaceHolder;
 
-
-  // constructor(private el: ElementRef) {}
-
-  ngAfterViewInit() {
-    this.placeholder;
-    console.log('placeholder', this.placeholder);
+  ngAfterContentInit(): void {
+    // this.placeholderComponent;
+    // console.log('this', this);
+    // console.log('placeholder', this.placeholderComponent);
   }
 }
