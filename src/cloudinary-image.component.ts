@@ -10,16 +10,20 @@ import {
   OnInit,
   OnChanges,
   SimpleChanges,
-  OnDestroy,
+  OnDestroy, ContentChild,
 } from '@angular/core';
 import { Cloudinary } from './cloudinary.service';
 import { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
+import { CloudinaryPlaceHolder } from './cloudinary-placeholder.component';
 import { isBrowser } from './cloudinary.service';
 
 @Component({
   selector: 'cl-image',
-  styles: [`img {width: 100%}`],
-  template: `<img (load)="hasLoaded()">`,
+  template: `<img [style.display]="shouldShowPlaceHolder ? 'none' : 'inline'" (load)="hasLoaded()">
+  <div [style.display]="shouldShowPlaceHolder ? 'inline' : 'none'">
+      <ng-content></ng-content>
+  </div>
+  `,
 })
 export class CloudinaryImage
   implements AfterViewInit, OnInit, AfterViewInit, OnChanges, OnDestroy {
@@ -31,16 +35,26 @@ export class CloudinaryImage
 
   @ContentChildren(CloudinaryTransformationDirective)
   transformations: QueryList<CloudinaryTransformationDirective>;
+  @ContentChild(CloudinaryPlaceHolder) placeholderComponent: CloudinaryPlaceHolder;
 
   @Output() onLoad: EventEmitter<boolean> = new EventEmitter(); // Callback when an image is loaded successfully
   @Output() onError: EventEmitter<boolean> = new EventEmitter(); // Callback when an image is loaded with error
 
   observer: MutationObserver;
-  sholdShowPlaceHolder: boolean = true;
+  shouldShowPlaceHolder: boolean = true;
 
   constructor(private el: ElementRef, private cloudinary: Cloudinary) {}
 
   ngOnInit(): void {
+    if (this.width && this.placeholderComponent) {
+      this.placeholderComponent.setWidth(this.width);
+    }
+    if (this.height && this.placeholderComponent) {
+      this.placeholderComponent.setHeight(this.height);
+    }
+    if (this.placeholderComponent) {
+      this.placeholderComponent.setPublicId(this.publicId);
+    }
     if (isBrowser()) {
       // Create an observer instance
       this.observer = new MutationObserver(() => {
@@ -73,9 +87,7 @@ export class CloudinaryImage
   }
 
   hasLoaded() {
-    console.log('image has loaded');
-    this.sholdShowPlaceHolder = false;
-    // this.placeholderComponent.publicId = null;
+    this.shouldShowPlaceHolder = false;
   }
 
   loadImage() {
@@ -105,11 +117,15 @@ export class CloudinaryImage
         delete options['data-src'];
         delete options['responsive'];
       }
+      if (this.placeholderComponent) {
+        this.placeholderHandler(options);
+      }
       const imageTag = this.cloudinary.imageTag(this.publicId, options);
-        this.setElementAttributes(image, imageTag.attributes());
-        if (options.responsive) {
-          this.cloudinary.responsive(image, options);
-        }
+
+      this.setElementAttributes(image, imageTag.attributes());
+      if (options.responsive) {
+        this.cloudinary.responsive(image, options);
+      }
     }
   }
 
@@ -118,5 +134,14 @@ export class CloudinaryImage
       const attr = attrName === 'src' && this.loading === 'lazy' ? 'data-src' : attrName;
       element.setAttribute(attr, attributesLiteral[attrName]);
     });
+  }
+
+  placeholderHandler(options) {
+    const placeholderOptions = {};
+
+    Object.keys(options).forEach(name => {
+      placeholderOptions[name] = (name === 'width' && !options[name].startsWith('auto') || name === 'height') ? Math.floor(parseInt(options[name], 10) * 0.1) : options[name];
+    })
+    this.placeholderComponent.options = placeholderOptions;
   }
 }

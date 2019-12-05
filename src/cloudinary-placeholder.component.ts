@@ -1,54 +1,58 @@
 import {
+  AfterContentChecked,
   Component,
+  HostBinding,
   Input,
-  ContentChild,
-  ContentChildren, QueryList,
 } from '@angular/core';
 import {Cloudinary} from './cloudinary.service';
-import { CloudinaryImage } from './cloudinary-image.component';
+
 
 @Component({
-  selector: 'placeholder',
-  template: `<div style="position: relative; overflow:hidden" [style.width.px]="this.width" [style.height.px]="this.height"><img style="width: 100%; position: relative; transform: scale(1)" [src]="getSmallImage()">
-  <div style="position: absolute;top: 0;left: 0; width: 100%;height: 100%;transition: opacity 1s linear;" [style.opacity]="cloudinaryImage.sholdShowPlaceHolder ? 0 : 1">
-      <ng-content></ng-content>
-  </div></div>
-  `
+  selector: 'cl-placeholder',
+  template: `<img [src]="this.smallImg" [style.width.px]="this.itemWidth"[style.height.px]="this.itemHeight">`
   ,
-// <div *ngIf="this.cloudinaryImage.sholdHidePlaceHolder">  should make image disappear once loaded?
 })
-export class CloudinaryPlaceHolder {
-  // @ts-ignore
-  @Input('public-id') publicId: string;
-  @Input() width: string;
-  @Input('height') height: string;
-  @Input() placeholder_type: string;
+export class CloudinaryPlaceHolder implements AfterContentChecked {
+  @Input('type') type: string;
+  @HostBinding('style.width') itemWidth;
+  @HostBinding('style.height') itemHeight;
+  @HostBinding('attr.public-id') publicId;
 
-  showImage: boolean = true;
-
-  @ContentChild(CloudinaryImage) cloudinaryImage: CloudinaryImage;
-  @ContentChildren(CloudinaryImage)
-  transformations: QueryList<CloudinaryImage>;
+  options: object = {};
+  smallImg: string;
 
   constructor(private cloudinary: Cloudinary) {}
 
-  toggleImage() {
-    this.showImage = !this.showImage;
-  }
-  ngAfterViewInit() {
-    console.log('width', this.width);
-    this.width = this.cloudinaryImage.width;
-    this.height = this.cloudinaryImage.height;
-    this.publicId = this.cloudinaryImage.publicId;
-    console.log('transformations', this.transformations);
-    console.log('cloudinary-image', this.cloudinaryImage);
+  setWidth(width) {
+    this.itemWidth = width;
   }
 
-  getSmallImage() { // blur cartoonify pixelate
-    // take percentagge of original image with limit 200
-    if (this.placeholder_type) {
-      return this.cloudinary.url(this.publicId, {effect: this.placeholder_type, quality: 'auto', fetch_format: 'auto', width: '50', crop: 'fit'});
+  setHeight(height) {
+    this.itemHeight = height;
+  }
+
+  setPublicId(id) {
+    this.publicId = id;
+  }
+
+  ngAfterContentChecked() {
+    this.smallImg = this.getSmallImage();
+  }
+
+  getSmallImage() {
+    if (this.type === 'vectorize') {
+      return this.cloudinary.url(this.publicId, {transformation: [this.options, {effect: this.type, quality: 1}]});
+    } else if (this.type === 'pixelate') {
+        return this.cloudinary.url(this.publicId, {transformation: [this.options, {effect: this.type, quality: 1, fetch_format: 'auto'}]});
+    } else if (this.type === 'solid') {
+      return this.cloudinary.url(this.publicId, {
+        transformation: [this.options,
+          {width: 'iw_div_2', aspect_ratio: 1, crop: 'pad', background: 'auto'},
+          {crop: 'crop', width: 10, height: 10, gravity: 'north_east'},
+          {width: 'iw', height: 'ih', crop: 'fill'}]
+      });
+    } else {
+      return this.cloudinary.url(this.publicId, {transformation: [this.options, {effect: 'blur:500', quality: 1, fetch_format: 'auto'}]});
     }
-    return this.cloudinary.url(this.publicId, {quality: 'auto', fetch_format: 'auto', width: '50', crop: 'fit', effect: 'blur'});
   }
 }

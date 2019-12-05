@@ -10,7 +10,6 @@ import { CloudinaryImageSourceDirective } from './cloudinary-image-source.direct
 import { CloudinaryBackgroundImageDirective } from './cloudinary-background-image.directive'
 import CloudinaryConfiguration from './cloudinary-configuration.class';
 import { LazyLoadDirective } from './cloudinary-lazy-load.directive';
-import { PlaceHolderDirective } from'./cloudinary-placeholder.directive'
 import { CloudinaryPlaceHolder } from'./cloudinary-placeholder.component';
 
 // Export for lib consumers
@@ -20,7 +19,6 @@ export { CloudinaryTransformationDirective } from './cloudinary-transformation.d
 export { CloudinaryImageSourceDirective } from './cloudinary-image-source.directive';
 export { CloudinaryBackgroundImageDirective } from './cloudinary-background-image.directive';
 export { LazyLoadDirective } from './cloudinary-lazy-load.directive';
-export { PlaceHolderDirective } from'./cloudinary-placeholder.directive';
 export { CloudinaryPlaceHolder } from'./cloudinary-placeholder.component';
 
 
@@ -47,7 +45,6 @@ export function createCloudinary(cloudinaryJsLib: any, configuration: Cloudinary
     CloudinaryVideo,
     CloudinaryTransformationDirective,
     LazyLoadDirective,
-    PlaceHolderDirective,
     CloudinaryPlaceHolder
   ],
   exports: [
@@ -57,7 +54,6 @@ export function createCloudinary(cloudinaryJsLib: any, configuration: Cloudinary
     CloudinaryVideo,
     CloudinaryTransformationDirective,
     LazyLoadDirective,
-    PlaceHolderDirective,
     CloudinaryPlaceHolder
   ]
 })
