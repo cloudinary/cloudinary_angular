@@ -36,23 +36,24 @@ export class CloudinaryPlaceHolder implements AfterContentChecked {
   }
 
   ngAfterContentChecked() {
-    this.smallImg = this.getSmallImage();
+    this.smallImg = this.getPlaceholderImage();
   }
 
-  getSmallImage() {
-    if (this.type === 'vectorize') {
-      return this.cloudinary.url(this.publicId, {transformation: [this.options, {effect: this.type, quality: 1}]});
-    } else if (this.type === 'pixelate') {
-        return this.cloudinary.url(this.publicId, {transformation: [this.options, {effect: this.type, quality: 1, fetch_format: 'auto'}]});
-    } else if (this.type === 'solid') {
-      return this.cloudinary.url(this.publicId, {
-        transformation: [this.options,
-          {width: 'iw_div_2', aspect_ratio: 1, crop: 'pad', background: 'auto'},
-          {crop: 'crop', width: 10, height: 10, gravity: 'north_east'},
-          {width: 'iw', height: 'ih', crop: 'fill'}]
-      });
-    } else {
-      return this.cloudinary.url(this.publicId, {transformation: [this.options, {effect: 'blur:500', quality: 1, fetch_format: 'auto'}]});
+  getPlaceholderImage() {
+    const placeholderImageOptions = {
+      'vectorize': {effect: 'vectorize', quality: 1},
+      'pixelate': {effect: 'pixelate', quality: 1, fetch_format: 'auto'},
+      'blur': {effect: 'blur:2000', quality: 1, fetch_format: 'auto'},
+      'solid': [
+        {width: 'iw_div_2', aspect_ratio: 1, crop: 'pad', background: 'auto'},
+        {crop: 'crop', width: 10, height: 10, gravity: 'north_east'},
+        {width: 'iw', height: 'ih', crop: 'fill'},
+        {fetch_format: 'auto', quality: 'auto'}]
     }
+
+    let transformation = [].concat.apply([], [this.options, placeholderImageOptions[this.type]]);
+
+    return placeholderImageOptions[this.type] ? this.cloudinary.url(this.publicId, {transformation: transformation}) :
+      this.cloudinary.url(this.publicId, {transformation: [this.options, placeholderImageOptions['blur']]})
   }
 }

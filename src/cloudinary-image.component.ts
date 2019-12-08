@@ -10,7 +10,8 @@ import {
   OnInit,
   OnChanges,
   SimpleChanges,
-  OnDestroy, ContentChild,
+  OnDestroy,
+  ContentChild,
 } from '@angular/core';
 import { Cloudinary } from './cloudinary.service';
 import { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';

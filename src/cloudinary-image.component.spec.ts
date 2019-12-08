@@ -561,7 +561,7 @@ describe('CloudinaryImage', () => {
       expect(img.hasAttribute('src')).toBe(true);
       expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/bear'));
     });
-    it('Should lazy load post scroll', async () => {
+    it('Should lazy load post scroll', async() => {
       const delay = 300;
       const wait = (ms) => new Promise(res => setTimeout(res, ms));
       const count = async () => document.querySelectorAll('.startWindow').length;
@@ -585,7 +585,72 @@ describe('CloudinaryImage', () => {
       expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/bear'));
     });
   });
-  describe('lazy load image', async () => {
+  describe('lazy load image with placeholder', async () => {
+    @Component({
+      template: `
+          <div class="startWindow"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+          <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+          <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear">
+              <cl-placeholder></cl-placeholder>
+          </cl-image></div>
+          <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+          <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+          <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+          <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+          <div class="endWindow" style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>`
+    })
+    class TestComponent {}
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement[];  // the elements w/ the directive
+    let placeholder: DebugElement[];
+    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
+      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
+    beforeEach(fakeAsync(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent, LazyLoadDirective, CloudinaryPlaceHolder],
+        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+      // all elements with an attached CloudinaryImage
+      des = fixture.debugElement.queryAll(By.directive(CloudinaryImage));
+      placeholder = fixture.debugElement.queryAll(By.directive(CloudinaryPlaceHolder));
+      tick();
+      fixture.detectChanges();
+    }));
+    it('should load eagerly', () => {
+      const img = des[0].children[0].nativeElement as HTMLImageElement;
+      expect(img.hasAttribute('src')).toBe(true);
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/bear'));
+    });
+    it('Should lazy load post scroll', async () => {
+      const delay = 300;
+      const wait = (ms) => new Promise(res => setTimeout(res, ms));
+      const count = async () => document.querySelectorAll('.startWindow').length;
+      const scrollDown = async () => {
+        document.querySelector('.endWindow')
+          .scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'end' });
+      }
+
+      let preCount = 0;
+      let postCount = 0;
+      do {
+        preCount = await count();
+        await scrollDown();
+        await wait(delay);
+        postCount = await count();
+      } while (postCount > preCount);
+      await wait(delay);
+
+      const placeholderimg = placeholder[0].children[0].nativeElement as HTMLImageElement;
+      const img = des[3].children[0].nativeElement as HTMLImageElement;
+      expect(placeholderimg.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/e_blur:2000,f_auto,q_1/bear'));
+      expect(img.hasAttribute('src')).toBe(true);
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/bear'));
+    });
+  });
+  describe('lazy load image with placeholder', async () => {
     @Component({
       template: `
           <div class="startWindow"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
@@ -621,7 +686,35 @@ describe('CloudinaryImage', () => {
       expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/e_pixelate,f_auto,q_1/bear'));
     }));
   });
-  describe('placeholder', () => {
+  describe('placeholder default', () => {
+    @Component({
+      template: `<cl-image public-id="bear">
+          <cl-placeholder></cl-placeholder>
+      </cl-image>`
+    })
+    class TestComponent {}
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement[];  // the elements w/ the directive
+    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
+      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent, CloudinaryPlaceHolder],
+        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+      des = fixture.debugElement.queryAll(By.directive(CloudinaryPlaceHolder));
+    });
+    it('creates an img element with placeholder', fakeAsync(() => {
+      tick();
+      fixture.detectChanges();
+      const img = des[0].children[0].nativeElement as HTMLImageElement;
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/e_blur:2000,f_auto,q_1/bear'));
+    }));
+  });
+  describe('placeholder type blur', () => {
     @Component({
       template: `<cl-image public-id="bear" width="300" crop="fit">
           <cl-placeholder type="blur"></cl-placeholder>
@@ -646,7 +739,92 @@ describe('CloudinaryImage', () => {
       tick();
       fixture.detectChanges();
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('c_fit,w_30/e_blur:500,f_auto,q_1/bear'));
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('c_fit,w_30/e_blur:2000,f_auto,q_1/bear'));
+    }));
+  });
+  describe('placeholder type pixelate', () => {
+    @Component({
+      template: `<cl-image public-id="bear" width="300" crop="fit">
+          <cl-placeholder type="pixelate"></cl-placeholder>
+      </cl-image>`
+    })
+    class TestComponent {}
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement[];  // the elements w/ the directive
+    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
+      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent, CloudinaryPlaceHolder],
+        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+      des = fixture.debugElement.queryAll(By.directive(CloudinaryPlaceHolder));
+    });
+    it('creates an img element with placeholder', fakeAsync(() => {
+      tick();
+      fixture.detectChanges();
+      const img = des[0].children[0].nativeElement as HTMLImageElement;
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/c_fit,w_30/e_pixelate,f_auto,q_1/bear'));
+    }));
+  });
+  describe('placeholder type solid', () => {
+    @Component({
+      template: `<cl-image public-id="bear" width="300" crop="fit">
+          <cl-placeholder type="solid"></cl-placeholder>
+      </cl-image>`
+    })
+    class TestComponent {}
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement[];  // the elements w/ the directive
+    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
+      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent, CloudinaryPlaceHolder],
+        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+      des = fixture.debugElement.queryAll(By.directive(CloudinaryPlaceHolder));
+    });
+    it('creates an img element with placeholder', fakeAsync(() => {
+      tick();
+      fixture.detectChanges();
+      const img = des[0].children[0].nativeElement as HTMLImageElement;
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/c_fit,w_30/ar_1,b_auto,' +
+        'c_pad,w_iw_div_2/c_crop,g_north_east,h_10,w_10/c_fill,h_ih,w_iw/f_auto,q_auto/bear'));
+    }));
+  });
+  describe('placeholder type vectorize', () => {
+    @Component({
+      template: `<cl-image public-id="bear" width="300" crop="fit">
+          <cl-placeholder type="vectorize"></cl-placeholder>
+      </cl-image>`
+    })
+    class TestComponent {}
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement[];  // the elements w/ the directive
+    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
+      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent, CloudinaryPlaceHolder],
+        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+      des = fixture.debugElement.queryAll(By.directive(CloudinaryPlaceHolder));
+    });
+    it('creates an img element with placeholder', fakeAsync(() => {
+      tick();
+      fixture.detectChanges();
+      const img = des[0].children[0].nativeElement as HTMLImageElement;
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/c_fit,w_30/e_vectorize,q_1/bear'));
     }));
   });
   describe('placeholder with cl-transformation', () => {
@@ -674,7 +852,7 @@ describe('CloudinaryImage', () => {
       tick();
       fixture.detectChanges();
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_sepia/c_fit,w_30/e_blur:500,f_auto,q_1/bear'));
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_sepia/c_fit,w_30/e_blur:2000,f_auto,q_1/bear'));
     }));
   });
 });
