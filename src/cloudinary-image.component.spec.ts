@@ -585,7 +585,7 @@ describe('CloudinaryImage', () => {
       expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/bear'));
     });
   });
-  describe('lazy load image with placeholder', async () => {
+  describe('lazy load image with default placeholder', async () => {
     @Component({
       template: `
           <div class="startWindow"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
@@ -650,7 +650,7 @@ describe('CloudinaryImage', () => {
       expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/bear'));
     });
   });
-  describe('lazy load image with placeholder', async () => {
+  describe('lazy load image with pixelate placeholder', async () => {
     @Component({
       template: `
           <div class="startWindow"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>

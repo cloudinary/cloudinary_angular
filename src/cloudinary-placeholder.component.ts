@@ -9,7 +9,7 @@ import {Cloudinary} from './cloudinary.service';
 
 @Component({
   selector: 'cl-placeholder',
-  template: `<img [src]="this.smallImg" [style.width.px]="this.itemWidth"[style.height.px]="this.itemHeight">`
+  template: `<img [src]="this.placeholderImg" [style.width.px]="this.itemWidth" [style.height.px]="this.itemHeight">`
   ,
 })
 export class CloudinaryPlaceHolder implements AfterContentChecked {
@@ -19,7 +19,7 @@ export class CloudinaryPlaceHolder implements AfterContentChecked {
   @HostBinding('attr.public-id') publicId;
 
   options: object = {};
-  smallImg: string;
+  placeholderImg: string;
 
   constructor(private cloudinary: Cloudinary) {}
 
@@ -36,7 +36,7 @@ export class CloudinaryPlaceHolder implements AfterContentChecked {
   }
 
   ngAfterContentChecked() {
-    this.smallImg = this.getPlaceholderImage();
+    this.placeholderImg = this.getPlaceholderImage();
   }
 
   getPlaceholderImage() {
@@ -50,10 +50,7 @@ export class CloudinaryPlaceHolder implements AfterContentChecked {
         {width: 'iw', height: 'ih', crop: 'fill'},
         {fetch_format: 'auto', quality: 'auto'}]
     }
-
-    let transformation = [].concat.apply([], [this.options, placeholderImageOptions[this.type]]);
-
-    return placeholderImageOptions[this.type] ? this.cloudinary.url(this.publicId, {transformation: transformation}) :
-      this.cloudinary.url(this.publicId, {transformation: [this.options, placeholderImageOptions['blur']]})
+    let transformation = [].concat.apply([], [this.options, placeholderImageOptions[this.type] || placeholderImageOptions['blur']]);
+    return this.cloudinary.url(this.publicId, {transformation: transformation});
   }
 }
