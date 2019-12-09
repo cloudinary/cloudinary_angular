@@ -1,3 +1,15 @@
+1.1.0 / 2019-12-09
+==================
+
+New functionality
+-----------------
+* Add support to lazy loading
+* Add placeholder component
+Other changes
+-------------
+* Add test for custom function
+* Add fps tests
+
 (5.x)1.0.0 / 2017-11-22
 =======================
 

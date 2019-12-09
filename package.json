@@ -1,6 +1,6 @@
 {
   "name": "@cloudinary/angular-5.x",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "The formal Cloudinary Angular SDK to enhance your applications with image and video components powered by Cloudinary",
   "keywords": [
     "cloudinary",
