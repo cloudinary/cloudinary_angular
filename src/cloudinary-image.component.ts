@@ -33,6 +33,7 @@ export class CloudinaryImage
   @Input('loading') loading: string;
   @Input('width') width?: string;
   @Input('height') height?: string;
+  @Input('accessibility') accessibility?: string;
 
   @ContentChildren(CloudinaryTransformationDirective)
   transformations: QueryList<CloudinaryTransformationDirective>;
@@ -47,6 +48,9 @@ export class CloudinaryImage
   constructor(private el: ElementRef, private cloudinary: Cloudinary) {}
 
   ngOnInit(): void {
+    if (this.accessibility) {
+      this.accessibilityModeHandler();
+    }
     if (this.width && this.placeholderComponent) {
       this.placeholderComponent.setWidth(this.width);
     }
@@ -144,5 +148,17 @@ export class CloudinaryImage
       placeholderOptions[name] = (name === 'width' && !options[name].startsWith('auto') || name === 'height') ? Math.floor(parseInt(options[name], 10) * 0.1) : options[name];
     })
     this.placeholderComponent.options = placeholderOptions;
+  }
+
+  accessibilityModeHandler() {
+    const darkImages = Array.from(document.querySelectorAll('cl-image[accessibility="darkmode"]'));
+    const brightImages = Array.from(document.querySelectorAll('cl-image[accessibility="brightmode"]'));
+    const monochromeImages = Array.from(document.querySelectorAll('cl-image[accessibility="monochrome"]'));
+    const colorblindImages = Array.from(document.querySelectorAll('cl-image[accessibility="colorblind"]'));
+
+    darkImages.forEach( element => { element.setAttribute('effect', 'tint:75:black') });
+    brightImages.forEach( element => { element.setAttribute('effect', 'tint:50:white') });
+    monochromeImages.forEach( element => { element.setAttribute('effect', 'grayscale') });
+    colorblindImages.forEach( element => { element.setAttribute('effect', 'assist_colorblind') });
   }
 }
