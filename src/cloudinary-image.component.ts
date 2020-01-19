@@ -48,9 +48,6 @@ export class CloudinaryImage
   constructor(private el: ElementRef, private cloudinary: Cloudinary) {}
 
   ngOnInit(): void {
-    if (this.accessibility) {
-      this.accessibilityModeHandler();
-    }
     if (this.width && this.placeholderComponent) {
       this.placeholderComponent.setWidth(this.width);
     }
@@ -113,6 +110,7 @@ export class CloudinaryImage
       image.onerror = e => {
         this.onError.emit(e);
       }
+
       const options = this.cloudinary.toCloudinaryAttributes(
         nativeElement.attributes,
         this.transformations
@@ -124,6 +122,10 @@ export class CloudinaryImage
       }
       if (this.placeholderComponent) {
         this.placeholderHandler(options);
+      }
+
+      if (this.accessibility) {
+        options.effect = options.effect + this.accessibilityModeHandler();
       }
       const imageTag = this.cloudinary.imageTag(this.publicId, options);
 
@@ -151,14 +153,12 @@ export class CloudinaryImage
   }
 
   accessibilityModeHandler() {
-    const darkImages = Array.from(document.querySelectorAll('cl-image[accessibility="darkmode"]'));
-    const brightImages = Array.from(document.querySelectorAll('cl-image[accessibility="brightmode"]'));
-    const monochromeImages = Array.from(document.querySelectorAll('cl-image[accessibility="monochrome"]'));
-    const colorblindImages = Array.from(document.querySelectorAll('cl-image[accessibility="colorblind"]'));
-
-    darkImages.forEach( element => { element.setAttribute('effect', 'tint:75:black') });
-    brightImages.forEach( element => { element.setAttribute('effect', 'tint:50:white') });
-    monochromeImages.forEach( element => { element.setAttribute('effect', 'grayscale') });
-    colorblindImages.forEach( element => { element.setAttribute('effect', 'assist_colorblind') });
+    const accessibilityEffect = {
+      'darkmode': '/e_tint:75:black',
+      'brightmode': '/e_tint:50:white',
+      'monochrome': '/e_grayscale',
+      'colorblind': '/e_assist_colorblind'
+    }
+    return accessibilityEffect[this.accessibility];
   }
 }
