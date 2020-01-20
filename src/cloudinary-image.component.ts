@@ -20,7 +20,7 @@ import { isBrowser } from './cloudinary.service';
 
 @Component({
   selector: 'cl-image',
-  template: `<img [style.display]="shouldShowPlaceHolder ? 'none' : 'inline'" (load)="hasLoaded()">
+  template: `<img [ngStyle]="{opacity: shouldShowPlaceHolder ? '0' : '1', position: shouldShowPlaceHolder ? 'absolute' : 'unset'}"(load)="hasLoaded()">
   <div [style.display]="shouldShowPlaceHolder ? 'inline' : 'none'">
       <ng-content></ng-content>
   </div>
