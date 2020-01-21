@@ -895,7 +895,7 @@ describe('CloudinaryImage', () => {
   });
   describe('cl-image with acessibility modes and transformation', () => {
     @Component({
-      template: `<cl-image public-id="bear" accessibility="darkmode" effect="grayscale">
+      template: `<cl-image public-id="bear" accessibility="darkmode" effect="grayscale" overlay="sample">
         <cl-transformation effect="sepia"></cl-transformation>
       </cl-image>`
     })
@@ -915,7 +915,7 @@ describe('CloudinaryImage', () => {
     });
     it('creates an img element with accessibility darkmode without overwriting effect', fakeAsync(() => {
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_sepia/e_grayscale/e_tint:75:black/bear'));
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_sepia/e_grayscale,l_sample/e_tint:75:black/bear'));
     }));
   });
 });

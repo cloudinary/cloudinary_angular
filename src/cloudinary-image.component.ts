@@ -22,7 +22,7 @@ import { isBrowser } from './cloudinary.service';
   selector: 'cl-image',
   template: `<img [style.display]="shouldShowPlaceHolder ? 'none' : 'inline'" (load)="hasLoaded()">
   <div [style.display]="shouldShowPlaceHolder ? 'inline' : 'none'">
-      <ng-content></ng-content>
+    <ng-content></ng-content>
   </div>
   `,
 })
@@ -44,6 +44,7 @@ export class CloudinaryImage
 
   observer: MutationObserver;
   shouldShowPlaceHolder: boolean = true;
+  options: object = {};
 
   constructor(private el: ElementRef, private cloudinary: Cloudinary) {}
 
@@ -123,9 +124,9 @@ export class CloudinaryImage
       if (this.placeholderComponent) {
         this.placeholderHandler(options);
       }
-
       if (this.accessibility) {
-        options.effect = options.effect + this.accessibilityModeHandler();
+        this.options = options;
+        options.src = this.accessibilityModeHandler();
       }
       const imageTag = this.cloudinary.imageTag(this.publicId, options);
 
@@ -154,11 +155,13 @@ export class CloudinaryImage
 
   accessibilityModeHandler() {
     const accessibilityEffect = {
-      'darkmode': '/e_tint:75:black',
-      'brightmode': '/e_tint:50:white',
-      'monochrome': '/e_grayscale',
-      'colorblind': '/e_assist_colorblind'
+      'darkmode': {effect: 'tint:75:black'},
+      'brightmode': {effect: 'tint:50:white'},
+      'monochrome': {effect: 'grayscale'},
+      'colorblind': {effect: 'assist_colorblind'}
     }
-    return accessibilityEffect[this.accessibility];
+    let transformation = [].concat.apply([], [this.options, accessibilityEffect[this.accessibility]]);
+    return this.cloudinary.url(this.publicId, {transformation: transformation});
   }
 }
+
