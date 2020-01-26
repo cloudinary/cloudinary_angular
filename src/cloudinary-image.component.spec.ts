@@ -770,10 +770,10 @@ describe('CloudinaryImage', () => {
       expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/c_fit,w_30/e_pixelate,f_auto,q_1/bear'));
     }));
   });
-  describe('placeholder type solid', () => {
+  describe('placeholder type predominant', () => {
     @Component({
       template: `<cl-image public-id="bear" width="300" crop="fit">
-          <cl-placeholder type="solid"></cl-placeholder>
+          <cl-placeholder type="predominant"></cl-placeholder>
       </cl-image>`
     })
     class TestComponent {}
