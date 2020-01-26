@@ -1,4 +1,12 @@
 {
+  "$schema": "./node_modules/ng-packagr/package.schema.json",
+  "name": "@my/foo",
+  "version": "1.0.0",
+  "ngPackage": {
+    "lib": {
+      "entryFile": "index.ts"
+    }
+  },
   "name": "@cloudinary/angular-5.x",
   "version": "1.1.0",
   "description": "The formal Cloudinary Angular SDK to enhance your applications with image and video components powered by Cloudinary",
@@ -32,7 +40,8 @@
     "e2e": "npm run install-sample-from-source && concurrently \"npm run start-sample\" \"protractor protractor.config.js --baseUrl='http://localhost:4000/'\" --kill-others --success first",
     "e2e:jquery": "npm run start-sample:jquery && protractor protractor.config.js --baseUrl='http://localhost:3000/' --kill-others --success first",
     "ngc": "ngc",
-    "ngc:w": "ngc -w"
+    "ngc:w": "ngc -w",
+    "build": "ng-packagr -p package.json"
   },
   "repository": {
     "type": "git",
@@ -75,6 +84,7 @@
     "karma-jasmine": "^2.0.0",
     "karma-jasmine-html-reporter": "^1.4.0",
     "karma-phantomjs-launcher": "^1.0.4",
+    "ng-packagr": "^4.7.1",
     "promise-polyfill": "^6.0.2",
     "protractor": "^5.2.0",
     "reflect-metadata": "^0.1.10",

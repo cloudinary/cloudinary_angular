@@ -30,7 +30,7 @@ export const CLOUDINARY_LIB = new InjectionToken('CLOUDINARY_LIB');
 export const CLOUDINARY_CONFIGURATION = new InjectionToken('CLOUDINARY_CONFIGURATION');
 
 // Export this function to Angular's AOT to work
-export function createCloudinary(cloudinaryJsLib: any, configuration: CloudinaryConfiguration) {
+export function createCloudinary(cloudinaryJsLib: object, configuration: CloudinaryConfiguration) {
   return new Cloudinary(cloudinaryJsLib, configuration);
 };
 
@@ -58,7 +58,8 @@ export function createCloudinary(cloudinaryJsLib: any, configuration: Cloudinary
   ]
 })
 export class CloudinaryModule {
-  static forRoot(cloudinaryJsLib: any, cloudinaryConfiguration: CloudinaryConfiguration): ModuleWithProviders {
+  // @ts-ignore
+  static forRoot(cloudinaryJsLib: object, cloudinaryConfiguration: CloudinaryConfiguration): ModuleWithProviders<CloudinaryModule> {
     return {
       ngModule: CloudinaryModule,
       providers: [
