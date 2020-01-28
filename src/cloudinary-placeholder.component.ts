@@ -5,7 +5,7 @@ import {
   Input,
 } from '@angular/core';
 import {Cloudinary} from './cloudinary.service';
-
+import { placeholderImageOptions, predominantColorTransformPxl } from './constants';
 
 @Component({
   selector: 'cl-placeholder',
@@ -20,7 +20,6 @@ export class CloudinaryPlaceHolder implements AfterContentChecked {
 
   options: object = {};
   placeholderImg: string;
-  predominantTransform: object;
 
   constructor(private cloudinary: Cloudinary) {}
 
@@ -41,26 +40,10 @@ export class CloudinaryPlaceHolder implements AfterContentChecked {
   }
 
   getPlaceholderImage() {
-    if (this.type === 'predominant' && this.itemHeight && this.itemWidth) {
-      this.predominantTransform = [
-        {width: 'iw_div_2', aspect_ratio: 1, crop: 'pad', background: 'auto'},
-        {crop: 'crop', width: 10, height: 10, gravity: 'north_east'},
-        {width: '1', height: '1', crop: 'fill'},
-        {fetch_format: 'auto', quality: 'auto'}]
+    if (this.type === 'predominant-color' && this.itemHeight && this.itemWidth) {
+      return this.cloudinary.url(this.publicId, {transformation: [this.options, ...predominantColorTransformPxl]});
     } else {
-      this.predominantTransform  = [
-        {width: 'iw_div_2', aspect_ratio: 1, crop: 'pad', background: 'auto'},
-        {crop: 'crop', width: 10, height: 10, gravity: 'north_east'},
-        {width: 'iw', height: 'ih', crop: 'fill'},
-        {fetch_format: 'auto', quality: 'auto'}]
+      return this.cloudinary.url(this.publicId, {transformation: [this.options, ...placeholderImageOptions[this.type] || placeholderImageOptions['blur']]})
     }
-    const placeholderImageOptions = {
-      'vectorize': {effect: 'vectorize', quality: 1},
-      'pixelate': {effect: 'pixelate', quality: 1, fetch_format: 'auto'},
-      'blur': {effect: 'blur:2000', quality: 1, fetch_format: 'auto'},
-      'predominant': this.predominantTransform
-    }
-    let transformation = [].concat.apply([], [this.options, placeholderImageOptions[this.type] || placeholderImageOptions['blur']]);
-    return this.cloudinary.url(this.publicId, {transformation: transformation});
   }
 }
