@@ -149,7 +149,7 @@ export class CloudinaryImage
     const placeholderOptions = {};
 
     Object.keys(options).forEach(name => {
-      placeholderOptions[name] = (name === 'width' || name === 'height' && !options[name].startsWith('auto')) ? Math.ceil(parseInt(options[name], 10) * 0.1) : options[name];
+      placeholderOptions[name] = (name === 'width' && !options[name].startsWith('auto') || name === 'height') ? Math.ceil(parseInt(options[name], 10) * 0.1) : options[name];
     })
     this.placeholderComponent.options = placeholderOptions;
   }
