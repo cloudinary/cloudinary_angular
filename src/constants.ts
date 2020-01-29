@@ -1,10 +1,3 @@
-export const accessibilityEffect = {
-  'darkmode': {effect: 'tint:75:black'},
-  'brightmode': {effect: 'tint:50:white'},
-  'monochrome': {effect: 'grayscale'},
-  'colorblind': {effect: 'assist_colorblind'}
-};
-
 export const predominantColorTransformPxl = [
   {width: 'iw_div_2', aspect_ratio: 1, crop: 'pad', background: 'auto'},
   {crop: 'crop', width: 1, height: 1, gravity: 'north_east'},
