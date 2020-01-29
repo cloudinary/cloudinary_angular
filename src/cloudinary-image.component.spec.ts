@@ -770,6 +770,35 @@ describe('CloudinaryImage', () => {
       expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/c_fit,w_30/e_pixelate,f_auto,q_1/bear'));
     }));
   });
+  describe('placeholder type predominant-color with exact dimensions', () => {
+    @Component({
+      template: `<cl-image public-id="bear" width="300" height="300" crop="fit">
+        <cl-placeholder type="predominant-color"></cl-placeholder>
+      </cl-image>`
+    })
+    class TestComponent {}
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement[];  // the elements w/ the directive
+    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
+      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent, CloudinaryPlaceHolder],
+        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+      des = fixture.debugElement.queryAll(By.directive(CloudinaryPlaceHolder));
+    });
+    it('creates an img element with placeholder size 1 pxl', fakeAsync(() => {
+      tick();
+      fixture.detectChanges();
+      const img = des[0].children[0].nativeElement as HTMLImageElement;
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/c_fit,h_30,w_30/ar_1,b_auto,' +
+        'c_pad,w_iw_div_2/c_crop,g_north_east,h_1,w_1/f_auto,q_auto/bear'));
+    }));
+  });
   describe('placeholder type predominant-color', () => {
     @Component({
       template: `<cl-image public-id="bear" width="300" crop="fit">
@@ -853,69 +882,6 @@ describe('CloudinaryImage', () => {
       fixture.detectChanges();
       const img = des[0].children[0].nativeElement as HTMLImageElement;
       expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_sepia/c_fit,w_30/e_blur:2000,f_auto,q_1/bear'));
-    }));
-  });
-  describe('cl-image with acessibility modes', () => {
-    @Component({
-      template: `<cl-image public-id="bear" accessibility="darkmode"></cl-image>
-      <cl-image public-id="bear" accessibility="monochrome"></cl-image>
-      <cl-image public-id="bear" accessibility="brightmode"></cl-image>
-      <cl-image public-id="bear" accessibility="colorblind"></cl-image>`
-    })
-    class TestComponent {}
-
-    let fixture: ComponentFixture<TestComponent>;
-    let des: DebugElement[];  // the elements w/ the directive
-    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
-      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
-    beforeEach(() => {
-      fixture = TestBed.configureTestingModule({
-        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent],
-        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
-      }).createComponent(TestComponent);
-      fixture.detectChanges(); // initial binding
-      des = fixture.debugElement.queryAll(By.directive(CloudinaryImage));
-    });
-    it('creates an img element with accessibility darkmode', fakeAsync(() => {
-      const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_tint:75:black/bear'));
-    }));
-    it('creates an img element with accessibility monochrome', fakeAsync(() => {
-      const img = des[1].children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_grayscale/bear'));
-    }));
-    it('creates an img element with accessibility brightmode', fakeAsync(() => {
-      const img = des[2].children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_tint:50:white/bear'));
-    }));
-    it('creates an img element with accessibility colorblind', fakeAsync(() => {
-      const img = des[3].children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_assist_colorblind/bear'));
-    }));
-  });
-  describe('cl-image with acessibility modes and transformation', () => {
-    @Component({
-      template: `<cl-image public-id="bear" accessibility="darkmode" effect="grayscale" overlay="sample">
-        <cl-transformation effect="sepia"></cl-transformation>
-      </cl-image>`
-    })
-    class TestComponent {}
-
-    let fixture: ComponentFixture<TestComponent>;
-    let des: DebugElement[];  // the elements w/ the directive
-    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
-      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
-    beforeEach(() => {
-      fixture = TestBed.configureTestingModule({
-        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent],
-        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
-      }).createComponent(TestComponent);
-      fixture.detectChanges(); // initial binding
-      des = fixture.debugElement.queryAll(By.directive(CloudinaryImage));
-    });
-    it('creates an img element with accessibility darkmode without overwriting effect', fakeAsync(() => {
-      const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_sepia/e_grayscale,l_sample/e_tint:75:black/bear'));
     }));
   });
 });
