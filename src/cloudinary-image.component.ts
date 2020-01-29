@@ -17,7 +17,6 @@ import { Cloudinary } from './cloudinary.service';
 import { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
 import { CloudinaryPlaceHolder } from './cloudinary-placeholder.component';
 import { isBrowser } from './cloudinary.service';
-import { accessibilityEffect } from './constants';
 
 @Component({
   selector: 'cl-image',
@@ -34,7 +33,6 @@ export class CloudinaryImage
   @Input('loading') loading: string;
   @Input('width') width?: string;
   @Input('height') height?: string;
-  @Input('accessibility') accessibility?: string;
 
   @ContentChildren(CloudinaryTransformationDirective)
   transformations: QueryList<CloudinaryTransformationDirective>;
@@ -45,7 +43,6 @@ export class CloudinaryImage
 
   observer: MutationObserver;
   shouldShowPlaceHolder: boolean = true;
-  options: object = {};
 
   constructor(private el: ElementRef, private cloudinary: Cloudinary) {}
 
@@ -125,10 +122,6 @@ export class CloudinaryImage
       if (this.placeholderComponent) {
         this.placeholderHandler(options);
       }
-      if (this.accessibility) {
-        this.options = options;
-        options.src = this.accessibilityModeHandler();
-      }
       const imageTag = this.cloudinary.imageTag(this.publicId, options);
 
       this.setElementAttributes(image, imageTag.attributes());
@@ -149,13 +142,9 @@ export class CloudinaryImage
     const placeholderOptions = {};
 
     Object.keys(options).forEach(name => {
-      placeholderOptions[name] = (name === 'width' && !options[name].startsWith('auto') || name === 'height') ? Math.floor(parseInt(options[name], 10) * 0.1) : options[name];
+      placeholderOptions[name] = (name === 'width' && !options[name].startsWith('auto') || name === 'height') ? Math.ceil(parseInt(options[name], 10) * 0.1) : options[name];
     })
     this.placeholderComponent.options = placeholderOptions;
-  }
-
-  accessibilityModeHandler() {
-    return this.cloudinary.url(this.publicId, {transformation: [this.options, accessibilityEffect[this.accessibility]]});
   }
 }
 

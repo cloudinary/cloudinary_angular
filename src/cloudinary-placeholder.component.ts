@@ -5,7 +5,7 @@ import {
   Input,
 } from '@angular/core';
 import {Cloudinary} from './cloudinary.service';
-
+import { placeholderImageOptions, predominantColorTransformPxl } from './constants';
 
 @Component({
   selector: 'cl-placeholder',
@@ -40,17 +40,10 @@ export class CloudinaryPlaceHolder implements AfterContentChecked {
   }
 
   getPlaceholderImage() {
-    const placeholderImageOptions = {
-      'vectorize': {effect: 'vectorize', quality: 1},
-      'pixelate': {effect: 'pixelate', quality: 1, fetch_format: 'auto'},
-      'blur': {effect: 'blur:2000', quality: 1, fetch_format: 'auto'},
-      'solid': [
-        {width: 'iw_div_2', aspect_ratio: 1, crop: 'pad', background: 'auto'},
-        {crop: 'crop', width: 10, height: 10, gravity: 'north_east'},
-        {width: 'iw', height: 'ih', crop: 'fill'},
-        {fetch_format: 'auto', quality: 'auto'}]
+    if (this.type === 'predominant-color' && this.itemHeight && this.itemWidth) {
+      return this.cloudinary.url(this.publicId, {transformation: [this.options, ...predominantColorTransformPxl]});
+    } else {
+      return this.cloudinary.url(this.publicId, {transformation: [this.options, ...placeholderImageOptions[this.type] || placeholderImageOptions['blur']]})
     }
-    let transformation = [].concat.apply([], [this.options, placeholderImageOptions[this.type] || placeholderImageOptions['blur']]);
-    return this.cloudinary.url(this.publicId, {transformation: transformation});
   }
 }
