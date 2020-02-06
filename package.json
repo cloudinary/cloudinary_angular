@@ -1,14 +1,12 @@
 {
   "$schema": "./node_modules/ng-packagr/package.schema.json",
-  "name": "@my/foo",
-  "version": "1.0.0",
+  "name": "@cloudinary/angular-5.x",
+  "version": "1.1.0",
   "ngPackage": {
     "lib": {
       "entryFile": "index.ts"
     }
   },
-  "name": "@cloudinary/angular-5.x",
-  "version": "1.1.0",
   "description": "The formal Cloudinary Angular SDK to enhance your applications with image and video components powered by Cloudinary",
   "keywords": [
     "cloudinary",
@@ -60,8 +58,8 @@
     "@angular/common": "^5.0.0",
     "@angular/compiler": "^5.0.0",
     "@angular/compiler-cli": "^5.0.0",
-    "@angular/core": "^5.0.0",
-    "@angular/forms": "^5.0.0",
+    "@angular/core": "^6.1.2",
+    "@angular/forms": "^6.1.2",
     "@angular/http": "^5.0.0",
     "@angular/platform-browser": "^5.0.0",
     "@angular/platform-browser-dynamic": "^5.0.0",

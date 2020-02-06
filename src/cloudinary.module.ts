@@ -58,7 +58,6 @@ export function createCloudinary(cloudinaryJsLib: object, configuration: Cloudin
   ]
 })
 export class CloudinaryModule {
-  // @ts-ignore
   static forRoot(cloudinaryJsLib: object, cloudinaryConfiguration: CloudinaryConfiguration): ModuleWithProviders<CloudinaryModule> {
     return {
       ngModule: CloudinaryModule,
