@@ -1,0 +1,25 @@
+{
+  "name": "@cloudinary/angular-5.x",
+  "version": "1.1.0",
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
+  },
+  "devDependencies": {
+    "cloudinary-core": "^2.8.0",
+    "typescript": "^2.9.2"
+  },
+  "main": "bundles/cloudinary-angular-5.x.umd.js",
+  "module": "fesm5/cloudinary-angular-5.x.js",
+  "es2015": "fesm2015/cloudinary-angular-5.x.js",
+  "esm5": "esm5/cloudinary-angular-5.x.js",
+  "esm2015": "esm2015/cloudinary-angular-5.x.js",
+  "fesm5": "fesm5/cloudinary-angular-5.x.js",
+  "fesm2015": "fesm2015/cloudinary-angular-5.x.js",
+  "typings": "cloudinary-angular-5.x.d.ts",
+  "metadata": "cloudinary-angular-5.x.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}
