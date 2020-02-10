@@ -1,0 +1,7 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/@cloudinary/angular-5.x",
+  "lib": {
+    "entryFile": "src/public_api.ts"
+  }
+}

@@ -1,0 +1,6 @@
+.photo { margin: 10px; padding: 10px; border-top: 2px solid #ccc; }
+.photo .thumbnail { margin-top: 10px; display: block; max-width: 200px; border: none; }
+.toggle_info { margin-top: 10px; font-weight: bold; color: #e62401; display: block; }
+.thumbnail_holder { height: 182px; margin-bottom: 5px; margin-right: 10px; }
+.info td, .uploaded_info td { font-size: 12px }
+.note { margin: 20px 0}

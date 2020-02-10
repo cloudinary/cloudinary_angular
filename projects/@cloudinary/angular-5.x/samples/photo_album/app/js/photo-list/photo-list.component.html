@@ -1,0 +1,231 @@
+<div class="photo-list">
+    <div id="posterframe">
+        <!-- This will render the fetched Facebook profile picture using Cloudinary according to the
+      requested transformations. This also shows how to chain transformations -->
+        <a (click)=changePublicId()>
+          <cl-image
+                  class="static-photo"
+                  responsive
+                  width="auto"
+                  crop="scale"
+                  [public-id]="publicId"
+                  type="facebook"
+                  angle="20"
+                  (onLoad)="onLoadImage($event)"
+          >
+              <cl-transformation effect="art:hokusai"></cl-transformation>
+              <cl-transformation border="3px_solid_rgb:00390b" radius="20"></cl-transformation>
+          </cl-image>
+          <cl-image
+                  public-id="non-existing"
+                  (onError)="onErrorImage($event)"
+          >
+          </cl-image>
+        </a>
+    </div>
+
+    <h1 class="welcome">Welcome!</h1>
+
+
+    <div class="introducing-cloudinary">
+        <p>
+            This is the main demo page of the PhotoAlbum sample AngularJS application of Cloudinary.<br/> Here you can see all images
+            you have uploaded to this application and find some information on how to implement your own AngularJS application storing,
+            manipulating and serving your photos using Cloudinary!
+        </p>
+        <p>
+            All of the images you see here are transformed and served by Cloudinary. For instance, the logo and the poster frame. They
+            are both generated in the cloud using Cloudinary functions. These two pictures weren't even have to be uploaded to Cloudinary,
+            they are retrieved by the service, transformed, cached and distributed through a CDN.
+
+            <!-- This embeds a <video> element in the page, retrieved from a different cloud -->
+            <cl-video public-id="manipulation_video" cloud-name="cloudinary" controls="true" preload="none"
+                      width="925" crop="scale"
+                      class="manipulation-video"
+                      poster='{ "cloud-name": "cloudinary", "gravity": "north", "start-offset": "28", "transformation": [{"effect": "sepia", "fetch_format": "auto"}]}'
+                      source-transformation='{ "webm": { "quality": "70"}, "mp4": { "overlay": "text:verdana_30:Greetings!" } }'
+                      fallback-content="Your browser does not support HTML5 video tags"
+            >
+                <cl-transformation overlay="text:arial_20:Cloudinary%20features" color="red" gravity="north" y="12"></cl-transformation>
+            </cl-video>
+        </p>
+    </div>
+    <hr>
+
+    <h1>Your Photos</h1>
+
+    <div class="actions">
+        <a class="upload_link" routerLink="new">Add photo with Angular File upload</a>
+    </div>
+
+    <div class="photos">
+        <p *ngIf="errorOccurred">No photos were added yet.</p>
+        <p *ngIf="photos.length === 0 | async">No photos were added yet.</p>
+        <div class="photo" *ngFor="let photo of photos | async">
+            <!-- | orderBy:'version':true -->
+            <h2 *ngIf="photo.context">{{photo.context.custom.photo}}</h2>
+            <a clHref={{photo.public_id}} format="jpg" target="_blank">
+                <cl-transformation quality="auto" fetch-format="auto"></cl-transformation>
+                <cl-image
+                        public-id={{photo.public_id}}
+                        class="thumbnail inline"
+                        width="150"
+                        height="150"
+                        crop="fit"
+                        quality="80"
+                        format="jpg"
+                        (mouseenter)="photo.isMouseOver = true"
+                        (mouseleave)="photo.isMouseOver = false"
+                        [attr.opacity]="photo.isMouseOver ? '50' : null"
+                >
+                </cl-image>
+            </a>
+            <div class="less_info">
+                <button class="toggle_info" style="cursor: help" (click)="photo.shown=true" *ngIf="!photo.shown">Show transformations</button>
+            </div>
+            <div class="more_info" *ngIf="photo.shown">
+                <button class="toggle_info" (click)="photo.shown=false">Hide transformations</button>
+                <table class="thumbnails">
+                    <tr>
+                        <td>
+                            <div class="thumbnail_holder">
+                                <cl-image public-id={{photo.public_id}} class="thumbnail inline" crop="fill" height="150" width="150" radius="10" format="jpg">
+                                </cl-image>
+                            </div>
+                            <table class="info">
+                                <tr>
+                                    <td>crop</td>
+                                    <td>fill</td>
+                                </tr>
+                                <tr>
+                                    <td>width</td>
+                                    <td>150</td>
+                                </tr>
+                                <tr>
+                                    <td>height</td>
+                                    <td>150</td>
+                                </tr>
+                                <tr>
+                                    <td>radius</td>
+                                    <td>10</td>
+                                </tr>
+                            </table>
+                            <br/>
+                        </td>
+                        <td>
+                            <div class="thumbnail_holder">
+                                <cl-image public-id={{photo.public_id}} class="thumbnail inline" crop="scale" height="150" width="150" format="jpg">
+                                </cl-image>
+                            </div>
+                            <table class="info">
+                                <tr>
+                                    <td>crop</td>
+                                    <td>scale</td>
+                                </tr>
+                                <tr>
+                                    <td>width</td>
+                                    <td>150</td>
+                                </tr>
+                                <tr>
+                                    <td>height</td>
+                                    <td>150</td>
+                                </tr>
+                            </table>
+                            <br/>
+                        </td>
+                        <td>
+                            <div class="thumbnail_holder">
+                                <cl-image public-id={{photo.public_id}} class="thumbnail inline" crop="fit" height="150" width="150" format="jpg">
+                                </cl-image>
+                            </div>
+                            <table class="info">
+                                <tr>
+                                    <td>crop</td>
+                                    <td>fit</td>
+                                </tr>
+                                <tr>
+                                    <td>width</td>
+                                    <td>150</td>
+                                </tr>
+                                <tr>
+                                    <td>height</td>
+                                    <td>150</td>
+                                </tr>
+                            </table>
+                            <br/>
+                        </td>
+                        <td>
+                            <div class="thumbnail_holder">
+                                <cl-image public-id={{photo.public_id}} class="thumbnail inline" crop="thumb" gravity="face" height="150" width="150" format="jpg">
+                                </cl-image>
+                            </div>
+                            <table class="info">
+                                <tr>
+                                    <td>crop</td>
+                                    <td>thumb</td>
+                                </tr>
+                                <tr>
+                                    <td>gravity</td>
+                                    <td>face</td>
+                                </tr>
+                                <tr>
+                                    <td>width</td>
+                                    <td>150</td>
+                                </tr>
+                                <tr>
+                                    <td>height</td>
+                                    <td>150</td>
+                                </tr>
+                            </table>
+                            <br/>
+                        </td>
+                        <td>
+                            <div class="thumbnail_holder">
+                                <cl-image public-id={{photo.public_id}} class="thumbnail inline" angle="20" format="jpg">
+                                    <cl-transformation height="150" width="150" crop="fill" gravity="north" effect="sepia" radius="20">
+                                    </cl-transformation>
+                                </cl-image>
+                            </div>
+                            <table class="info">
+                                <tr>
+                                    <td>crop</td>
+                                    <td>fill</td>
+                                </tr>
+                                <tr>
+                                    <td>effect</td>
+                                    <td>sepia</td>
+                                </tr>
+                                <tr>
+                                    <td>gravity</td>
+                                    <td>north</td>
+                                </tr>
+                                <tr>
+                                    <td>width</td>
+                                    <td>150</td>
+                                </tr>
+                                <tr>
+                                    <td>height</td>
+                                    <td>150</td>
+                                </tr>
+                                <tr>
+                                    <td>then</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>angle</td>
+                                    <td>20</td>
+                                </tr>
+                            </table>
+                            <br/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="note">
+            Take a look at our documentation of <a href="http://cloudinary.com/documentation/image_transformations" target="_blank">Image Transformations</a> for a full list of
+            supported transformations.
+        </div>
+    </div>
+</div>
