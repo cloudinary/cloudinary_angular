@@ -3,11 +3,11 @@
   "version": "1.1.0",
   "scripts": {
     "lint": "tslint **/*.ts --exclude \"**/*.d.ts\" -t verbose --project tsconfig.lib.json",
-    "test": "ng test @cloudinary/angular-5.x",
+    "test": "ng test angular-cld",
     "install-sample-from-source": "node ./scripts/install-sample-from-source.js samples/photo_album",
     "install-sample-from-source:jquery": "node ./scripts/install-sample-from-source.js samples/photo_album_with_jquery",
-    "build": "ng build @cloudinary/angular-5.x && npm run copy-lib-assets",
-    "copy-lib-assets": "cp \"LICENSE\" \"CHANGELOG.md\"  \"projects/dist/@cloudinary/angular-5.x\""
+    "build": "ng build angular-cld && npm run copy-lib-assets",
+    "copy-lib-assets": "cp \"LICENSE\" \"CHANGELOG.md\"  \"dist/angular-cld\""
   },
   "private": true,
   "dependencies": {

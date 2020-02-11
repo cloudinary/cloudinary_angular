@@ -122,38 +122,38 @@
         }
       }
     },
-    "@cloudinary/angular-5.x": {
-      "root": "projects/@cloudinary/angular-5.x",
-      "sourceRoot": "projects/@cloudinary/angular-5.x/src",
+    "angular-cld": {
+      "root": "projects/angular-cld",
+      "sourceRoot": "projects/angular-cld/src",
       "projectType": "library",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/@cloudinary/angular-5.x/tsconfig.lib.json",
-            "project": "projects/@cloudinary/angular-5.x/ng-package.json"
+            "tsConfig": "projects/angular-cld/tsconfig.lib.json",
+            "project": "projects/angular-cld/ng-package.json"
           },
           "configurations": {
             "production": {
-              "project": "projects/@cloudinary/angular-5.x/ng-package.prod.json"
+              "project": "projects/angular-cld/ng-package.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/@cloudinary/angular-5.x/src/test.ts",
-            "tsConfig": "projects/@cloudinary/angular-5.x/tsconfig.spec.json",
-            "karmaConfig": "projects/@cloudinary/angular-5.x/karma.conf.js"
+            "main": "projects/angular-cld/src/test.ts",
+            "tsConfig": "projects/angular-cld/tsconfig.spec.json",
+            "karmaConfig": "projects/angular-cld/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/@cloudinary/angular-5.x/tsconfig.lib.json",
-              "projects/@cloudinary/angular-5.x/tsconfig.spec.json"
+              "projects/angular-cld/tsconfig.lib.json",
+              "projects/angular-cld/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

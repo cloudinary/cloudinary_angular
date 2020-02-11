@@ -17,8 +17,8 @@
       "dom"
     ],
     "paths": {
-      "@cloudinary/angular-5.x/*": [
-        "dist/@cloudinary/angular-5.x/*"
+      "angular-cld/*": [
+        "dist/angular-cld/*"
       ]
     }
   },
