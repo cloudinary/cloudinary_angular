@@ -24,9 +24,14 @@ export const config: CloudinaryConfiguration = cloudinaryConfiguration;
     BrowserModule.withServerTransition({appId: 'my-app'}),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full'},
-      { path: 'lazy', loadChildren: './lazy/lazy.module#LazyModule'},
-      { path: 'lazy/nested', loadChildren: './lazy/lazy.module#LazyModule'}
-    ]),
+      { path: 'lazy',
+        loadChildren: () => import('./lazy/lazy.module').then(m => m.LazyModule)
+      },
+      { path: 'lazy/nested',
+        loadChildren: () => import('./lazy/lazy.module').then(m => m.LazyModule)
+      }
+
+]),
     TransferHttpCacheModule,
     CloudinaryModule.forRoot(cloudinary, config),
   ],

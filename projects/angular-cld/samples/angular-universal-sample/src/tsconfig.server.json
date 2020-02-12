@@ -4,7 +4,7 @@
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
     // Set the module format to "commonjs":
-    "module": "commonjs",
+    "module": "esnext",
     "types": [
       "node"
     ]
