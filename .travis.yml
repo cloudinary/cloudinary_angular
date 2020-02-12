@@ -13,5 +13,5 @@ os:
 # before_script:
 #   - sh -e /etc/init.d/xvfb start
 script:
-  - npm run test
+  - npm run test-headless
 #  - npm run e2e
