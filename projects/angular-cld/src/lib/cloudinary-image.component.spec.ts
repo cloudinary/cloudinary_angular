@@ -558,8 +558,8 @@ describe('CloudinaryImage', () => {
 
     it('should load eagerly', () => {
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.hasAttribute('src')).toBe(true);
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/bear'));
+      expect(img.hasAttribute('data-src')).toBe(true);
+      expect(img.attributes.getNamedItem('data-src').value).toEqual(jasmine.stringMatching('image/upload/bear'));
     });
     it('Should lazy load post scroll', async() => {
       const delay = 300;
@@ -621,8 +621,8 @@ describe('CloudinaryImage', () => {
     }));
     it('should load eagerly', () => {
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.hasAttribute('src')).toBe(true);
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/bear'));
+      expect(img.hasAttribute('data-src')).toBe(true);
+      expect(img.attributes.getNamedItem('data-src').value).toEqual(jasmine.stringMatching('image/upload/bear'));
     });
     it('Should lazy load post scroll', async () => {
       const delay = 300;
