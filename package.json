@@ -1,6 +1,6 @@
 {
   "name": "cloudinary_angular",
-  "version": "1.1.0",
+  "version": "1.2.0-rc.0",
   "scripts": {
     "lint": "tslint **/*.ts --exclude \"**/*.d.ts\" -t verbose --project tsconfig.lib.json",
     "test": "ng test angular-cld",
