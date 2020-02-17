@@ -770,10 +770,39 @@ describe('CloudinaryImage', () => {
       expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/c_fit,w_30/e_pixelate,f_auto,q_1/bear'));
     }));
   });
+  describe('placeholder type predominant-color with exact dimensions', () => {
+    @Component({
+      template: `<cl-image public-id="bear" width="300" height="300" crop="fit">
+        <cl-placeholder type="predominant-color"></cl-placeholder>
+      </cl-image>`
+    })
+    class TestComponent {}
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement[];  // the elements w/ the directive
+    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
+      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent, CloudinaryPlaceHolder],
+        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+      des = fixture.debugElement.queryAll(By.directive(CloudinaryPlaceHolder));
+    });
+    it('creates an img element with placeholder size 1 pxl', fakeAsync(() => {
+      tick();
+      fixture.detectChanges();
+      const img = des[0].children[0].nativeElement as HTMLImageElement;
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/c_fit,h_30,w_30/ar_1,b_auto,' +
+        'c_pad,w_iw_div_2/c_crop,g_north_east,h_1,w_1/f_auto,q_auto/bear'));
+    }));
+  });
   describe('placeholder type predominant-color', () => {
     @Component({
       template: `<cl-image public-id="bear" width="300" crop="fit">
-          <cl-placeholder type="predominant-color"></cl-placeholder>
+          <cl-placeholder type="solid"></cl-placeholder>
       </cl-image>`
     })
     class TestComponent {}
