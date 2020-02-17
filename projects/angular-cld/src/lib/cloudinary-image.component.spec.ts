@@ -802,7 +802,7 @@ describe('CloudinaryImage', () => {
   describe('placeholder type predominant-color', () => {
     @Component({
       template: `<cl-image public-id="bear" width="300" crop="fit">
-          <cl-placeholder type="solid"></cl-placeholder>
+          <cl-placeholder type="predominant-color"></cl-placeholder>
       </cl-image>`
     })
     class TestComponent {}
