@@ -52,10 +52,10 @@ describe('CloudinaryImage', () => {
   describe('responsive images with nested transformations', () => {
     @Component({
       template: `<cl-image responsive id="image1" public-id="responsive_sample.jpg">
-            <cl-transformation width="300" crop="scale" overlay="text:roboto_25_bold:SDK"></cl-transformation>
-            <cl-transformation effect="art:hokusai" gravity="auto"></cl-transformation>
-            <cl-transformation fetch-format="auto"></cl-transformation>
-            </cl-image>`
+        <cl-transformation width="300" crop="scale" overlay="text:roboto_25_bold:SDK"></cl-transformation>
+        <cl-transformation effect="art:hokusai" gravity="auto"></cl-transformation>
+        <cl-transformation fetch-format="auto"></cl-transformation>
+      </cl-image>`
     })
     class TestComponent { }
 
@@ -77,7 +77,7 @@ describe('CloudinaryImage', () => {
     it('creates an img element which encodes the directive attributes to the URL', () => {
       const img = des.children[0].nativeElement as HTMLImageElement;
       expect(img.src).toEqual(jasmine.stringMatching
-        (/c_scale,l_text:roboto_25_bold:SDK,w_300\/e_art:hokusai,g_auto\/f_auto\/responsive_sample.jpg/));
+      (/c_scale,l_text:roboto_25_bold:SDK,w_300\/e_art:hokusai,g_auto\/f_auto\/responsive_sample.jpg/));
       expect(img.attributes.getNamedItem('data-src').value).toEqual(jasmine.stringMatching(
         /c_scale,l_text:roboto_25_bold:SDK,w_300\/e_art:hokusai,g_auto\/f_auto\/responsive_sample.jpg/));
     });
@@ -113,7 +113,7 @@ describe('CloudinaryImage', () => {
     it('should serialize a fetch URL', () => {
       const img = des[0].children[0].nativeElement as HTMLImageElement;
       expect(img.src).toEqual(jasmine.stringMatching
-        (/l_fetch:aHR0cDovL2Nsb3VkaW5hcnkuY29tL2ltYWdlcy9vbGRfbG9nby5wbmc=\/u_fetch:aHR0cDovL2Nsb3VkaW5hcnkuY29tL2ltYWdlcy9vbGRfbG9nby5wbmc=\/responsive_sample.jpg/));
+      (/l_fetch:aHR0cDovL2Nsb3VkaW5hcnkuY29tL2ltYWdlcy9vbGRfbG9nby5wbmc=\/u_fetch:aHR0cDovL2Nsb3VkaW5hcnkuY29tL2ltYWdlcy9vbGRfbG9nby5wbmc=\/responsive_sample.jpg/));
       expect(img.attributes.getNamedItem('data-src').value).toEqual(jasmine.stringMatching(
         /l_fetch:aHR0cDovL2Nsb3VkaW5hcnkuY29tL2ltYWdlcy9vbGRfbG9nby5wbmc=\/u_fetch:aHR0cDovL2Nsb3VkaW5hcnkuY29tL2ltYWdlcy9vbGRfbG9nby5wbmc=\/responsive_sample.jpg/));
     });
@@ -121,12 +121,12 @@ describe('CloudinaryImage', () => {
       const img = des[1].children[0].nativeElement as HTMLImageElement;
       expect(img.src).toEqual(jasmine.stringMatching(
         new RegExp('l_fetch:aHR0cHM6Ly91cGxvYWQud2lraW1lZGlhLm9yZy93aWtpcGVkaWEvY29tbW9ucy8yLzJiLyVFQSVCMyVB' +
-        'MCVFQyVCMCVCRCVFQSVCMCVBRiVFQiVCMiU4Qy5qcGc=/u_fetch:aHR0cHM6Ly91cGxvYWQud2lraW1lZGlhLm9yZy93aWtpcGVkaWEv' +
-        'Y29tbW9ucy8yLzJiLyVFQSVCMyVBMCVFQyVCMCVCRCVFQSVCMCVBRiVFQiVCMiU4Qy5qcGc=/responsive_sample.jpg')));
+          'MCVFQyVCMCVCRCVFQSVCMCVBRiVFQiVCMiU4Qy5qcGc=/u_fetch:aHR0cHM6Ly91cGxvYWQud2lraW1lZGlhLm9yZy93aWtpcGVkaWEv' +
+          'Y29tbW9ucy8yLzJiLyVFQSVCMyVBMCVFQyVCMCVCRCVFQSVCMCVBRiVFQiVCMiU4Qy5qcGc=/responsive_sample.jpg')));
       expect(img.attributes.getNamedItem('data-src').value).toEqual(jasmine.stringMatching(
         new RegExp('l_fetch:aHR0cHM6Ly91cGxvYWQud2lraW1lZGlhLm9yZy93aWtpcGVkaWEvY29tbW9ucy8yLzJiLyVFQSVCMyVB' +
-        'MCVFQyVCMCVCRCVFQSVCMCVBRiVFQiVCMiU4Qy5qcGc=/u_fetch:aHR0cHM6Ly91cGxvYWQud2lraW1lZGlhLm9yZy93aWtpcGVkaWEv' +
-        'Y29tbW9ucy8yLzJiLyVFQSVCMyVBMCVFQyVCMCVCRCVFQSVCMCVBRiVFQiVCMiU4Qy5qcGc=/responsive_sample.jpg')));
+          'MCVFQyVCMCVCRCVFQSVCMCVBRiVFQiVCMiU4Qy5qcGc=/u_fetch:aHR0cHM6Ly91cGxvYWQud2lraW1lZGlhLm9yZy93aWtpcGVkaWEv' +
+          'Y29tbW9ucy8yLzJiLyVFQSVCMyVBMCVFQyVCMCVCRCVFQSVCMCVBRiVFQiVCMiU4Qy5qcGc=/responsive_sample.jpg')));
     });
   });
 
@@ -188,12 +188,12 @@ describe('CloudinaryImage', () => {
   describe('non-responsive images with nested transformations', () => {
     @Component({
       template: `<cl-image id="image1" public-id="responsive_sample.jpg">
-            <cl-transformation width="300" crop="scale" overlay="text:roboto_35_bold:SDK"></cl-transformation>
-            <cl-transformation effect="art:hokusai"></cl-transformation>
-            <cl-transformation fetch-format="auto"></cl-transformation>
-            <cl-transformation if="initialWidth > 400" effect="grayscale"></cl-transformation>
-            <cl-transformation if="initialHeight < 200" effect="blur"></cl-transformation>
-            </cl-image>`
+        <cl-transformation width="300" crop="scale" overlay="text:roboto_35_bold:SDK"></cl-transformation>
+        <cl-transformation effect="art:hokusai"></cl-transformation>
+        <cl-transformation fetch-format="auto"></cl-transformation>
+        <cl-transformation if="initialWidth > 400" effect="grayscale"></cl-transformation>
+        <cl-transformation if="initialHeight < 200" effect="blur"></cl-transformation>
+      </cl-image>`
     })
     class TestComponent { }
 
@@ -215,7 +215,7 @@ describe('CloudinaryImage', () => {
     it('creates an img element which encodes the directive attributes to the URL', () => {
       const img = des.children[0].nativeElement as HTMLImageElement;
       expect(img.src).toEqual(jasmine.stringMatching
-        (/c_scale,l_text:roboto_35_bold:SDK,w_300\/e_art:hokusai\/f_auto\/if_iw_gt_400,e_grayscale\/if_ih_lt_200,e_blur\/responsive_sample.jpg/));
+      (/c_scale,l_text:roboto_35_bold:SDK,w_300\/e_art:hokusai\/f_auto\/if_iw_gt_400,e_grayscale\/if_ih_lt_200,e_blur\/responsive_sample.jpg/));
       expect(img.attributes.getNamedItem('data-src')).toBeNull();
     });
 
@@ -226,7 +226,7 @@ describe('CloudinaryImage', () => {
       const observer = new MutationObserver(() => {
         const img = des.children[0].nativeElement as HTMLImageElement;
         expect(img.src).toEqual(jasmine.stringMatching
-          (/c_scale,l_text:roboto_35_bold:SDK,w_300\/e_art:hokusai\/f_auto\/if_iw_gt_400,e_grayscale\/if_ih_lt_200,e_blur\/o_50\/responsive_sample.jpg/));
+        (/c_scale,l_text:roboto_35_bold:SDK,w_300\/e_art:hokusai\/f_auto\/if_iw_gt_400,e_grayscale\/if_ih_lt_200,e_blur\/o_50\/responsive_sample.jpg/));
         observer.disconnect();
         done();
       });
@@ -243,7 +243,7 @@ describe('CloudinaryImage', () => {
   describe('should support custom function remote', () => {
     @Component({
       template:
-        `
+          `
         <cl-image public-id="sample">
           <cl-transformation  custom_function='{"function_type":"remote", "source": "https://df34ra4a.execute-api.us-west-2.amazonaws.com/default/cloudinaryFunction"}'></cl-transformation>
         </cl-image>
@@ -277,7 +277,7 @@ describe('CloudinaryImage', () => {
   describe('should support custom function wasm', () => {
     @Component({
       template:
-        `
+          `
         <cl-image public-id="sample">
           <cl-transformation  custom_function='{"function_type":"wasm", "source": "blur.wasm"}'></cl-transformation>
         </cl-image>
@@ -311,12 +311,12 @@ describe('CloudinaryImage', () => {
   describe('Sample code presented in README', () => {
     @Component({
       template:
+          `
+        <cl-image public-id="readme" class="thumbnail inline" angle="20" format="jpg">
+          <cl-transformation height="150" width="150" crop="fill" effect="sepia" radius="20"></cl-transformation>
+          <cl-transformation overlay="text:arial_60:readme" gravity="north" y="20"></cl-transformation>
+        </cl-image>
       `
-            <cl-image public-id="readme" class="thumbnail inline" angle="20" format="jpg">
-                <cl-transformation height="150" width="150" crop="fill" effect="sepia" radius="20"></cl-transformation>
-                <cl-transformation overlay="text:arial_60:readme" gravity="north" y="20"></cl-transformation>
-            </cl-image>
-            `
     })
     class TestComponent { }
 
@@ -338,7 +338,7 @@ describe('CloudinaryImage', () => {
     it('creates an img element which encodes the directive attributes to the URL', () => {
       const img = des.children[0].nativeElement as HTMLImageElement;
       expect(img.src).toEqual(jasmine.stringMatching
-        (/c_fill,e_sepia,h_150,r_20,w_150\/g_north,l_text:arial_60:readme,y_20\/a_20\/readme.jpg/));
+      (/c_fill,e_sepia,h_150,r_20,w_150\/g_north,l_text:arial_60:readme,y_20\/a_20\/readme.jpg/));
       expect(img.attributes.getNamedItem('data-src')).toBeNull();
     });
   });
@@ -427,10 +427,10 @@ describe('CloudinaryImage', () => {
   describe('responsive images with nested transformations using the cld-responsive attribute', () => {
     @Component({
       template: `<cl-image cld-responsive id="image1" public-id="responsive_sample.jpg">
-             <cl-transformation width="300" crop="scale" overlay="text:roboto_25_bold:SDK"></cl-transformation>
-             <cl-transformation effect="art:hokusai"></cl-transformation>
-             <cl-transformation fetch-format="auto"></cl-transformation>
-             </cl-image>`
+        <cl-transformation width="300" crop="scale" overlay="text:roboto_25_bold:SDK"></cl-transformation>
+        <cl-transformation effect="art:hokusai"></cl-transformation>
+        <cl-transformation fetch-format="auto"></cl-transformation>
+      </cl-image>`
     })
     class TestComponent { }
 
@@ -453,7 +453,7 @@ describe('CloudinaryImage', () => {
     it('creates an img element which encodes the directive attributes to the URL', () => {
       const img = des.children[0].nativeElement as HTMLImageElement;
       expect(img.src).toEqual(jasmine.stringMatching
-        (/c_scale,l_text:roboto_25_bold:SDK,w_300\/e_art:hokusai\/f_auto\/responsive_sample.jpg/));
+      (/c_scale,l_text:roboto_25_bold:SDK,w_300\/e_art:hokusai\/f_auto\/responsive_sample.jpg/));
       expect(img.attributes.getNamedItem('data-src').value).toEqual(jasmine.stringMatching(
         /c_scale,l_text:roboto_25_bold:SDK,w_300\/e_art:hokusai\/f_auto\/responsive_sample.jpg/));
     });
@@ -462,7 +462,7 @@ describe('CloudinaryImage', () => {
   describe('responsive images with locally configured client hints', () => {
     @Component({
       template: `<cl-image public-id="sample.jpg" [client-hints]="true" responsive>
-           <cl-transformation crop='scale' width='auto' dpr='auto'></cl-transformation>
+        <cl-transformation crop='scale' width='auto' dpr='auto'></cl-transformation>
       </cl-image>`
     })
     class TestComponent { }
@@ -491,11 +491,11 @@ describe('CloudinaryImage', () => {
   describe('responsive images with global configured client hints', () => {
     @Component({
       template: `<cl-image id="image_1" public-id="sample.jpg" responsive>
-                   <cl-transformation crop='scale' width='auto' dpr='auto'></cl-transformation>
-                 </cl-image>
-                 <cl-image id="image_2" public-id="sample.jpg" [client-hints]="false" responsive>
-                   <cl-transformation crop='scale' width='auto' dpr='auto'></cl-transformation>
-                 </cl-image>`
+        <cl-transformation crop='scale' width='auto' dpr='auto'></cl-transformation>
+      </cl-image>
+      <cl-image id="image_2" public-id="sample.jpg" [client-hints]="false" responsive>
+        <cl-transformation crop='scale' width='auto' dpr='auto'></cl-transformation>
+      </cl-image>`
     })
     class TestComponent {}
 
@@ -558,8 +558,8 @@ describe('CloudinaryImage', () => {
 
     it('should load eagerly', () => {
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.hasAttribute('src')).toBe(true);
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/bear'));
+      expect(img.hasAttribute('data-src')).toBe(true);
+      expect(img.attributes.getNamedItem('data-src').value).toEqual(jasmine.stringMatching('image/upload/bear'));
     });
     it('Should lazy load post scroll', async() => {
       const delay = 300;
@@ -621,8 +621,8 @@ describe('CloudinaryImage', () => {
     }));
     it('should load eagerly', () => {
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.hasAttribute('src')).toBe(true);
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/bear'));
+      expect(img.hasAttribute('data-src')).toBe(true);
+      expect(img.attributes.getNamedItem('data-src').value).toEqual(jasmine.stringMatching('image/upload/bear'));
     });
     it('Should lazy load post scroll', async () => {
       const delay = 300;
@@ -653,15 +653,15 @@ describe('CloudinaryImage', () => {
   describe('lazy load image with pixelate placeholder', async () => {
     @Component({
       template: `
-          <div class="startWindow"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
-          <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
-          <div style="margin-top: 300px">
-              <cl-image loading="lazy" width="300" public-id="bear">
-                  <cl-placeholder type="pixelate"></cl-placeholder>
-              </cl-image>
-          </div>
-          <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
-          <div class="endWindow" style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>`
+        <div class="startWindow"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+        <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+        <div style="margin-top: 300px">
+          <cl-image loading="lazy" width="300" public-id="bear">
+            <cl-placeholder type="pixelate"></cl-placeholder>
+          </cl-image>
+        </div>
+        <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+        <div class="endWindow" style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>`
     })
     class TestComponent {}
 
@@ -689,7 +689,7 @@ describe('CloudinaryImage', () => {
   describe('placeholder default', () => {
     @Component({
       template: `<cl-image public-id="bear">
-          <cl-placeholder></cl-placeholder>
+        <cl-placeholder></cl-placeholder>
       </cl-image>`
     })
     class TestComponent {}
@@ -717,7 +717,7 @@ describe('CloudinaryImage', () => {
   describe('placeholder type blur', () => {
     @Component({
       template: `<cl-image public-id="bear" width="300" crop="fit">
-          <cl-placeholder type="blur"></cl-placeholder>
+        <cl-placeholder type="blur"></cl-placeholder>
       </cl-image>`
     })
     class TestComponent {}
@@ -745,7 +745,7 @@ describe('CloudinaryImage', () => {
   describe('placeholder type pixelate', () => {
     @Component({
       template: `<cl-image public-id="bear" width="300" crop="fit">
-          <cl-placeholder type="pixelate"></cl-placeholder>
+        <cl-placeholder type="pixelate"></cl-placeholder>
       </cl-image>`
     })
     class TestComponent {}
@@ -768,35 +768,6 @@ describe('CloudinaryImage', () => {
       fixture.detectChanges();
       const img = des[0].children[0].nativeElement as HTMLImageElement;
       expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/c_fit,w_30/e_pixelate,f_auto,q_1/bear'));
-    }));
-  });
-  describe('placeholder type predominant-color with exact dimensions', () => {
-    @Component({
-      template: `<cl-image public-id="bear" width="300" height="300" crop="fit">
-        <cl-placeholder type="predominant-color"></cl-placeholder>
-      </cl-image>`
-    })
-    class TestComponent {}
-
-    let fixture: ComponentFixture<TestComponent>;
-    let des: DebugElement[];  // the elements w/ the directive
-    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
-      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
-    beforeEach(() => {
-      fixture = TestBed.configureTestingModule({
-        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent, CloudinaryPlaceHolder],
-        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
-      }).createComponent(TestComponent);
-
-      fixture.detectChanges(); // initial binding
-      des = fixture.debugElement.queryAll(By.directive(CloudinaryPlaceHolder));
-    });
-    it('creates an img element with placeholder size 1 pxl', fakeAsync(() => {
-      tick();
-      fixture.detectChanges();
-      const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/c_fit,h_30,w_30/ar_1,b_auto,' +
-        'c_pad,w_iw_div_2/c_crop,g_north_east,h_1,w_1/f_auto,q_auto/bear'));
     }));
   });
   describe('placeholder type predominant-color', () => {
@@ -882,6 +853,69 @@ describe('CloudinaryImage', () => {
       fixture.detectChanges();
       const img = des[0].children[0].nativeElement as HTMLImageElement;
       expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_sepia/c_fit,w_30/e_blur:2000,f_auto,q_1/bear'));
+    }));
+  });
+  describe('cl-image with acessibility modes', () => {
+    @Component({
+      template: `<cl-image public-id="bear" accessibility="darkmode"></cl-image>
+      <cl-image public-id="bear" accessibility="monochrome"></cl-image>
+      <cl-image public-id="bear" accessibility="brightmode"></cl-image>
+      <cl-image public-id="bear" accessibility="colorblind"></cl-image>`
+    })
+    class TestComponent {}
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement[];  // the elements w/ the directive
+    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
+      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
+      }).createComponent(TestComponent);
+      fixture.detectChanges(); // initial binding
+      des = fixture.debugElement.queryAll(By.directive(CloudinaryImage));
+    });
+    it('creates an img element with accessibility darkmode', fakeAsync(() => {
+      const img = des[0].children[0].nativeElement as HTMLImageElement;
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_tint:75:black/bear'));
+    }));
+    it('creates an img element with accessibility monochrome', fakeAsync(() => {
+      const img = des[1].children[0].nativeElement as HTMLImageElement;
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_grayscale/bear'));
+    }));
+    it('creates an img element with accessibility brightmode', fakeAsync(() => {
+      const img = des[2].children[0].nativeElement as HTMLImageElement;
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_tint:50:white/bear'));
+    }));
+    it('creates an img element with accessibility colorblind', fakeAsync(() => {
+      const img = des[3].children[0].nativeElement as HTMLImageElement;
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_assist_colorblind/bear'));
+    }));
+  });
+  describe('cl-image with acessibility modes and transformation', () => {
+    @Component({
+      template: `<cl-image public-id="bear" accessibility="darkmode" effect="grayscale" overlay="sample">
+        <cl-transformation effect="sepia"></cl-transformation>
+      </cl-image>`
+    })
+    class TestComponent {}
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement[];  // the elements w/ the directive
+    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
+      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
+      }).createComponent(TestComponent);
+      fixture.detectChanges(); // initial binding
+      des = fixture.debugElement.queryAll(By.directive(CloudinaryImage));
+    });
+    it('creates an img element with accessibility darkmode without overwriting effect', fakeAsync(() => {
+      const img = des[0].children[0].nativeElement as HTMLImageElement;
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_sepia/e_grayscale,l_sample/e_tint:75:black/bear'));
     }));
   });
 });
