@@ -7,6 +7,7 @@ import {
   ContentChildren,
   QueryList,
   AfterViewInit,
+  AfterContentChecked,
   OnInit,
   OnChanges,
   SimpleChanges,
@@ -17,22 +18,24 @@ import { Cloudinary } from './cloudinary.service';
 import { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
 import { CloudinaryPlaceHolder } from './cloudinary-placeholder.component';
 import { isBrowser } from './cloudinary.service';
+import { accessibilityEffect } from './constants';
 
 @Component({
   selector: 'cl-image',
   template: `<img [ngStyle]="{opacity: shouldShowPlaceHolder ? '0' : '1', position: shouldShowPlaceHolder ? 'absolute' : 'unset'}"(load)="hasLoaded()">
   <div [style.display]="shouldShowPlaceHolder ? 'inline' : 'none'">
-    <ng-content></ng-content>
+      <ng-content></ng-content>
   </div>
   `,
 })
 export class CloudinaryImage
-  implements AfterViewInit, OnInit, AfterViewInit, OnChanges, OnDestroy {
+  implements AfterViewInit, OnInit, AfterViewInit, AfterContentChecked, OnChanges, OnDestroy {
   @Input('public-id') publicId: string;
   @Input('client-hints') clientHints?: boolean;
   @Input('loading') loading: string;
   @Input('width') width?: string;
   @Input('height') height?: string;
+  @Input('accessibility') accessibility?: string;
 
   @ContentChildren(CloudinaryTransformationDirective)
   transformations: QueryList<CloudinaryTransformationDirective>;
@@ -42,20 +45,12 @@ export class CloudinaryImage
   @Output() onError: EventEmitter<boolean> = new EventEmitter(); // Callback when an image is loaded with error
 
   observer: MutationObserver;
-  shouldShowPlaceHolder: boolean = true;
+  shouldShowPlaceHolder = true;
+  options: object = {};
 
   constructor(private el: ElementRef, private cloudinary: Cloudinary) {}
 
   ngOnInit(): void {
-    if (this.width && this.placeholderComponent) {
-      this.placeholderComponent.setWidth(this.width);
-    }
-    if (this.height && this.placeholderComponent) {
-      this.placeholderComponent.setHeight(this.height);
-    }
-    if (this.placeholderComponent) {
-      this.placeholderComponent.setPublicId(this.publicId);
-    }
     if (isBrowser()) {
       // Create an observer instance
       this.observer = new MutationObserver(() => {
@@ -87,6 +82,18 @@ export class CloudinaryImage
     this.loadImage();
   }
 
+  ngAfterContentChecked() {
+    if (this.width && this.placeholderComponent) {
+      this.placeholderComponent.setWidth(this.width);
+    }
+    if (this.height && this.placeholderComponent) {
+      this.placeholderComponent.setHeight(this.height);
+    }
+    if (this.placeholderComponent) {
+      this.placeholderComponent.setPublicId(this.publicId);
+    }
+  }
+
   hasLoaded() {
     this.shouldShowPlaceHolder = false;
   }
@@ -105,11 +112,10 @@ export class CloudinaryImage
       // Add onload and onerror handlers
       image.onload = e => {
         this.onLoad.emit(e);
-      }
+      };
       image.onerror = e => {
         this.onError.emit(e);
-      }
-
+      };
       const options = this.cloudinary.toCloudinaryAttributes(
         nativeElement.attributes,
         this.transformations
@@ -121,6 +127,10 @@ export class CloudinaryImage
       }
       if (this.placeholderComponent) {
         this.placeholderHandler(options);
+      }
+      if (this.accessibility) {
+        this.options = options;
+        options.src = this.accessibilityModeHandler();
       }
       const imageTag = this.cloudinary.imageTag(this.publicId, options);
 
@@ -143,8 +153,11 @@ export class CloudinaryImage
 
     Object.keys(options).forEach(name => {
       placeholderOptions[name] = (name === 'width' && !options[name].startsWith('auto') || name === 'height') ? Math.ceil(parseInt(options[name], 10) * 0.1) : options[name];
-    })
+    });
     this.placeholderComponent.options = placeholderOptions;
   }
-}
 
+  accessibilityModeHandler() {
+    return this.cloudinary.url(this.publicId, {transformation: [this.options, accessibilityEffect[this.accessibility]]});
+  }
+}

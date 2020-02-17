@@ -1,63 +1,43 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-config.ts
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
-# Ignore AOT compiler output
-/compiled
-*.metadata.json
+# compiled output
+/dist
+/tmp
+/out-tsc
 
-# Ignore output of typescript compilation. They WILL be included in the package since .npmignore is empty
-index.js.map
-index.d.ts
-index.ngsummary.json
+# dependencies
+/node_modules
+/**/node_modules
 
-/src/**/*.js
-/src/**/*.js.map
-/src/**/*.d.ts
-/src/**/*.ngsummary.json
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
-# Ignore testing code TS compilation output
-/e2e/**/*.js
-/e2e/**/*.js.map
-/e2e/**/*.d.ts
-/e2e/**/*.ngsummary.json
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
-/samples/**/*.js
-/samples/**/*.js.map
-/samples/**/*.d.ts
+# miscg
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
 
-# Ignore generated typings
-typings/
+# System Files
+.DS_Store
+Thumbs.db
 
-# Exclude root folder *.js files and except the generated index.js
-!/*.js
-index.js
+package-lock.json
 
-# Exclude important config files (part of the samples)
-!systemjs.config.js
-!webpack.config.js
-
-# Exclude scripts folder
-!/scripts/*
-
-# Coverage directory used by tools like istanbul
-coverage
-
-# protractor test results
-_test-output/
-
-# Dependency directory
-# https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
-node_modules
-bower_components
-doc/
-build/
-
-# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
-*.iml
-
-## Directory-based project format:
-.idea/
-.vscode/

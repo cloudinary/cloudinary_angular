@@ -1,28 +1,30 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
     "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "noUnusedParameters": true,
-    "noUnusedLocals": true,
-    "declaration": true,
-    "skipLibCheck": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "lib": [
-      "es2015",
+      "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "angular-cld/*": [
+        "dist/angular-cld/*"
+      ]
+    }
   },
   "exclude": [
     "node_modules",
     "samples",
     "compiled"
-  ],
-  "angularCompilerOptions": {
-    "strictMetadataEmit": true,
-    "skipTemplateCodeGen": true
-  }
+  ]
 }

@@ -7,10 +7,10 @@ import { CloudinaryImage } from './cloudinary-image.component';
 import { CloudinaryVideo } from './cloudinary-video.component';
 import { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
 import { CloudinaryImageSourceDirective } from './cloudinary-image-source.directive';
-import { CloudinaryBackgroundImageDirective } from './cloudinary-background-image.directive'
+import { CloudinaryBackgroundImageDirective } from './cloudinary-background-image.directive';
 import CloudinaryConfiguration from './cloudinary-configuration.class';
 import { LazyLoadDirective } from './cloudinary-lazy-load.directive';
-import { CloudinaryPlaceHolder } from'./cloudinary-placeholder.component';
+import { CloudinaryPlaceHolder } from './cloudinary-placeholder.component';
 
 // Export for lib consumers
 export { CloudinaryImage } from './cloudinary-image.component';
@@ -30,7 +30,7 @@ export const CLOUDINARY_LIB = new InjectionToken('CLOUDINARY_LIB');
 export const CLOUDINARY_CONFIGURATION = new InjectionToken('CLOUDINARY_CONFIGURATION');
 
 // Export this function to Angular's AOT to work
-export function createCloudinary(cloudinaryJsLib: any, configuration: CloudinaryConfiguration) {
+export function createCloudinary(cloudinaryJsLib: object, configuration: CloudinaryConfiguration) {
   return new Cloudinary(cloudinaryJsLib, configuration);
 };
 
@@ -45,7 +45,7 @@ export function createCloudinary(cloudinaryJsLib: any, configuration: Cloudinary
     CloudinaryVideo,
     CloudinaryTransformationDirective,
     LazyLoadDirective,
-    CloudinaryPlaceHolder
+    CloudinaryPlaceHolder,
   ],
   exports: [
     CloudinaryImageSourceDirective,
@@ -58,7 +58,7 @@ export function createCloudinary(cloudinaryJsLib: any, configuration: Cloudinary
   ]
 })
 export class CloudinaryModule {
-  static forRoot(cloudinaryJsLib: any, cloudinaryConfiguration: CloudinaryConfiguration): ModuleWithProviders {
+  static forRoot(cloudinaryJsLib: object, cloudinaryConfiguration: CloudinaryConfiguration): ModuleWithProviders<CloudinaryModule> {
     return {
       ngModule: CloudinaryModule,
       providers: [
