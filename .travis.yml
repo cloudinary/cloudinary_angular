@@ -5,13 +5,5 @@ node_js:
   - "node"
 os:
   - linux
-# env:
-#   global:
-#     - DBUS_SESSION_BUS_ADDRESS=/dev/null
-#     - DISPLAY=:99.0
-#     - CHROME_BIN=chromium-browser
-# before_script:
-#   - sh -e /etc/init.d/xvfb start
 script:
   - npm run test-headless
-#  - npm run e2e

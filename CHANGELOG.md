@@ -1,3 +1,16 @@
+1.2.0-rc.0 / 2020-02-17
+=======================
+
+New functionality
+-----------------
+* Add support for Angular 9
+* Add predominant-color
+* Add `accessibility` attribute to `cl-image`
+
+Other changes
+-----------------
+* Fix lazy load in chrome 
+
 1.1.0 / 2019-12-09
 ==================
 
