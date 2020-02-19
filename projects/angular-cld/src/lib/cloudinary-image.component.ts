@@ -126,7 +126,7 @@ export class CloudinaryImage
         delete options['responsive'];
       }
       if (this.placeholderComponent) {
-        this.placeholderHandler(options);
+        this.placeholderHandler(options, image);
       }
       if (this.accessibility) {
         this.options = options;
@@ -148,12 +148,17 @@ export class CloudinaryImage
     });
   }
 
-  placeholderHandler(options) {
+  placeholderHandler(options, image) {
     const placeholderOptions = {};
-
     Object.keys(options).forEach(name => {
-      placeholderOptions[name] = (name === 'width' && !options[name].startsWith('auto') || name === 'height') ? Math.ceil(parseInt(options[name], 10) * 0.1) : options[name];
-    });
+      if (name === 'width' && options.responsive) {
+        placeholderOptions[name] = image.getAttribute('data-width');
+      } else if (name === 'width' && !options[name].startsWith('auto') || name === 'height') {
+        placeholderOptions[name] = Math.ceil(parseInt(options[name], 10) * 0.1)
+      } else {
+        placeholderOptions[name] = options[name]
+      }
+    })
     this.placeholderComponent.options = placeholderOptions;
   }
 
