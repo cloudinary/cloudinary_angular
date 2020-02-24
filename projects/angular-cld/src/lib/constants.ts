@@ -11,10 +11,9 @@ export const predominantColorTransformPxl = [
   {fetch_format: 'auto', quality: 'auto'}];
 
 export const predominantColorTransform  = [
-  {variables: [['$currWidth', 'w'], ['$currHeight', 'h']]},
   {width: 'iw_div_2', aspect_ratio: 1, crop: 'pad', background: 'auto'},
   {crop: 'crop', width: 10, height: 10, gravity: 'north_east'},
-  {width: '$currWidth', height: '$currHeight', crop: 'fill'},
+  {width: 'iw', height: 'ih', crop: 'fill'},
   {fetch_format: 'auto', quality: 'auto'}];
 
 export const placeholderImageOptions = {
