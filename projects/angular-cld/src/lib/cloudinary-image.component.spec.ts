@@ -947,7 +947,7 @@ describe('CloudinaryImage', () => {
       expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_sepia/e_grayscale,l_sample/e_tint:75:black/bear'));
     }));
   });
-  describe('cl-image with responsive and placeholder', async () => {
+  describe('cl-image with responsive and placeholder on lazy load', async () => {
     @Component({
       template: `<div class="startWindow"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
       <div style="margin-top: 700px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
@@ -980,12 +980,6 @@ describe('CloudinaryImage', () => {
       tick();
       fixture.detectChanges();
     }));
-    it('src should not exist on Firefox', () => {
-      const img = des[0].children[0].nativeElement as HTMLImageElement;
-      if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-        expect(img).not.toContain('src');
-      }
-    });
     it('Placeholder width should equal img width on Firefox', async () => {
       const placeholderimg = placeholder[0].children[0].nativeElement as HTMLImageElement;
       const img = des[2].children[0].nativeElement as HTMLImageElement;
