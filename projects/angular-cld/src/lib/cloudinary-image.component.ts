@@ -148,6 +148,11 @@ export class CloudinaryImage
     });
   }
 
+  /**
+   * Handels placeholder options
+   * In case of responsive sets width from resize
+   * In case width or height is known takes 10% of original dimension
+   */
   placeholderHandler(options, image) {
     const placeholderOptions = {};
     Object.keys(options).forEach(name => {
