@@ -149,21 +149,22 @@ export class CloudinaryImage
   }
 
   /**
-   * Handels placeholder options
+   * Handles placeholder options
    * In case of responsive sets width from resize
    * In case width or height is known takes 10% of original dimension
    */
   placeholderHandler(options, image) {
-    const placeholderOptions = {};
-    Object.keys(options).forEach(name => {
-      if (name === 'width' && options.responsive) {
-        placeholderOptions[name] = image.getAttribute('data-width');
-      } else if (name === 'width' && !options[name].startsWith('auto') || name === 'height') {
-        placeholderOptions[name] = Math.ceil(parseInt(options[name], 10) * 0.1)
+    const placeholderOptions = { ...options };
+    if (placeholderOptions['width']) {
+      if (placeholderOptions['width'] === 'auto') {
+        placeholderOptions['width'] = image.getAttribute('data-width');
       } else {
-        placeholderOptions[name] = options[name]
+        placeholderOptions['width'] = Math.ceil(parseInt(options['width'], 10) * 0.1);
       }
-    })
+    }
+    if (placeholderOptions['height']) {
+      placeholderOptions['height'] = Math.ceil(parseInt(options['height'], 10) * 0.1);
+    }
     this.placeholderComponent.options = placeholderOptions;
   }
 
