@@ -824,8 +824,8 @@ describe('CloudinaryImage', () => {
       tick();
       fixture.detectChanges();
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/c_fit,w_30/ar_1,b_auto,' +
-        'c_pad,w_iw_div_2/c_crop,g_north_east,h_10,w_10/c_fill,h_ih,w_iw/f_auto,q_auto/bear'));
+      expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/' +
+        '@@fake_angular2_sdk@@/image/upload/c_fit,w_30/ar_1,b_auto,c_pad,w_iw_div_2/c_crop,g_north_east,h_10,w_10/c_fill,h_ih,w_iw/f_auto,q_auto/bear');
     }));
   });
   describe('placeholder type vectorize', () => {
@@ -947,4 +947,35 @@ describe('CloudinaryImage', () => {
       expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_sepia/e_grayscale,l_sample/e_tint:75:black/bear'));
     }));
   });
+  describe('cl-image with responsive and lazy-load', async () => {
+    @Component({
+      template: `<cl-image loading="lazy" width="300" public-id="bear"></cl-image>`
+    })
+    class TestComponent {}
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement[];  // the elements w/ the directive
+    let placeholder: DebugElement[];
+    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
+      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
+    beforeEach(fakeAsync(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent, LazyLoadDirective],
+        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+      // all elements with an attached CloudinaryImage
+      des = fixture.debugElement.queryAll(By.directive(CloudinaryImage));
+      tick();
+      fixture.detectChanges();
+    }));
+    it('src should not exist on Firefox', () => {
+      const img = des[0].children[0].nativeElement as HTMLImageElement;
+      if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+        expect(img).not.toContain('src');
+      }
+    });
+  });
 });
+

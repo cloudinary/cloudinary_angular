@@ -43,7 +43,7 @@ export class CloudinaryPlaceHolder implements AfterContentChecked {
     if (this.type === 'predominant-color' && this.itemHeight && this.itemWidth) {
       return this.cloudinary.url(this.publicId, {transformation: [this.options, ...predominantColorTransformPxl]});
     } else {
-      return this.cloudinary.url(this.publicId, {transformation: [this.options, ...placeholderImageOptions[this.type] || placeholderImageOptions['blur']]})
+      return this.cloudinary.url(this.publicId, {transformation: [this.options, ...placeholderImageOptions[this.type] || placeholderImageOptions['blur']]});
     }
   }
 }
