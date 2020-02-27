@@ -824,8 +824,8 @@ describe('CloudinaryImage', () => {
       tick();
       fixture.detectChanges();
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/' +
-        '@@fake_angular2_sdk@@/image/upload/c_fit,w_30/ar_1,b_auto,c_pad,w_iw_div_2/c_crop,g_north_east,h_10,w_10/c_fill,h_ih,w_iw/f_auto,q_auto/bear');
+      expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular2_sdk@@/image/' +
+        'upload/c_fit,w_30/$currWidth_w,$currHeight_h/ar_1,b_auto,c_pad,w_iw_div_2/c_crop,g_north_east,h_10,w_10/c_fill,h_$currHeight,w_$currWidth/f_auto,q_auto/bear');
     }));
   });
   describe('placeholder type vectorize', () => {
@@ -977,5 +977,64 @@ describe('CloudinaryImage', () => {
       }
     });
   });
-});
+  describe('cl-image with responsive and placeholder on lazy load', async () => {
+    @Component({
+      template: `<div class="startWindow"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+      <div style="margin-top: 700px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+      <div style="margin-top: 700px"><cl-image loading="lazy" public-id="bear" responsive width="auto" crop="scale">
+        <cl-placeholder></cl-placeholder>
+      </cl-image></div>
+      <div style="margin-top: 700px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+      <div style="margin-top: 700px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+      <div style="margin-top: 700px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+      <div style="margin-top: 700px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+      <div class="endWindow" style="margin-top: 700px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>`
+    })
+    class TestComponent {}
 
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement[];  // the elements w/ the directive
+    let placeholder: DebugElement[];
+    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
+      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
+    beforeEach(fakeAsync(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent, LazyLoadDirective, CloudinaryPlaceHolder],
+        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+      // all elements with an attached CloudinaryImage
+      des = fixture.debugElement.queryAll(By.directive(CloudinaryImage));
+      placeholder = fixture.debugElement.queryAll(By.directive(CloudinaryPlaceHolder));
+      tick();
+      fixture.detectChanges();
+    }));
+    it('Placeholder width should equal img width on Firefox', async () => {
+      const placeholderimg = placeholder[0].children[0].nativeElement as HTMLImageElement;
+      const img = des[2].children[0].nativeElement as HTMLImageElement;
+
+      const delay = 300;
+      const wait = (ms) => new Promise(res => setTimeout(res, ms));
+      const count = async () => document.querySelectorAll('.startWindow').length;
+      const scrollDown = async () => {
+        document.querySelector('.endWindow')
+          .scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'end' });
+      }
+
+      let preCount = 0;
+      let postCount = 0;
+      do {
+        preCount = await count();
+        await scrollDown();
+        await wait(delay);
+        postCount = await count();
+      } while (postCount > preCount);
+      await wait(delay);
+
+      if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+        expect(placeholderimg.attributes.getNamedItem('width')).toEqual(img.attributes.getNamedItem('width'));
+      }
+    });
+  });
+});

@@ -126,7 +126,7 @@ export class CloudinaryImage
         delete options['responsive'];
       }
       if (this.placeholderComponent) {
-        this.placeholderHandler(options);
+        this.placeholderHandler(options, image);
       }
       if (this.accessibility) {
         this.options = options;
@@ -148,12 +148,23 @@ export class CloudinaryImage
     });
   }
 
-  placeholderHandler(options) {
-    const placeholderOptions = {};
-
-    Object.keys(options).forEach(name => {
-      placeholderOptions[name] = (name === 'width' && !options[name].startsWith('auto') || name === 'height') ? Math.ceil(parseInt(options[name], 10) * 0.1) : options[name];
-    });
+  /**
+   * Handles placeholder options
+   * In case of responsive sets width from resize
+   * In case width or height is known takes 10% of original dimension
+   */
+  placeholderHandler(options, image) {
+    const placeholderOptions = { ...options };
+    if (placeholderOptions['width']) {
+      if (placeholderOptions['width'] === 'auto') {
+        placeholderOptions['width'] = image.getAttribute('data-width');
+      } else {
+        placeholderOptions['width'] = Math.ceil(parseInt(options['width'], 10) * 0.1);
+      }
+    }
+    if (placeholderOptions['height']) {
+      placeholderOptions['height'] = Math.ceil(parseInt(options['height'], 10) * 0.1);
+    }
     this.placeholderComponent.options = placeholderOptions;
   }
 
