@@ -158,7 +158,7 @@ export class CloudinaryImage
     if (placeholderOptions['width']) {
       if (placeholderOptions['width'] === 'auto') {
         placeholderOptions['width'] = image.getAttribute('data-width');
-      } else {
+      } else if (this.placeholderComponent.type !== 'vectorize') {
         placeholderOptions['width'] = Math.ceil(parseInt(options['width'], 10) * 0.1);
       }
     }
