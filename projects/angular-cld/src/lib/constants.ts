@@ -18,7 +18,7 @@ export const predominantColorTransform  = [
   {fetch_format: 'auto', quality: 'auto'}];
 
 export const placeholderImageOptions = {
-  'vectorize': {effect: 'vectorize', quality: 10},
+  'vectorize': {effect: 'vectorize:3:0.1', fetch_format: 'svg'},
   'pixelate': {effect: 'pixelate', quality: 1, fetch_format: 'auto'},
   'blur': {effect: 'blur:2000', quality: 1, fetch_format: 'auto'},
   'predominant-color': predominantColorTransform
