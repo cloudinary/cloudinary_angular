@@ -853,7 +853,7 @@ describe('CloudinaryImage', () => {
       tick();
       fixture.detectChanges();
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/c_fit,w_30/e_vectorize,q_1/bear'));
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/c_fit,w_300/e_vectorize:3:0.1,f_svg/bear'));
     }));
   });
   describe('placeholder with cl-transformation', () => {
