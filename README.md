@@ -85,11 +85,11 @@ import { Cloudinary } from 'cloudinary-core';
 export class AppModule { }
 ```
 
-See [samples folder](samples) for a complete reference project.
+See [samples folder](https://github.com/cloudinary/cloudinary_angular/tree/master/projects/angular-cld/samples) for a complete reference project.
 
 ### Creating new image tags with cl-image & cl-transformation ##################################
 
-The [cl-image](src/cloudinary-image.component.ts) component generates an `<image>` tag with requested transformation, type, and format. 
+The [cl-image](https://github.com/cloudinary/cloudinary_angular/blob/master/projects/angular-cld/src/lib/cloudinary-image.component.ts) component generates an `<image>` tag with requested transformation, type, and format. 
 The image tag can contain optional `<cl-transformation>` tags that will be used as chained transformations:
 
 ```html
@@ -161,11 +161,11 @@ Will be compiled by Angular to:
     src="http://res.cloudinary.com/{your_cloud_name}/image/fetch/f_auto,q_auto/https://cloudinary.com/images/logo.png">
 ```
 
-See additional usage examples [here](src/cloudinary-image-source.directive.spec.ts) and in the sample projects.
+See additional usage examples [here](https://github.com/cloudinary/cloudinary_angular/blob/master/projects/angular-cld/src/lib/cloudinary-image.component.spec.ts) and in the sample projects.
 
 ## Samples ########################################################
 
-You can find our sample projects, along with documentation in the [samples folder](samples).
+You can find our sample projects, along with documentation in the [samples folder](https://github.com/cloudinary/cloudinary_angular/tree/master/projects/angular-cld/samples).
 
 :information_source: In order to run the samples you need to create a new file called config.ts with your cloud credentials.
 Copy `config.ts.sample` in the sample of your choice and replace the placeholders with your credentials.
@@ -175,10 +175,10 @@ Both sample applications demonstrate a basic photo gallery showcasing basic imag
 
 The samples differ by their bundling solution and upload implementation:
 
-* [Photo album sample app](samples/photo_album) 
+* [Photo album sample app](https://github.com/cloudinary/cloudinary_angular/tree/master/projects/angular-cld/samples/photo_album) 
     * Uses [ng2-file-upload](https://github.com/valor-software/ng2-file-upload) for uploading files using an opensource file uploader
     * Uses [Webpack](https://webpack.github.io) for bundling and serving the application
-* [Photo album sample app with jQuery](samples/photo_album_with_jquery) 
+* [Photo album sample app with jQuery](https://github.com/cloudinary/cloudinary_angular/tree/master/projects/angular-cld/samples/photo_album_with_jquery) 
     * Uses [Cloudinary's jQuery plugin](https://cloudinary.com/blog/direct_upload_made_easy_from_browser_or_mobile_app_to_the_cloud#direct_uploading_from_the_browser_using_jquery) for uploading files using jQuery and blueimp.
     * Uses [SystemJS](https://github.com/systemjs/systemjs) for bundling the application and [lite-server](https://github.com/johnpapa/lite-server) for serving the application. 
 * [Photo Album AOT compilation](samples/photo_album_aot) 
