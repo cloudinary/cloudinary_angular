@@ -562,7 +562,7 @@ describe('CloudinaryImage', () => {
       expect(img.attributes.getNamedItem('data-src').value).toEqual(jasmine.stringMatching('image/upload/bear'));
     });
     it('Should lazy load post scroll', async() => {
-      const delay = 300;
+      const delay = 1000;
       const wait = (ms) => new Promise(res => setTimeout(res, ms));
       const count = async () => document.querySelectorAll('.startWindow').length;
       const scrollDown = async () => {
@@ -625,7 +625,7 @@ describe('CloudinaryImage', () => {
       expect(img.attributes.getNamedItem('data-src').value).toEqual(jasmine.stringMatching('image/upload/bear'));
     });
     it('Should lazy load post scroll', async () => {
-      const delay = 300;
+      const delay = 1000;
       const wait = (ms) => new Promise(res => setTimeout(res, ms));
       const count = async () => document.querySelectorAll('.startWindow').length;
       const scrollDown = async () => {
@@ -1014,7 +1014,7 @@ describe('CloudinaryImage', () => {
       const placeholderimg = placeholder[0].children[0].nativeElement as HTMLImageElement;
       const img = des[2].children[0].nativeElement as HTMLImageElement;
 
-      const delay = 300;
+      const delay = 1000;
       const wait = (ms) => new Promise(res => setTimeout(res, ms));
       const count = async () => document.querySelectorAll('.startWindow').length;
       const scrollDown = async () => {
