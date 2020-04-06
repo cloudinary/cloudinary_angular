@@ -95,10 +95,8 @@ export class CloudinaryImage
   }
 
   getPlaceHolderStyle() {
-    if (this.placeholderComponent) {
-      return {[this.shouldShowPlaceHolder ? 'opacity' : ''] : '0',
-        [this.shouldShowPlaceHolder ? 'position' : ''] : 'absolute'}
-    }
+    return {[this.shouldShowPlaceHolder ? 'opacity' : ''] : '0',
+      [this.shouldShowPlaceHolder ? 'position' : ''] : 'absolute'}
   }
 
   hasLoaded() {

@@ -550,7 +550,7 @@ describe('CloudinaryImage', () => {
 
     it('should not have style opacity and position', () => {
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.hasAttribute('style')).toBe(false);
+      expect(img.getAttribute('style')).toEqual(jasmine.stringMatching(''));
     });
   });
 
