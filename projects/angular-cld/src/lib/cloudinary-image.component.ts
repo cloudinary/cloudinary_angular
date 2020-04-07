@@ -22,8 +22,8 @@ import { accessibilityEffect } from './constants';
 
 @Component({
   selector: 'cl-image',
-  template: `<img [ngStyle]="{opacity: shouldShowPlaceHolder ? '0' : '1', position: shouldShowPlaceHolder ? 'absolute' : 'unset'}"(load)="hasLoaded()">
-  <div [style.display]="shouldShowPlaceHolder ? 'inline' : 'none'">
+  template: `<img [ngStyle]="getPlaceHolderStyle()"(load)="hasLoaded()">
+  <div *ngIf="placeholderComponent"[style.display]="shouldShowPlaceHolder ? 'inline' : 'none'">
       <ng-content></ng-content>
   </div>
   `,
@@ -92,6 +92,11 @@ export class CloudinaryImage
     if (this.placeholderComponent) {
       this.placeholderComponent.setPublicId(this.publicId);
     }
+  }
+
+  getPlaceHolderStyle() {
+    return {[this.shouldShowPlaceHolder ? 'opacity' : ''] : '0',
+      [this.shouldShowPlaceHolder ? 'position' : ''] : 'absolute'}
   }
 
   hasLoaded() {

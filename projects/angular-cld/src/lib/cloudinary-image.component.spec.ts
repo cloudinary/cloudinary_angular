@@ -527,6 +527,63 @@ describe('CloudinaryImage', () => {
     });
   });
 
+  describe('cl-image styling without placeholder', () => {
+    @Component({
+      template: `<cl-image public-id="sample.jpg" ></cl-image>`
+    })
+    class TestComponent {}
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement[];  // the elements w/ the directive
+    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
+      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+      // all elements with an attached CloudinaryImage
+      des = fixture.debugElement.queryAll(By.directive(CloudinaryImage));
+    });
+
+    it('should not have style opacity and position', () => {
+      const img = des[0].children[0].nativeElement as HTMLImageElement;
+      expect(img.getAttribute('style')).toEqual(jasmine.stringMatching(''));
+    });
+  });
+
+  describe('cl-image styling with placeholder', () => {
+    @Component({
+      template: `<div style="margin-top: 4000px"></div>
+      <cl-image public-id="sample.jpg" loading="lazy">
+        <cl-placeholder></cl-placeholder>
+      </cl-image>`
+    })
+    class TestComponent {}
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement[];  // the elements w/ the directive
+    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
+      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent, CloudinaryPlaceHolder],
+        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+      // all elements with an attached CloudinaryImage
+      des = fixture.debugElement.queryAll(By.directive(CloudinaryImage));
+    });
+
+    it('should have style opacity and position', () => {
+      const img = des[0].children[0].nativeElement as HTMLImageElement;
+      expect(img.getAttribute('style')).toEqual(jasmine.stringMatching('opacity: 0; position: absolute;'));
+    });
+  });
+
   describe('lazy load image', async () => {
     @Component({
       template: `
