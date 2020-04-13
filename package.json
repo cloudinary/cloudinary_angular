@@ -8,7 +8,7 @@
     "install-sample-from-source": "node ./scripts/install-sample-from-source.js samples/photo_album",
     "install-sample-from-source:jquery": "node ./scripts/install-sample-from-source.js samples/photo_album_with_jquery",
     "build": "ng build angular-cld && npm run copy-lib-assets",
-    "copy-lib-assets": "cp \"LICENSE\" \"CHANGELOG.md\"  \"dist/angular-cld\"",
+    "copy-lib-assets": "cp \"LICENSE\" \"CHANGELOG.md\" \"README.md\" \"dist/angular-cld\"",
     "bundlewatch": "bundlewatch --config bundlewatch.config.js"
   },
   "private": true,
