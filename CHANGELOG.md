@@ -1,3 +1,19 @@
+1.2.2 / 2020-04-13
+==================
+
+New functionality
+-----------------
+* Added bundlewatch (#268)
+* Added issue templates (#265) 
+
+Other changes
+-----------------
+*  Removed lock files from sample projects (#271)
+*  Updated placeholder constants data structure (#270)
+*  Updated styling for image without placeholder (#266)
+*  Update sample links (#264
+*  Update vectorize placeholder transformation (#259)
+
 1.2.0-rc.0 / 2020-02-17
 =======================
 
