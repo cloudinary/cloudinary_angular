@@ -2,8 +2,8 @@
   "name": "@cloudinary/angular-5.x",
   "version": "1.2.2",
   "peerDependencies": {
-    "@angular/common": "^6.0.0",
-    "@angular/core": "^6.0.0"
+    "@angular/common": "^6.0.3",
+    "@angular/core": "^6.0.3"
   },
   "devDependencies": {
     "cloudinary-core": "^2.8.1",
