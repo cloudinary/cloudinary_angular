@@ -5,7 +5,8 @@
     "types": [
       "jasmine",
       "node"
-    ]
+    ],
+    "target": "es5"
   },
   "files": [
     "src/test.ts"
