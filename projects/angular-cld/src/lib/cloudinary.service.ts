@@ -15,6 +15,10 @@ const isJsonLikeString = function (str: any): boolean {
   return str && typeof str === 'string' && (str.trim().match(/^{[\s\S]*?}$/) !== null);
 };
 
+const isArrayLikeString = function (str: any): boolean {
+  return str && typeof str === 'string' && (str.trim().match(/^\[[\s\S]*?]$/) !== null);
+};
+
 const isNamedNodeMap = function (obj: any): boolean {
   return obj && (obj.constructor.name === 'NamedNodeMap' || obj instanceof NamedNodeMap);
 };
@@ -31,9 +35,13 @@ const namedNodeMapToObject = function (source: NamedNodeMap): any {
 
 const transformKeyNames = function (obj: any): any {
   let _obj = obj;
-  if (isJsonLikeString(obj)) {
+  if (isJsonLikeString(obj) || isArrayLikeString(obj)) {
     // Given attribute value is in the form of a JSON object -
-    // Transforms the string into an object, as the Javascript API expects
+    // Transforms the string into an object or array, as the Javascript API expects
+
+    if (isArrayLikeString(obj)) {
+      obj = obj.replace(/'/g, '"');
+    }
     _obj = JSON.parse(obj);
   } else if (isNamedNodeMap(obj)) {
     _obj = namedNodeMapToObject(obj);
