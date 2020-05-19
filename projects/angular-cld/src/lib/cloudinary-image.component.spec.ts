@@ -308,6 +308,39 @@ describe('CloudinaryImage', () => {
     });
   });
 
+  describe('should support user variables', () => {
+    @Component({
+      template:
+        `
+        <cl-image public-id="sample">
+          <cl-transformation variables="[['$imgWidth','150']]"></cl-transformation>
+          <cl-transformation width="$imgWidth" crop="crop" ></cl-transformation>
+        </cl-image>
+      `
+    })
+    class TestComponent { }
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement;  // the elements w/ the directive
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: localCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+
+      // Our element under test, which is attached to CloudinaryImage
+      des = fixture.debugElement.query(By.directive(CloudinaryImage));
+    });
+
+    it('creates an img element with user variables', () => {
+      const img = des.children[0].nativeElement as HTMLImageElement;
+      expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular2_sdk@@/image/upload/$imgWidth_150/c_crop,w_$imgWidth/sample');
+    });
+  });
+
   describe('Sample code presented in README', () => {
     @Component({
       template:
