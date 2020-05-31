@@ -1,6 +1,10 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
@@ -24,6 +28,7 @@
   "exclude": [
     "node_modules",
     "samples",
-    "compiled"
+    "compiled",
+    "projects/angular-cld/package.json"
   ]
 }
