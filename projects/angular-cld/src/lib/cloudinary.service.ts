@@ -88,6 +88,9 @@ export class Cloudinary {
   url(...parameters): string {
     return this._cloudinaryInstance.url(...parameters);
   }
+  prepareUrl(...parameters) {
+    return this._cloudinaryInstance.url(...parameters);
+  }
 
   imageTag(...parameters): any {
     return this._cloudinaryInstance.imageTag(...parameters);

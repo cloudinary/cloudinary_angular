@@ -12,13 +12,14 @@ import {
   OnChanges,
   SimpleChanges,
   OnDestroy,
-  ContentChild,
+  ContentChild
 } from '@angular/core';
 import { Cloudinary } from './cloudinary.service';
 import { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
 import { CloudinaryPlaceHolder } from './cloudinary-placeholder.component';
 import { isBrowser } from './cloudinary.service';
 import { accessibilityEffect } from './constants';
+import { analyticsOptions } from './analyticsOptions';
 
 @Component({
   selector: 'cl-image',
@@ -125,6 +126,7 @@ export class CloudinaryImage
         nativeElement.attributes,
         this.transformations
       );
+
       if (this.clientHints || (typeof this.clientHints === 'undefined' && this.cloudinary.config().client_hints)) {
         delete options['class'];
         delete options['data-src'];
@@ -135,14 +137,24 @@ export class CloudinaryImage
       }
       if (this.accessibility) {
         this.options = options;
+        analyticsOptions['feature'] = 'D';
         options.src = this.accessibilityModeHandler();
       }
-      const imageTag = this.cloudinary.imageTag(this.publicId, options);
-
-      this.setElementAttributes(image, imageTag.attributes());
       if (options.responsive) {
+        analyticsOptions['feature'] = 'A';
         this.cloudinary.responsive(image, options);
       }
+
+      if (options.loading === 'lazy') {
+        analyticsOptions['feature'] = 'C';
+      }
+      if (this.cloudinary.config().analytics) {
+        this.options = {analyticsOptions, ...options};
+      } else {
+        this.options = options;
+      }
+      const imageTag = this.cloudinary.imageTag(this.publicId, this.options);
+      this.setElementAttributes(image, imageTag.attributes());
     }
   }
 
@@ -174,6 +186,6 @@ export class CloudinaryImage
   }
 
   accessibilityModeHandler() {
-    return this.cloudinary.url(this.publicId, {transformation: [this.options, accessibilityEffect[this.accessibility]]});
+    return this.cloudinary.prepareUrl(this.publicId, { transformation: [this.options, accessibilityEffect[this.accessibility]], analyticsOptions: analyticsOptions });
   }
 }

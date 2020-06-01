@@ -23,4 +23,6 @@ export default interface CloudinaryConfiguration {
     readonly use_root_path?: boolean;
     readonly version?: string;
     readonly client_hints?: boolean;
+    readonly analytics?: boolean;
+    readonly analyticsOptions?: string;
 }
