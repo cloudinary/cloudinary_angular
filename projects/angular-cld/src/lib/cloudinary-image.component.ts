@@ -197,7 +197,5 @@ export class CloudinaryImage
     } else {
       this.options = options;
     }
-
-    return analyticsOptions;
   }
 }
