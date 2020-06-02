@@ -45,9 +45,9 @@ export class CloudinaryPlaceHolder implements AfterContentChecked {
     analyticsOptions.feature = 'B';
 
     if (this.type === 'predominant-color' && this.itemHeight && this.itemWidth) {
-      return this.cloudinary.prepareUrl(this.publicId, {transformation: [this.options, ...predominantColorTransformPxl], analyticsOptions: analyticsOptions});
+      return this.cloudinary.url(this.publicId, {transformation: [this.options, ...predominantColorTransformPxl], analyticsOptions: analyticsOptions});
     } else {
-      return this.cloudinary.prepareUrl(this.publicId,
+      return this.cloudinary.url(this.publicId,
         {transformation: [this.options, ...(placeholderImageOptions[this.type] || placeholderImageOptions['blur'])], analyticsOptions: analyticsOptions});
     }
   }

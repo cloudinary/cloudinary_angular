@@ -179,7 +179,7 @@ export class CloudinaryImage
   }
 
   accessibilityModeHandler(analyticsOptions) {
-    return this.cloudinary.prepareUrl(this.publicId, { transformation: [this.options, accessibilityEffect[this.accessibility]], analyticsOptions: analyticsOptions });
+    return this.cloudinary.url(this.publicId, { transformation: [this.options, accessibilityEffect[this.accessibility]], analyticsOptions: analyticsOptions });
   }
 
   setAnalytics(options) {
