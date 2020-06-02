@@ -135,11 +135,9 @@ export class CloudinaryImage
       if (this.placeholderComponent) {
         this.placeholderHandler(options, image);
       }
-      let analyticsOptions = this.setAnalytics(options);
-
+      this.setAnalytics(options);
       if (this.accessibility) {
-        this.options = options;
-        options.src = this.accessibilityModeHandler(analyticsOptions);
+        this.options['src'] = this.accessibilityModeHandler();
       }
 
       const imageTag = this.cloudinary.imageTag(this.publicId, this.options);
@@ -178,8 +176,8 @@ export class CloudinaryImage
     this.placeholderComponent.options = placeholderOptions;
   }
 
-  accessibilityModeHandler(analyticsOptions) {
-    return this.cloudinary.url(this.publicId, { transformation: [this.options, accessibilityEffect[this.accessibility]], analyticsOptions: analyticsOptions });
+  accessibilityModeHandler() {
+    return this.cloudinary.url(this.publicId, { transformation: [this.options, accessibilityEffect[this.accessibility]], analyticsOptions: this.options['analyticsOptions'] });
   }
 
   setAnalytics(options) {
