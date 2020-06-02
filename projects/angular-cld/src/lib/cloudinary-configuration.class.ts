@@ -24,5 +24,4 @@ export default interface CloudinaryConfiguration {
     readonly version?: string;
     readonly client_hints?: boolean;
     readonly analytics?: boolean;
-    readonly analyticsOptions?: string;
 }

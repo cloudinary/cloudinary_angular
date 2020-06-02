@@ -19,7 +19,7 @@ import { CloudinaryTransformationDirective } from './cloudinary-transformation.d
 import { CloudinaryPlaceHolder } from './cloudinary-placeholder.component';
 import { isBrowser } from './cloudinary.service';
 import { accessibilityEffect } from './constants';
-import { analyticsOptions } from './analyticsOptions';
+import { analyticsOptionsDefault }  from './analyticsOptionsDefault';
 
 @Component({
   selector: 'cl-image',
@@ -135,26 +135,19 @@ export class CloudinaryImage
       if (this.placeholderComponent) {
         this.placeholderHandler(options, image);
       }
+      let analyticsOptions = this.setAnalytics(options);
+
       if (this.accessibility) {
         this.options = options;
-        analyticsOptions['feature'] = 'D';
-        options.src = this.accessibilityModeHandler();
-      }
-      if (options.responsive) {
-        analyticsOptions['feature'] = 'A';
-        this.cloudinary.responsive(image, options);
+        options.src = this.accessibilityModeHandler(analyticsOptions);
       }
 
-      if (options.loading === 'lazy') {
-        analyticsOptions['feature'] = 'C';
-      }
-      if (this.cloudinary.config().analytics) {
-        this.options = {analyticsOptions, ...options};
-      } else {
-        this.options = options;
-      }
       const imageTag = this.cloudinary.imageTag(this.publicId, this.options);
+
       this.setElementAttributes(image, imageTag.attributes());
+      if (options.responsive) {
+        this.cloudinary.responsive(image, options);
+      }
     }
   }
 
@@ -185,7 +178,28 @@ export class CloudinaryImage
     this.placeholderComponent.options = placeholderOptions;
   }
 
-  accessibilityModeHandler() {
+  accessibilityModeHandler(analyticsOptions) {
     return this.cloudinary.prepareUrl(this.publicId, { transformation: [this.options, accessibilityEffect[this.accessibility]], analyticsOptions: analyticsOptions });
+  }
+
+  setAnalytics(options) {
+    let analyticsOptions = {...analyticsOptionsDefault};
+
+    if (this.cloudinary.config().analytics) {
+      if (this.accessibility) {
+        analyticsOptions.feature = 'D';
+      }
+      if (options.loading === 'lazy') {
+        analyticsOptions.feature = 'C';
+      }
+      if (options.responsive) {
+        analyticsOptions.feature = 'A';
+      }
+      this.options = {analyticsOptions, ...options};
+    } else {
+      this.options = options;
+    }
+
+    return analyticsOptions;
   }
 }

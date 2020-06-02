@@ -1,6 +1,6 @@
 import {VERSION} from '@angular/core';
 
-export let analyticsOptions = {
+export let analyticsOptionsDefault = {
   sdkSemver: '1.2.2',
   techVersion: VERSION.full,
   sdkCode: 'K',
