@@ -12,7 +12,7 @@ import {
   OnChanges,
   SimpleChanges,
   OnDestroy,
-  ContentChild
+  ContentChild,
 } from '@angular/core';
 import { Cloudinary } from './cloudinary.service';
 import { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
@@ -122,7 +122,7 @@ export class CloudinaryImage
       image.onerror = e => {
         this.onError.emit(e);
       };
-      const options = this.cloudinary.toCloudinaryAttributes(
+      let options = this.cloudinary.toCloudinaryAttributes(
         nativeElement.attributes,
         this.transformations
       );
@@ -132,15 +132,20 @@ export class CloudinaryImage
         delete options['data-src'];
         delete options['responsive'];
       }
+      if (this.cloudinary.config().analytics) {
+        options = {...analyticsOptionsDefault, ...options};
+      }
+
       if (this.placeholderComponent) {
         this.placeholderHandler(options, image);
       }
-      this.setAnalytics(options);
+
       if (this.accessibility) {
-        this.options['src'] = this.accessibilityModeHandler();
+        this.options = options;
+        options.src = this.accessibilityModeHandler();
       }
 
-      const imageTag = this.cloudinary.imageTag(this.publicId, this.options);
+      const imageTag = this.cloudinary.imageTag(this.publicId, options);
 
       this.setElementAttributes(image, imageTag.attributes());
       if (options.responsive) {
@@ -177,25 +182,6 @@ export class CloudinaryImage
   }
 
   accessibilityModeHandler() {
-    return this.cloudinary.url(this.publicId, { transformation: [this.options, accessibilityEffect[this.accessibility]], analyticsOptions: this.options['analyticsOptions'] });
-  }
-
-  setAnalytics(options) {
-    let analyticsOptions = {...analyticsOptionsDefault};
-
-    if (this.cloudinary.config().analytics) {
-      if (this.accessibility) {
-        analyticsOptions.feature = 'D';
-      }
-      if (options.loading === 'lazy') {
-        analyticsOptions.feature = 'C';
-      }
-      if (options.responsive) {
-        analyticsOptions.feature = 'A';
-      }
-      this.options = {analyticsOptions, ...options};
-    } else {
-      this.options = options;
-    }
+    return this.cloudinary.url(this.publicId, {transformation: [this.options, accessibilityEffect[this.accessibility]], accessibility: true, ...analyticsOptionsDefault});
   }
 }

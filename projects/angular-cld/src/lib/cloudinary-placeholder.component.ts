@@ -7,7 +7,6 @@ import {
 import {Cloudinary} from './cloudinary.service';
 import { placeholderImageOptions, predominantColorTransformPxl } from './constants';
 import { analyticsOptionsDefault }  from './analyticsOptionsDefault';
-let analyticsOptions = {...analyticsOptionsDefault};
 
 @Component({
   selector: 'cl-placeholder',
@@ -42,13 +41,11 @@ export class CloudinaryPlaceHolder implements AfterContentChecked {
   }
 
   getPlaceholderImage() {
-    analyticsOptions.feature = 'B';
-
     if (this.type === 'predominant-color' && this.itemHeight && this.itemWidth) {
-      return this.cloudinary.url(this.publicId, {transformation: [this.options, ...predominantColorTransformPxl], analyticsOptions: analyticsOptions});
+      return this.cloudinary.url(this.publicId, {transformation: [this.options, ...predominantColorTransformPxl], placeholder: true, ...analyticsOptionsDefault});
     } else {
       return this.cloudinary.url(this.publicId,
-        {transformation: [this.options, ...(placeholderImageOptions[this.type] || placeholderImageOptions['blur'])], analyticsOptions: analyticsOptions});
+        {transformation: [this.options, ...(placeholderImageOptions[this.type] || placeholderImageOptions['blur'])], placeholder: true, ...analyticsOptionsDefault});
     }
   }
 }

@@ -4,5 +4,4 @@ export let analyticsOptionsDefault = {
   sdkSemver: '1.2.2',
   techVersion: VERSION.full,
   sdkCode: 'K',
-  feature: '0'
 };
