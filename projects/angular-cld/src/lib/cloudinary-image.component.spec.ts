@@ -776,7 +776,7 @@ describe('CloudinaryImage', () => {
       expect(img.attributes.getNamedItem('data-src').value).toEqual(jasmine.stringMatching('image/upload/bear'));
     });
     it('Should lazy load post scroll', async () => {
-      const delay = 300;
+      const delay = 500;
       const wait = (ms) => new Promise(res => setTimeout(res, ms));
       const count = async () => document.querySelectorAll('.startWindow').length;
       const scrollDown = async () => {
