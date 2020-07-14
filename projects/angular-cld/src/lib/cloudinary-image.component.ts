@@ -13,6 +13,7 @@ import {
   SimpleChanges,
   OnDestroy,
   ContentChild,
+  Renderer2,
 } from '@angular/core';
 import { Cloudinary } from './cloudinary.service';
 import { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
@@ -22,9 +23,9 @@ import { accessibilityEffect } from './constants';
 
 @Component({
   selector: 'cl-image',
-  template: `<img [ngStyle]="getPlaceHolderStyle()"(load)="hasLoaded()">
-  <div *ngIf="placeholderComponent"[style.display]="shouldShowPlaceHolder ? 'inline' : 'none'">
-      <ng-content></ng-content>
+  template: `<img (load)="hasLoaded()">
+  <div *ngIf="placeholderComponent && shouldShowPlaceHolder" [style.display]="shouldShowPlaceHolder ? 'inline' : 'none'">
+    <ng-content></ng-content>
   </div>
   `,
 })
@@ -35,6 +36,7 @@ export class CloudinaryImage
   @Input('loading') loading: string;
   @Input('width') width?: string;
   @Input('height') height?: string;
+
   @Input('accessibility') accessibility?: string;
 
   @ContentChildren(CloudinaryTransformationDirective)
@@ -48,7 +50,7 @@ export class CloudinaryImage
   shouldShowPlaceHolder = true;
   options: object = {};
 
-  constructor(private el: ElementRef, private cloudinary: Cloudinary) {}
+  constructor(private el: ElementRef, private cloudinary: Cloudinary, private renderer: Renderer2) {}
 
   ngOnInit(): void {
     if (isBrowser()) {
@@ -94,9 +96,11 @@ export class CloudinaryImage
     }
   }
 
-  getPlaceHolderStyle() {
-    return {[this.shouldShowPlaceHolder ? 'opacity' : ''] : '0',
-      [this.shouldShowPlaceHolder ? 'position' : ''] : 'absolute'}
+  setPlaceHolderStyle() {
+    if (this.placeholderComponent) {
+      this.renderer.setStyle(this.el.nativeElement.children[0], 'opacity', '0' );
+      this.renderer.setStyle(this.el.nativeElement.children[0], 'position', 'absolute' );
+    }
   }
 
   hasLoaded() {
@@ -138,7 +142,6 @@ export class CloudinaryImage
         options.src = this.accessibilityModeHandler();
       }
       const imageTag = this.cloudinary.imageTag(this.publicId, options);
-
       this.setElementAttributes(image, imageTag.attributes());
       if (options.responsive) {
         this.cloudinary.responsive(image, options);
@@ -149,8 +152,13 @@ export class CloudinaryImage
   setElementAttributes(element, attributesLiteral) {
     Object.keys(attributesLiteral).forEach(attrName => {
       const attr = attrName === 'src' && this.loading === 'lazy' ? 'data-src' : attrName;
-      element.setAttribute(attr, attributesLiteral[attrName]);
+      this.renderer.setAttribute(element, attr, attributesLiteral[attrName]);
     });
+
+    // Enforcing placeholder style
+    if (this.shouldShowPlaceHolder) {
+      this.setPlaceHolderStyle();
+    }
   }
 
   /**
@@ -163,12 +171,7 @@ export class CloudinaryImage
     if (placeholderOptions['width']) {
       if (placeholderOptions['width'] === 'auto') {
         placeholderOptions['width'] = image.getAttribute('data-width');
-      } else if (this.placeholderComponent.type !== 'vectorize') {
-        placeholderOptions['width'] = Math.ceil(parseInt(options['width'], 10) * 0.1);
       }
-    }
-    if (placeholderOptions['height']) {
-      placeholderOptions['height'] = Math.ceil(parseInt(options['height'], 10) * 0.1);
     }
     this.placeholderComponent.options = placeholderOptions;
   }

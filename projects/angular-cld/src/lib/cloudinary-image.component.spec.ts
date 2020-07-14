@@ -649,7 +649,35 @@ describe('CloudinaryImage', () => {
       expect(img.getAttribute('style')).toEqual(jasmine.stringMatching('opacity: 0; position: absolute;'));
     });
   });
+  describe('cl-image with placeholder and html style', () => {
+    @Component({
+      template: `<div style="margin-top: 4000px"></div>
+      <cl-image loading="lazy" public-id="sample" width="500" crop="fit" style="max-height: 100%">
+        <cl-placeholder type="blur"></cl-placeholder>
+      </cl-image>`
+    })
+    class TestComponent {}
 
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement[];  // the elements w/ the directive
+    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
+      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent, CloudinaryPlaceHolder],
+        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+      // all elements with an attached CloudinaryImage
+      des = fixture.debugElement.queryAll(By.directive(CloudinaryImage));
+    });
+
+    it('should have style opacity and position when style is passed', () => {
+      const img = des[0].children[0].nativeElement as HTMLImageElement;
+      expect(img.getAttribute('style')).toEqual(jasmine.stringMatching('opacity: 0; position: absolute;'));
+    });
+  });
   describe('lazy load image', async () => {
     @Component({
       template: `
@@ -862,7 +890,7 @@ describe('CloudinaryImage', () => {
       tick();
       fixture.detectChanges();
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('c_fit,w_30/e_blur:2000,f_auto,q_1/bear'));
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('c_fit,w_300/e_blur:2000,f_auto,q_1/bear'));
     }));
   });
   describe('placeholder type pixelate', () => {
@@ -890,7 +918,7 @@ describe('CloudinaryImage', () => {
       tick();
       fixture.detectChanges();
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/c_fit,w_30/e_pixelate,f_auto,q_1/bear'));
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/c_fit,w_300/e_pixelate,f_auto,q_1/bear'));
     }));
   });
   describe('placeholder type predominant-color with exact dimensions', () => {
@@ -918,7 +946,7 @@ describe('CloudinaryImage', () => {
       tick();
       fixture.detectChanges();
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/c_fit,h_30,w_30/ar_1,b_auto,' +
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/c_fit,h_300,w_300/ar_1,b_auto,' +
         'c_pad,w_iw_div_2/c_crop,g_north_east,h_1,w_1/f_auto,q_auto/bear'));
     }));
   });
@@ -948,7 +976,7 @@ describe('CloudinaryImage', () => {
       fixture.detectChanges();
       const img = des[0].children[0].nativeElement as HTMLImageElement;
       expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular2_sdk@@/image/' +
-        'upload/c_fit,w_30/$currWidth_w,$currHeight_h/ar_1,b_auto,c_pad,w_iw_div_2/c_crop,g_north_east,h_10,w_10/c_fill,h_$currHeight,w_$currWidth/f_auto,q_auto/bear');
+        'upload/c_fit,w_300/$currWidth_w,$currHeight_h/ar_1,b_auto,c_pad,w_iw_div_2/c_crop,g_north_east,h_10,w_10/c_fill,h_$currHeight,w_$currWidth/f_auto,q_auto/bear');
     }));
   });
   describe('placeholder type vectorize', () => {
@@ -1004,7 +1032,7 @@ describe('CloudinaryImage', () => {
       tick();
       fixture.detectChanges();
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_sepia/c_fit,w_30/e_blur:2000,f_auto,q_1/bear'));
+      expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('e_sepia/c_fit,w_300/e_blur:2000,f_auto,q_1/bear'));
     }));
   });
   describe('cl-image with acessibility modes', () => {
