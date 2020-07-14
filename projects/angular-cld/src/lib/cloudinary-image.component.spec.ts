@@ -675,7 +675,7 @@ describe('CloudinaryImage', () => {
 
     it('should have style opacity and position when style is passed', () => {
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.getAttribute('style')).toEqual(jasmine.stringMatching('opacity: 0; position: absolute;'));
+      expect(img.getAttribute('style')).toEqual(jasmine.stringMatching('max-height: 100%; opacity: 0; position: absolute;'));
     });
   });
   describe('lazy load image', async () => {
