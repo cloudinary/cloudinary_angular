@@ -3,13 +3,15 @@ import {
   Component,
   HostBinding,
   Input,
+  ElementRef,
+  Renderer2,
 } from '@angular/core';
 import {Cloudinary} from './cloudinary.service';
 import { placeholderImageOptions, predominantColorTransformPxl } from './constants';
 
 @Component({
   selector: 'cl-placeholder',
-  template: `<img [src]="this.placeholderImg" [style.width.px]="this.itemWidth" [style.height.px]="this.itemHeight">`
+  template: `<img [src]="this.placeholderImg">`
   ,
 })
 export class CloudinaryPlaceHolder implements AfterContentChecked {
@@ -21,7 +23,7 @@ export class CloudinaryPlaceHolder implements AfterContentChecked {
   options: object = {};
   placeholderImg: string;
 
-  constructor(private cloudinary: Cloudinary) {}
+  constructor(private cloudinary: Cloudinary, private renderer: Renderer2, private el: ElementRef) {}
 
   setWidth(width) {
     this.itemWidth = width;
@@ -36,6 +38,8 @@ export class CloudinaryPlaceHolder implements AfterContentChecked {
   }
 
   ngAfterContentChecked() {
+    const imageTag = this.cloudinary.imageTag(this.publicId, this.options);
+    this.setElementAttributes(this.el.nativeElement.children[0], imageTag.attributes());
     this.placeholderImg = this.getPlaceholderImage();
   }
 
@@ -45,5 +49,13 @@ export class CloudinaryPlaceHolder implements AfterContentChecked {
     } else {
       return this.cloudinary.url(this.publicId, {transformation: [this.options, ...(placeholderImageOptions[this.type] || placeholderImageOptions['blur'])]});
     }
+  }
+
+  setElementAttributes(element, attributesLiteral) {
+    Object.keys(attributesLiteral).forEach(attrName => {
+      if (attrName !== 'src') {
+        this.renderer.setAttribute(element, attrName, attributesLiteral[attrName]);
+      }
+    });
   }
 }
