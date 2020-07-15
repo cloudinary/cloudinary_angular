@@ -739,16 +739,16 @@ describe('CloudinaryImage', () => {
   describe('lazy load image with default placeholder', async () => {
     @Component({
       template: `
-          <div class="startWindow"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
-          <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
-          <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear">
-              <cl-placeholder></cl-placeholder>
-          </cl-image></div>
-          <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
-          <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
-          <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
-          <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
-          <div class="endWindow" style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>`
+        <div class="startWindow"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+        <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+        <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear">
+          <cl-placeholder></cl-placeholder>
+        </cl-image></div>
+        <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+        <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+        <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+        <div style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>
+        <div class="endWindow" style="margin-top: 300px"><cl-image loading="lazy" width="300" public-id="bear"></cl-image></div>`
     })
     class TestComponent {}
 
@@ -770,13 +770,13 @@ describe('CloudinaryImage', () => {
       tick();
       fixture.detectChanges();
     }));
-    it('should load eagerly', () => {
+    it('should load eagerly', fakeAsync(() => {
       const img = des[0].children[0].nativeElement as HTMLImageElement;
       expect(img.hasAttribute('data-src')).toBe(true);
       expect(img.attributes.getNamedItem('data-src').value).toEqual(jasmine.stringMatching('image/upload/bear'));
-    });
-    it('Should lazy load post scroll', async () => {
-      const delay = 500;
+    }));
+    it('Should lazy load post scroll', async() => {
+      const delay = 300;
       const wait = (ms) => new Promise(res => setTimeout(res, ms));
       const count = async () => document.querySelectorAll('.startWindow').length;
       const scrollDown = async () => {
