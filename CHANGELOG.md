@@ -1,3 +1,21 @@
+
+1.3.1 / 2020-07-19
+=============
+
+New functionality
+-----------------
+ * Add support for angular 10 (#281)
+
+Other changes
+-----------------
+ * Fix placeholder when user passes css style (#284)
+ * Add test for normalized user variables (#280)
+ * Update workspace to version angular 7 (#278)
+ * Fix user variables (#276)
+ * Add test coverage (#285)
+ * Update cloudinary-core version (#286)
+
+
 1.2.2 / 2020-04-13
 ==================
 
