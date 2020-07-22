@@ -97,9 +97,12 @@ export class CloudinaryImage
   }
 
   setPlaceHolderStyle() {
-    if (this.placeholderComponent) {
+    if (this.shouldShowPlaceHolder) {
       this.renderer.setStyle(this.el.nativeElement.children[0], 'opacity', '0' );
       this.renderer.setStyle(this.el.nativeElement.children[0], 'position', 'absolute' );
+    } else {
+      this.renderer.setStyle(this.el.nativeElement.children[0], 'opacity', '' );
+      this.renderer.setStyle(this.el.nativeElement.children[0], 'position', '' );
     }
   }
 
@@ -156,9 +159,9 @@ export class CloudinaryImage
     });
 
     // Enforcing placeholder style
-    if (this.shouldShowPlaceHolder) {
-      this.setPlaceHolderStyle();
-    }
+      if (this.placeholderComponent) {
+        this.setPlaceHolderStyle();
+      }
   }
 
   /**

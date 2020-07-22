@@ -799,6 +799,12 @@ describe('CloudinaryImage', () => {
       const img = des[0].children[0].nativeElement as HTMLImageElement;
       expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/e_blur:2000,f_auto,q_1/bear'));
     }));
+    it('creates an img element without styling', fakeAsync(() => {
+      tick();
+      fixture.detectChanges();
+      const img = des[0].children[0].nativeElement as HTMLImageElement;
+      expect(img.getAttribute('style')).toEqual(jasmine.stringMatching(''));
+    }));
   });
   describe('placeholder type blur', () => {
     @Component({
