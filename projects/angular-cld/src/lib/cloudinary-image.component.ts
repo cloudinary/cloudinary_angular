@@ -96,13 +96,17 @@ export class CloudinaryImage
     }
   }
 
+  /**
+   * appends opacity and position to img when placeholder is displayed
+   * removes styling from img when placeholder does not display
+   * ensures user style remains on container cl-image
+   */
   setPlaceHolderStyle() {
     if (this.shouldShowPlaceHolder) {
       this.renderer.setStyle(this.el.nativeElement.children[0], 'opacity', '0' );
       this.renderer.setStyle(this.el.nativeElement.children[0], 'position', 'absolute' );
     } else {
-      this.renderer.setStyle(this.el.nativeElement.children[0], 'opacity', '' );
-      this.renderer.setStyle(this.el.nativeElement.children[0], 'position', '' );
+      this.renderer.removeAttribute(this.el.nativeElement.children[0], 'style');
     }
   }
 
