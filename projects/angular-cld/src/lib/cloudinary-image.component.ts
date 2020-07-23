@@ -96,10 +96,17 @@ export class CloudinaryImage
     }
   }
 
+  /**
+   * appends opacity and position to cl-img->img when placeholder is displayed
+   * removes styling from cl-img->img when placeholder does not display
+   */
   setPlaceHolderStyle() {
-    if (this.placeholderComponent) {
+    if (this.shouldShowPlaceHolder) {
       this.renderer.setStyle(this.el.nativeElement.children[0], 'opacity', '0' );
       this.renderer.setStyle(this.el.nativeElement.children[0], 'position', 'absolute' );
+    } else {
+      // note this only removes styling from cl-img->img and not cl-img
+      this.renderer.removeAttribute(this.el.nativeElement.children[0], 'style');
     }
   }
 
@@ -156,7 +163,7 @@ export class CloudinaryImage
     });
 
     // Enforcing placeholder style
-    if (this.shouldShowPlaceHolder) {
+    if (this.placeholderComponent) {
       this.setPlaceHolderStyle();
     }
   }

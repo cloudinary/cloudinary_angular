@@ -678,6 +678,35 @@ describe('CloudinaryImage', () => {
       expect(img.getAttribute('style')).toEqual(jasmine.stringMatching('max-height: 100%; opacity: 0; position: absolute;'));
     });
   });
+  describe('cl-image with placeholder and opacity', () => {
+    @Component({
+      template: `<div></div>
+      <cl-image public-id="sample" style="opacity: 0.5">
+        <cl-placeholder type="blur"></cl-placeholder>
+      </cl-image>`
+    })
+    class TestComponent {}
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement[];  // the elements w/ the directive
+    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
+      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent, CloudinaryPlaceHolder],
+        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+      // all elements with an attached CloudinaryImage
+      des = fixture.debugElement.queryAll(By.directive(CloudinaryImage));
+    });
+
+    it('should not overwrite input opacity', () => {
+      const img = des[0].nativeElement as HTMLImageElement;
+      expect(img.getAttribute('style')).toEqual(jasmine.stringMatching('opacity: 0.5'));
+    });
+  });
   describe('lazy load image', async () => {
     @Component({
       template: `
@@ -798,6 +827,12 @@ describe('CloudinaryImage', () => {
       fixture.detectChanges();
       const img = des[0].children[0].nativeElement as HTMLImageElement;
       expect(img.attributes.getNamedItem('src').value).toEqual(jasmine.stringMatching('image/upload/e_blur:2000,f_auto,q_1/bear'));
+    }));
+    it('creates an img element without styling', fakeAsync(() => {
+      tick();
+      fixture.detectChanges();
+      const img = des[0].children[0].nativeElement as HTMLImageElement;
+      expect(img.getAttribute('style')).toEqual(null);
     }));
   });
   describe('placeholder type blur', () => {
