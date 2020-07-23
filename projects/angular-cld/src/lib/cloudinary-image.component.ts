@@ -99,13 +99,13 @@ export class CloudinaryImage
   /**
    * appends opacity and position to cl-img->img when placeholder is displayed
    * removes styling from cl-img->img when placeholder does not display
-   * ensures user style remains on container cl-image
    */
   setPlaceHolderStyle() {
     if (this.shouldShowPlaceHolder) {
       this.renderer.setStyle(this.el.nativeElement.children[0], 'opacity', '0' );
       this.renderer.setStyle(this.el.nativeElement.children[0], 'position', 'absolute' );
     } else {
+      // note this only removes styling from cl-img->img and not cl-img
       this.renderer.removeAttribute(this.el.nativeElement.children[0], 'style');
     }
   }
