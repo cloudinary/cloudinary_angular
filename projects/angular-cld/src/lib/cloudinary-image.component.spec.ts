@@ -832,7 +832,7 @@ describe('CloudinaryImage', () => {
       tick();
       fixture.detectChanges();
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.getAttribute('style')).toEqual(jasmine.stringMatching(''));
+      expect(img.getAttribute('style')).toEqual(null);
     }));
   });
   describe('placeholder type blur', () => {

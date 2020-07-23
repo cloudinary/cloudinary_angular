@@ -53,7 +53,7 @@ export class CloudinaryPlaceHolder implements AfterContentChecked {
 
   setElementAttributes(element, attributesLiteral) {
     Object.keys(attributesLiteral).forEach(attrName => {
-      if (attrName !== 'src') {
+      if (attrName !== 'src' && attrName !== 'style') {
         this.renderer.setAttribute(element, attrName, attributesLiteral[attrName]);
       }
     });
