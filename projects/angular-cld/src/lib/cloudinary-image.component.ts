@@ -163,9 +163,9 @@ export class CloudinaryImage
     });
 
     // Enforcing placeholder style
-      if (this.placeholderComponent) {
-        this.setPlaceHolderStyle();
-      }
+    if (this.placeholderComponent) {
+      this.setPlaceHolderStyle();
+    }
   }
 
   /**
