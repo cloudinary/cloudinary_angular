@@ -97,8 +97,8 @@ export class CloudinaryImage
   }
 
   /**
-   * appends opacity and position to img when placeholder is displayed
-   * removes styling from img when placeholder does not display
+   * appends opacity and position to cl-img->img when placeholder is displayed
+   * removes styling from cl-img->img when placeholder does not display
    * ensures user style remains on container cl-image
    */
   setPlaceHolderStyle() {
