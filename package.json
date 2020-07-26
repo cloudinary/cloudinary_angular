@@ -6,7 +6,7 @@
     "test": "npm run test-es5 && npm run test-es2015",
     "test-es5": "ng test angular-cld --tsConfig=projects/angular-cld/tsconfig-es5.spec.json",
     "test-es2015": "ng test angular-cld --tsConfig=projects/angular-cld/tsconfig-es2015.spec.json",
-    "test-headless": "npm run test-es5-headless && npm run test-es2015-headless",
+    "test-headless": "npm run build && npm run test-es5-headless && npm run test-es2015-headless",
     "test-es5-headless": "ng test angular-cld --tsConfig=projects/angular-cld/tsconfig-es5.spec.json --browsers ChromeHeadless",
     "test-es2015-headless": "ng test angular-cld --tsConfig=projects/angular-cld/tsconfig-es2015.spec.json --browsers ChromeHeadless",
     "install-sample-from-source": "node ./scripts/install-sample-from-source.js samples/photo_album",
