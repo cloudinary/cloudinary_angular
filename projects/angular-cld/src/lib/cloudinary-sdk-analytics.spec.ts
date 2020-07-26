@@ -9,7 +9,7 @@ import {LazyLoadDirective } from './cloudinary-lazy-load.directive';
 import { CloudinaryPlaceHolder } from'./cloudinary-placeholder.component';
 
 describe('Tests for sdk versionID on image tag', () => {
-  describe('Config with analytics not set', () => {
+  describe('Config with urlAnalytics not set', () => {
     let localCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
       { cloud_name: '@@fake_angular_sdk@@' } as CloudinaryConfiguration);
 
@@ -45,9 +45,9 @@ describe('Tests for sdk versionID on image tag', () => {
     });
   });
 
-  describe('Config with analytics set to true', () => {
+  describe('Config with urlAnalytics set to true', () => {
     let localCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
-      { cloud_name: '@@fake_angular_sdk@@', analytics: true} as CloudinaryConfiguration);
+      { cloud_name: '@@fake_angular_sdk@@', urlAnalytics: true} as CloudinaryConfiguration);
 
     beforeEach(() => {
       spyOn(localCloudinary, 'toCloudinaryAttributes').and.callThrough();
@@ -73,15 +73,15 @@ describe('Tests for sdk versionID on image tag', () => {
       des = fixture.debugElement.query(By.directive(CloudinaryImage));
     });
 
-    it('creates an img with feature defaulting to 0', () => {
+    it('creates an img without a feature- resulting in 0', () => {
       const img = des.children[0].nativeElement as HTMLImageElement;
       expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/sample?_s=KE7pBq0');
     });
   });
 
-  describe('Accessibility with analytics set to true', () => {
+  describe('Accessibility with urlAnalytics set to true', () => {
     let localCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
-      { cloud_name: '@@fake_angular_sdk@@', analytics: true} as CloudinaryConfiguration);
+      { cloud_name: '@@fake_angular_sdk@@', urlAnalytics: true} as CloudinaryConfiguration);
 
     beforeEach(() => {
       spyOn(localCloudinary, 'toCloudinaryAttributes').and.callThrough();
@@ -107,15 +107,15 @@ describe('Tests for sdk versionID on image tag', () => {
       des = fixture.debugElement.query(By.directive(CloudinaryImage));
     });
 
-    it('creates an img with feature defaulting to D', () => {
+    it('creates an img with feature accessibility D', () => {
       const img = des.children[0].nativeElement as HTMLImageElement;
       expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/e_tint:75:black/sample?_s=KE7pBqD');
     });
   });
 
-  describe('Responsive with analytics set to true', () => {
+  describe('Responsive with urlAnalytics set to true', () => {
     let localCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
-      { cloud_name: '@@fake_angular_sdk@@', analytics: true } as CloudinaryConfiguration);
+      { cloud_name: '@@fake_angular_sdk@@', urlAnalytics: true } as CloudinaryConfiguration);
 
     beforeEach(() => {
       spyOn(localCloudinary, 'toCloudinaryAttributes').and.callThrough();
@@ -143,12 +143,12 @@ describe('Tests for sdk versionID on image tag', () => {
       des = fixture.debugElement.query(By.directive(CloudinaryImage));
     });
 
-    it('creates an img with feature defaulting to A', () => {
+    it('creates an img with feature responsive A', () => {
       const img = des.children[0].nativeElement as HTMLImageElement;
       expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/sample?_s=KE7pBqA');
     });
   });
-  describe('Placeholder with analytics set to true', async () => {
+  describe('Placeholder with urlAnalytics set to true', async () => {
     @Component({
       template: `<cl-image public-id="sample">
         <cl-placeholder></cl-placeholder>
@@ -160,7 +160,7 @@ describe('Tests for sdk versionID on image tag', () => {
     let des: DebugElement[];  // the elements w/ the directive
     let placeholder: DebugElement[];
     let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
-      { cloud_name: '@@fake_angular_sdk@@', analytics: true } as CloudinaryConfiguration);
+      { cloud_name: '@@fake_angular_sdk@@', urlAnalytics: true } as CloudinaryConfiguration);
     beforeEach(fakeAsync(() => {
       fixture = TestBed.configureTestingModule({
         declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent, LazyLoadDirective, CloudinaryPlaceHolder],
@@ -174,16 +174,16 @@ describe('Tests for sdk versionID on image tag', () => {
       tick();
       fixture.detectChanges();
     }));
-    it('placeholder img should default to B', async () => {
+    it('placeholder img should encode with B', async () => {
       const placeholderimg = placeholder[0].children[0].nativeElement as HTMLImageElement;
       expect(placeholderimg.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/e_blur:2000,f_auto,q_1/sample?_s=KE7pBqB');
     });
-    it('original img should default to 0', async () => {
+    it('original img should encode with 0', async () => {
       const img = des[0].children[0].nativeElement as HTMLImageElement;
       expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/sample?_s=KE7pBq0');
     });
   });
-  describe('Lazy-load with analytics set to true', async () => {
+  describe('Lazy-load with urlAnalytics set to true', async () => {
     @Component({
       template: `<cl-image public-id="sample" loading="lazy"></cl-image>`
     })
@@ -193,7 +193,7 @@ describe('Tests for sdk versionID on image tag', () => {
     let des: DebugElement[];  // the elements w/ the directive
     let placeholder: DebugElement[];
     let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
-      { cloud_name: '@@fake_angular_sdk@@', analytics: true } as CloudinaryConfiguration);
+      { cloud_name: '@@fake_angular_sdk@@', urlAnalytics: true } as CloudinaryConfiguration);
     beforeEach(fakeAsync(() => {
       fixture = TestBed.configureTestingModule({
         declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent, LazyLoadDirective, CloudinaryPlaceHolder],
@@ -207,7 +207,7 @@ describe('Tests for sdk versionID on image tag', () => {
       tick();
       fixture.detectChanges();
     }));
-    it('creates an img with feature defaulting to C', async () => {
+    it('creates an img with feature lazy load C', async () => {
       const img = des[0].children[0].nativeElement as HTMLImageElement;
       expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/sample?_s=KE7pBqC');
     });

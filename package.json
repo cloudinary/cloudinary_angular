@@ -11,7 +11,7 @@
     "test-es2015-headless": "ng test angular-cld --tsConfig=projects/angular-cld/tsconfig-es2015.spec.json --browsers ChromeHeadless",
     "install-sample-from-source": "node ./scripts/install-sample-from-source.js samples/photo_album",
     "install-sample-from-source:jquery": "node ./scripts/install-sample-from-source.js samples/photo_album_with_jquery",
-    "build": "ng build angular-cld && npm run copy-lib-assets && npm run prepare-version",
+    "build": "npm run prepare-version && ng build angular-cld && npm run copy-lib-assets",
     "copy-lib-assets": "cp \"LICENSE\" \"CHANGELOG.md\" \"README.md\" \"dist/angular-cld\"",
     "bundlewatch": "bundlewatch --config bundlewatch.config.js",
     "prepare-version": "node -e \"console.log('export let APP_VERSION = \\'' + process.env.npm_package_version +'\\';')\" > projects/angular-cld/src/lib/version.ts"
@@ -41,7 +41,7 @@
     "@types/jasminewd2": "2.0.8",
     "@types/node": "^8.9.5",
     "bundlewatch": "0.2.6",
-    "cloudinary-core": "2.8.2",
+    "cloudinary-core": "2.10.2",
     "codelyzer": "4.2.1",
     "jasmine-core": "2.99.1",
     "jasmine-spec-reporter": "4.2.1",

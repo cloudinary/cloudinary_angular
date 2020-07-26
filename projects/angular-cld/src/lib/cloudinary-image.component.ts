@@ -19,7 +19,7 @@ import { CloudinaryTransformationDirective } from './cloudinary-transformation.d
 import { CloudinaryPlaceHolder } from './cloudinary-placeholder.component';
 import { isBrowser } from './cloudinary.service';
 import { accessibilityEffect } from './constants';
-import { analyticsOptionsDefault }  from './analyticsOptionsDefault';
+import { SDKAnalyticsConstants }  from './SDKAnalyticsConstants';
 
 @Component({
   selector: 'cl-image',
@@ -132,8 +132,8 @@ export class CloudinaryImage
         delete options['data-src'];
         delete options['responsive'];
       }
-      if (this.cloudinary.config().analytics) {
-        options = {...analyticsOptionsDefault, ...options};
+      if (this.cloudinary.config().urlAnalytics) {
+        options = {...SDKAnalyticsConstants, ...options};
       }
 
       if (this.placeholderComponent) {
@@ -182,6 +182,6 @@ export class CloudinaryImage
   }
 
   accessibilityModeHandler() {
-    return this.cloudinary.url(this.publicId, {transformation: [this.options, accessibilityEffect[this.accessibility]], accessibility: true, ...analyticsOptionsDefault});
+    return this.cloudinary.url(this.publicId, {transformation: [this.options, accessibilityEffect[this.accessibility]], accessibility: true, ...SDKAnalyticsConstants});
   }
 }

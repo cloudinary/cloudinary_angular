@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import {Cloudinary} from './cloudinary.service';
 import { placeholderImageOptions, predominantColorTransformPxl } from './constants';
-import { analyticsOptionsDefault }  from './analyticsOptionsDefault';
+import { SDKAnalyticsConstants }  from './SDKAnalyticsConstants';
 
 @Component({
   selector: 'cl-placeholder',
@@ -42,10 +42,10 @@ export class CloudinaryPlaceHolder implements AfterContentChecked {
 
   getPlaceholderImage() {
     if (this.type === 'predominant-color' && this.itemHeight && this.itemWidth) {
-      return this.cloudinary.url(this.publicId, {transformation: [this.options, ...predominantColorTransformPxl], placeholder: true, ...analyticsOptionsDefault});
+      return this.cloudinary.url(this.publicId, {transformation: [this.options, ...predominantColorTransformPxl], placeholder: true, ...SDKAnalyticsConstants});
     } else {
       return this.cloudinary.url(this.publicId,
-        {transformation: [this.options, ...(placeholderImageOptions[this.type] || placeholderImageOptions['blur'])], placeholder: true, ...analyticsOptionsDefault});
+        {transformation: [this.options, ...(placeholderImageOptions[this.type] || placeholderImageOptions['blur'])], placeholder: true, ...SDKAnalyticsConstants});
     }
   }
 }
