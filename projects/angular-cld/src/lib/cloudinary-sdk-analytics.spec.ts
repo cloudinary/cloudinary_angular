@@ -208,6 +208,8 @@ describe('Tests for sdk versionID on image tag', () => {
       fixture.detectChanges();
     }));
     it('creates an img with feature lazy load C', async () => {
+      const wait = (ms) => new Promise(res => setTimeout(res, ms));
+      await wait(300);
       const img = des[0].children[0].nativeElement as HTMLImageElement;
       expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/sample?_a=AKE9NAHC');
     });
