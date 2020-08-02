@@ -19,7 +19,6 @@ import { Cloudinary } from './cloudinary.service';
 import { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
 import { CloudinaryPlaceHolder } from './cloudinary-placeholder.component';
 import { isBrowser } from './cloudinary.service';
-import { accessibilityEffect } from './constants';
 
 @Component({
   selector: 'cl-image',
@@ -184,6 +183,6 @@ export class CloudinaryImage
   }
 
   accessibilityModeHandler() {
-    return this.cloudinary.url(this.publicId, {transformation: [this.options, accessibilityEffect[this.accessibility]]});
+    return this.cloudinary.url(this.publicId, {transformation: [this.options], accessibility: this.accessibility});
   }
 }
