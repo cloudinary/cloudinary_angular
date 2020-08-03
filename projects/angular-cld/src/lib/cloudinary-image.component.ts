@@ -136,7 +136,6 @@ export class CloudinaryImage
         nativeElement.attributes,
         this.transformations
       );
-
       if (this.clientHints || (typeof this.clientHints === 'undefined' && this.cloudinary.config().client_hints)) {
         delete this.options['class'];
         delete this.options['data-src'];
