@@ -45,9 +45,9 @@ export class CloudinaryPlaceHolder implements AfterContentChecked {
 
   getPlaceholderImage() {
     if (this.type === 'predominant-color' && this.itemHeight && this.itemWidth) {
-      return this.cloudinary.url(this.publicId, {transformation: [this.options], placeholder: 'predominant-color-pixel' || true, ...SDKAnalyticsConstants});
+      return this.cloudinary.url(this.publicId, {placeholder: 'predominant-color-pixel' || true, ...this.options});
     } else {
-      return this.cloudinary.url(this.publicId, {transformation: [this.options], placeholder: this.type || true, ...SDKAnalyticsConstants});
+      return this.cloudinary.url(this.publicId, {placeholder: this.type || true, ...this.options});
     }
   }
 
