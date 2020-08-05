@@ -1,9 +1,0 @@
-dist: trusty
-sudo: required
-language: node_js
-node_js:
-  - "node"
-os:
-  - linux
-script:
-  - npm run test-headless
