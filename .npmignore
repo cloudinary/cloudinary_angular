@@ -1,0 +1,5 @@
+# Include everything that's not part of the distributable package
+**/*
+
+!package.json
+
