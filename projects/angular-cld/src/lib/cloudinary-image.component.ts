@@ -19,6 +19,7 @@ import { Cloudinary } from './cloudinary.service';
 import { CloudinaryTransformationDirective } from './cloudinary-transformation.directive';
 import { CloudinaryPlaceHolder } from './cloudinary-placeholder.component';
 import { isBrowser } from './cloudinary.service';
+import { SDKAnalyticsConstants }  from './SDKAnalyticsConstants';
 
 @Component({
   selector: 'cl-image',
@@ -131,26 +132,31 @@ export class CloudinaryImage
       image.onerror = e => {
         this.onError.emit(e);
       };
-      const options = this.cloudinary.toCloudinaryAttributes(
+      this.options = this.cloudinary.toCloudinaryAttributes(
         nativeElement.attributes,
         this.transformations
       );
       if (this.clientHints || (typeof this.clientHints === 'undefined' && this.cloudinary.config().client_hints)) {
-        delete options['class'];
-        delete options['data-src'];
-        delete options['responsive'];
+        delete this.options['class'];
+        delete this.options['data-src'];
+        delete this.options['responsive'];
       }
+      if (this.cloudinary.config().urlAnalytics) {
+        this.options = {...SDKAnalyticsConstants, ...this.options};
+      }
+
       if (this.placeholderComponent) {
-        this.placeholderHandler(options, image);
+        this.placeholderHandler(this.options, image);
       }
+
       if (this.accessibility) {
-        this.options = options;
-        options.src = this.accessibilityModeHandler();
+        this.options['src'] = this.accessibilityModeHandler();
       }
-      const imageTag = this.cloudinary.imageTag(this.publicId, options);
+
+      const imageTag = this.cloudinary.imageTag(this.publicId, this.options);
       this.setElementAttributes(image, imageTag.attributes());
-      if (options.responsive) {
-        this.cloudinary.responsive(image, options);
+      if (this.options['responsive']) {
+        this.cloudinary.responsive(image, this.options);
       }
     }
   }
@@ -183,6 +189,6 @@ export class CloudinaryImage
   }
 
   accessibilityModeHandler() {
-    return this.cloudinary.url(this.publicId, {transformation: [this.options], accessibility: this.accessibility});
+    return this.cloudinary.url(this.publicId, {accessibility: this.accessibility, ...this.options});
   }
 }
