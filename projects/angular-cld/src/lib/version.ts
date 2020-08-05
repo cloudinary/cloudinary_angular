@@ -1,1 +1,1 @@
-export let APP_VERSION = '1.3.2';
+export let APP_VERSION = '0.0.0';
