@@ -649,6 +649,37 @@ describe('CloudinaryImage', () => {
       expect(img.getAttribute('style')).toEqual(jasmine.stringMatching('opacity: 0; position: absolute;'));
     });
   });
+  describe('placeholder with secure', () => {
+    @Component({
+      template: `
+      <cl-image public-id="sample.jpg" secure="true">
+        <cl-placeholder></cl-placeholder>
+      </cl-image>`
+    })
+    class TestComponent {}
+
+    let fixture: ComponentFixture<TestComponent>;
+    let placeholder: DebugElement[];
+    let testLocalCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
+      { cloud_name: '@@fake_angular2_sdk@@', client_hints: true } as CloudinaryConfiguration);
+    beforeEach(fakeAsync(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryImage, TestComponent, LazyLoadDirective, CloudinaryPlaceHolder],
+        providers: [{ provide: Cloudinary, useValue: testLocalCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+      // all elements with an attached CloudinaryImage
+      placeholder = fixture.debugElement.queryAll(By.directive(CloudinaryPlaceHolder));
+      tick();
+      fixture.detectChanges();
+    }));
+
+    it('placeholder should have secure URL', () => {
+      const placeholderImg = placeholder[0].children[0].nativeElement as HTMLImageElement;
+      expect(placeholderImg.getAttribute('src')).toEqual('https://res.cloudinary.com/@@fake_angular2_sdk@@/image/upload/e_blur:2000,f_auto,q_1/sample.jpg');
+    });
+  });
   describe('cl-image with placeholder and html style', () => {
     @Component({
       template: `<div style="margin-top: 4000px"></div>
