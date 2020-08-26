@@ -1,4 +1,12 @@
 
+1.3.3 / 2020-08-26
+==================
+* Add test for secure placeholder (#291)
+* Update accessibility to use core transformation (#290)
+* Update placeholder to use core transformation(#289)
+
+
+
 1.3.2 / 2020-07-23
 =============
  * Updated placeholder styling (#288)
