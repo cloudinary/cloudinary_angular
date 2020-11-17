@@ -54,7 +54,7 @@
     "@angular/compiler-cli": "^6.0.0",
     "@angular/language-service": "6.0.0",
     "@cloudinary/angular-5.x": "^1.0.1",
-    "@types/node": "^8.0.30",
+    "@types/node": "7.0.7",
     "ajv": "^6.9.1",
     "cloudinary-core": "^2.5.0",
     "codelyzer": "^4.0.2",
