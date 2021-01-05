@@ -75,7 +75,7 @@ describe('Tests for sdk versionID on image tag', () => {
 
     it('creates an img without a feature- resulting in 0', () => {
       const img = des.children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/sample?_a=AKE9NAH0');
+      expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/sample?_a=AKHZdAH0');
     });
   });
 
@@ -109,7 +109,7 @@ describe('Tests for sdk versionID on image tag', () => {
 
     it('creates an img with feature accessibility D', () => {
       const img = des.children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/e_tint:75:black/sample?_a=AKE9NAHD');
+      expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/e_tint:75:black/sample?_a=AKHZdAHD');
     });
   });
 
@@ -145,7 +145,7 @@ describe('Tests for sdk versionID on image tag', () => {
 
     it('creates an img with feature responsive A', () => {
       const img = des.children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/sample?_a=AKE9NAHA');
+      expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/sample?_a=AKHZdAHA');
     });
   });
   describe('Placeholder with urlAnalytics set to true', async () => {
@@ -176,11 +176,11 @@ describe('Tests for sdk versionID on image tag', () => {
     }));
     it('placeholder img should encode with B', async () => {
       const placeholderimg = placeholder[0].children[0].nativeElement as HTMLImageElement;
-      expect(placeholderimg.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/e_blur:2000,f_auto,q_1/sample?_a=AKE9NAHB');
+      expect(placeholderimg.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/e_blur:2000,f_auto,q_1/sample?_a=AKHZdAHB');
     });
     it('original img should encode with 0', async () => {
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/sample?_a=AKE9NAH0');
+      expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/sample?_a=AKHZdAH0');
     });
   });
   describe('Lazy-load with urlAnalytics set to true', async () => {
@@ -211,7 +211,7 @@ describe('Tests for sdk versionID on image tag', () => {
       const wait = (ms) => new Promise(res => setTimeout(res, ms));
       await wait(300);
       const img = des[0].children[0].nativeElement as HTMLImageElement;
-      expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/sample?_a=AKE9NAHC');
+      expect(img.attributes.getNamedItem('src').value).toEqual('http://res.cloudinary.com/@@fake_angular_sdk@@/image/upload/sample?_a=AKHZdAHC');
     });
   });
 });
