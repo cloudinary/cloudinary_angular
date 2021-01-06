@@ -11,6 +11,8 @@ import {
   OnDestroy,
   PLATFORM_ID,
   Inject,
+  EventEmitter,
+  Output
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Cloudinary } from './cloudinary.service';
@@ -18,12 +20,18 @@ import { CloudinaryTransformationDirective } from './cloudinary-transformation.d
 
 @Component({
   selector: 'cl-video',
-  template: '<video></video>'
+  template: '<video (play)="emitPlayEvent()" (loadstart)="emitLoadstartEvent()" (playing)="emitPlayingEvent()" (error)="emitErrorEvent" (ended)="emitEndedEvent"></video>'
 })
 // See also video reference - http://cloudinary.com/documentation/video_manipulation_and_delivery#video_transformations_reference
 export class CloudinaryVideo
   implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   @Input('public-id') publicId: string;
+
+  @Output() play: EventEmitter<any> = new EventEmitter();
+  @Output() loadstart: EventEmitter<any> = new EventEmitter();
+  @Output() playing: EventEmitter<any> = new EventEmitter();
+  @Output() error: EventEmitter<any> = new EventEmitter();
+  @Output() ended: EventEmitter<any> = new EventEmitter();
 
   @ContentChildren(CloudinaryTransformationDirective)
   transformations: QueryList<CloudinaryTransformationDirective>;
@@ -102,5 +110,25 @@ export class CloudinaryVideo
       fragment.appendChild(element.childNodes[0]);
     }
     element.appendChild(fragment);
+  }
+
+  emitPlayEvent() {
+    this.play.emit();
+  }
+
+  emitLoadstartEvent() {
+    this.loadstart.emit();
+  }
+
+  emitPlayingEvent() {
+    this.playing.emit();
+  }
+
+  emitErrorEvent() {
+    this.error.emit();
+  }
+
+  emitEndedEvent() {
+    this.ended.emit();
   }
 }

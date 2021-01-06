@@ -1,5 +1,5 @@
 import { Component, DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Cloudinary } from './cloudinary.service';
 import CloudinaryConfiguration from './cloudinary-configuration.class';
@@ -399,5 +399,56 @@ describe('CloudinaryVideo', () => {
       }
     });
   });
+});
+
+
+describe('Video event handler', () => {
+  let localCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
+    { cloud_name: '@@fake_angular2_sdk@@' } as CloudinaryConfiguration);
+  let component: CloudinaryVideo;
+  let fixture: ComponentFixture<CloudinaryVideo>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [CloudinaryVideo],
+      providers: [{ provide: Cloudinary , useValue: localCloudinary}]
+    });
+    fixture = TestBed.createComponent(CloudinaryVideo);
+    component = fixture.componentInstance;
+    component.publicId = 'demo';
+  });
+
+  it('should emit play event', fakeAsync(() => {
+    spyOn(component, 'emitPlayEvent');
+    const videoElement: HTMLVideoElement = fixture.nativeElement;
+    const vid = videoElement.querySelector('video');
+
+    vid.dispatchEvent(new Event('play'));
+    fixture.detectChanges();
+
+    expect(component.emitPlayEvent).toHaveBeenCalled();
+  }));
+
+  it('should emit playing event', fakeAsync(() => {
+    spyOn(component, 'emitPlayingEvent');
+    const videoElement: HTMLVideoElement = fixture.nativeElement;
+    const vid = videoElement.querySelector('video');
+
+    vid.dispatchEvent(new Event('playing'));
+    fixture.detectChanges();
+
+    expect(component.emitPlayingEvent).toHaveBeenCalled();
+  }));
+
+  it('should emit loadstart event', fakeAsync(() => {
+    spyOn(component, 'emitLoadstartEvent');
+    const videoElement: HTMLVideoElement = fixture.nativeElement;
+    const vid = videoElement.querySelector('video');
+
+    vid.dispatchEvent(new Event('loadstart'));
+    fixture.detectChanges();
+
+    expect(component.emitLoadstartEvent).toHaveBeenCalled();
+  }));
 });
 
