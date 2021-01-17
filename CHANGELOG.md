@@ -1,4 +1,8 @@
 
+1.3.4 / 2021-01-17
+==================
+*  Add video event support (#300)
+
 1.3.3 / 2020-08-26
 ==================
 * Add test for secure placeholder (#291)

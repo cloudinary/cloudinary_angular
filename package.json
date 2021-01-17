@@ -1,6 +1,6 @@
 {
   "name": "cloudinary_angular",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "scripts": {
     "lint": "tslint **/*.ts --exclude \"**/*.d.ts\" -t verbose --project tsconfig.lib.json",
     "test": "npm run test-es5 && npm run test-es2015",
