@@ -85,6 +85,10 @@ export class Cloudinary {
     return this._cloudinaryInstance.config();
   }
 
+  updateConfig(configuration: CloudinaryConfiguration) {
+    this._cloudinaryInstance.config(configuration);
+  }
+
   url(...parameters): string {
     return this._cloudinaryInstance.url(...parameters);
   }

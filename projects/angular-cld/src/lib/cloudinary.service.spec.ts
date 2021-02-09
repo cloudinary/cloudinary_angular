@@ -22,6 +22,17 @@ describe('Cloudinary service', () => {
         expect(service instanceof Cloudinary).toBe(true);
     });
 
+    it('updates the configuration', () => {
+        
+        const newConfig: CloudinaryConfiguration = {
+            cloud_name: 'new-service-test'
+        };
+
+        service.updateConfig(newConfig)
+
+        expect(service.config().cloud_name).toEqual(newConfig.cloud_name);
+    });
+
     it('creates responsive urls by interacting with cloudinary core', () => {
         const imgElement = {} as HTMLImageElement;
         const options = {
