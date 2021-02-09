@@ -195,7 +195,7 @@ Please consult with the respective README file of each sample for usage and addi
 * **test** - Compiles TypeScript and runs unit tests on the generated JS files, re-running tests automatically on chages 
 * **test-once** - Compiles TypeSCript and executes unit tests once, closing the browser once it's done
 * **pree2e** - Updates WebDriver binary
-* **start-sample** - Starts the photo album sample, without automatically opening the browser and navingating to the started app
+* **start-sample** - Starts the photo album sample, without automatically opening the browser and navigating to the started app
 * **start-sample:jquery** - Same as *start-sample* for the jQuery sample
 * **install-sample-from-source** - Compiles TypeScript, packs this module and installs it into samples/photo_album
 * **install-sample-from-source:jquery** - Same as *install-sample-from-source* for the jQuery sample
