@@ -37,11 +37,6 @@ For example:
 npm install @cloudinary/angular-5.x cloudinary-core --save
 ```
 
-## Setup ######################################################################
-
-Follow the setup procedure described in the [Cloudinary jQuery plugin](https://github.com/cloudinary/cloudinary_js#setup) setup procedure. 
-Refer to the sample projects in this repository for usage examples.
-
 ## Usage ######################################################################
 
 The module provides three types of directives:
@@ -57,7 +52,7 @@ Further video manipulation and delivery capabilities see listed in [this referen
 Note that the attribute names in the docs are using snake_case, however this SDK supports both snake_case and kebab-case for attribute names,
 e.g. both `fetch_format: 'auto'` and `'fetch-format': 'auto'` are eventually translated to `f_auto`. 
 
-### Cloudinary module configuration ##################################
+### Cloudinary module configuration and setup ##################################
 This SDK is based on the Cloudinary JS module, however the two are decoupled, i.e. this module's `Cloudinary` is a configurable service
 to which you provide your choice of our JS module.
 
