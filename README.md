@@ -2,7 +2,7 @@ Cloudinary
 ==========
 The official [Cloudinary](https://cloudinary.com) SDK for Angular.
 
-Cloudinary's Angular SDK can be found [here](https://github.com/cloudinary/cloudinary_angular/tree/angular-5.x)
+We maintain difference branches for different versions. Cloudinary's latest Angular SDK can be found [here](https://github.com/cloudinary/cloudinary_angular/tree/angular-5.x)
 
 [Cloudinary](https://cloudinary.com) is a cloud service that offers a solution to a web application's entire image management pipeline. 
 
