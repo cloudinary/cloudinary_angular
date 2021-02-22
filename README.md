@@ -2,7 +2,7 @@ Cloudinary
 ==========
 The official [Cloudinary](https://cloudinary.com) SDK for Angular.
 
-Cloudinary's AngularJS (AKA Angular1) SDK can be found [here](https://github.com/cloudinary/cloudinary_angular/tree/angular-1.x)
+We maintain difference branches for different versions. Cloudinary's latest Angular SDK can be found [here](https://github.com/cloudinary/cloudinary_angular/tree/angular-5.x)
 
 [Cloudinary](https://cloudinary.com) is a cloud service that offers a solution to a web application's entire image management pipeline. 
 
@@ -14,15 +14,8 @@ Cloudinary offers comprehensive APIs and administration capabilities and is easy
 Cloudinary provides URL and HTTP based APIs that can be easily integrated with any Web development framework. 
 
 For Angular, Cloudinary provides an SDK for simplifying the integration even further. 
-The SDK serves as a layer on top of one of Cloudinary's Javascript libraries:
+The SDK serves as a layer on top of one of [Cloudinary's Javascript library](https://github.com/cloudinary/cloudinary_js).
 
-| Github Repository	| Package name | Description |
-|-------------------|--------------|-------------|
-| [pkg-cloudinary-core](https://github.com/cloudinary/pkg-cloudinary-core) | cloudinary-core | Core Cloudinary Library. Use this if you do not intend to use jQuery |
-| [pkg-cloudinary-jquery](https://github.com/cloudinary/pkg-cloudinary-jquery) | cloudinary-jquery | Core Library + jQuery plugin |
-| [pkg-cloudinary-jquery-file-upload](https://github.com/cloudinary/pkg-cloudinary-jquery-file-upload) | cloudinary-jquery-file-upload | Core Library + jQuery plugin + Blueimp File Upload adapter |
-
-<a href="https://cloudinary.com/signup" style="background-color:#ff7829; border:1px solid; color: white; border-color: black; padding: 8px; text-decoration: none; box-shadow: 1px 1px 3px #224488; width: 500px">Signup for free</a>
 
 ## Live examples ##################################################################
 Start experimenting right away with one of these live examples:
@@ -36,18 +29,13 @@ Install the SDK version that supports the Angular version you are using:
 
 * For Angular 2, use `2.x`
 * For Angular 4, use `4.x`
-* For Angular 5-10, use `5.x`
+* For Angular 5-11, use `5.x`
 
 For example: 
 
 ```shell
-npm install @cloudinary/angular-5.x --save
+npm install @cloudinary/angular-5.x cloudinary-core --save
 ```
-
-## Setup ######################################################################
-
-Follow the setup procedure described in the [Cloudinary jQuery plugin](https://github.com/cloudinary/cloudinary_js#setup) setup procedure. 
-Refer to the sample projects in this repository for usage examples.
 
 ## Usage ######################################################################
 
@@ -64,7 +52,7 @@ Further video manipulation and delivery capabilities see listed in [this referen
 Note that the attribute names in the docs are using snake_case, however this SDK supports both snake_case and kebab-case for attribute names,
 e.g. both `fetch_format: 'auto'` and `'fetch-format': 'auto'` are eventually translated to `f_auto`. 
 
-### Cloudinary module configuration ##################################
+### Cloudinary module configuration and setup ##################################
 This SDK is based on the Cloudinary JS module, however the two are decoupled, i.e. this module's `Cloudinary` is a configurable service
 to which you provide your choice of our JS module.
 
