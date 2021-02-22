@@ -43,11 +43,11 @@ describe('Cloudinary service', () => {
             crop: 'fill',
             responsive: true
         };
-        expect(service.url(publicId, options)).toContain(
+        expect(service.url(publicId, options)).toEqual(
             'http://res.cloudinary.com/service-test/image/upload/c_fill,w_100/image_public_id.jpg');
     });
 
-    describe('isJsonLikeString ', () => {
+    describe('isJsonLikeString', () => {
         it('identifies strings that start with { and end with }', () => {
             expect(isJsonLikeString('{"a":"1", "b":"2"}')).toBeTruthy();
         });
