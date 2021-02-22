@@ -23,7 +23,7 @@ describe('Cloudinary service', () => {
     });
 
     it('updates the configuration', () => {
-        
+
         const newConfig: CloudinaryConfiguration = {
             cloud_name: 'new-service-test'
         };
@@ -48,14 +48,15 @@ describe('Cloudinary service', () => {
     });
 
     it('creates an image url', () => {
-        const publicId = 'image_public_id.jpg';
-        const options = {
+      const publicId = 'image_public_id.jpg';
+
+      const options = {
             width: '100',
             crop: 'fill',
             responsive: true
         };
         expect(service.url(publicId, options)).toEqual(
-            'http://res.cloudinary.com/service-test/image/upload/c_fill,w_100/image_public_id.jpg');
+            'http://res.cloudinary.com/new-service-test/image/upload/c_fill,w_100/image_public_id.jpg');
     });
 
     describe('isJsonLikeString', () => {
