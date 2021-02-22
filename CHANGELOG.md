@@ -1,4 +1,9 @@
 
+1.4.0 / 2021-02-22
+==================
+* Add service api to update configuration during runtime (#302)
+* Add support to angular 11  (#304)
+
 1.3.4 / 2021-01-17
 ==================
 *  Add video event support (#300)
