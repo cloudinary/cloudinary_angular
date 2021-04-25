@@ -1,5 +1,5 @@
 import {AfterViewInit, Directive, ElementRef} from '@angular/core';
-
+import { isBrowser } from './cloudinary.service';
 
 @Directive({
   selector: 'cl-image[loading=lazy]'
@@ -9,11 +9,13 @@ export class LazyLoadDirective implements AfterViewInit {
   constructor(private el: ElementRef) {}
 
   ngAfterViewInit() {
+    if (isBrowser()) {
       if (!this.isNativeLazyLoadSupported() && this.isLazyLoadSupported()) {
         this.lazyLoad();
       } else {
         this.loadImage();
       }
+    }
   }
 
   loadImage() {
