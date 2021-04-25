@@ -1,4 +1,9 @@
 
+1.4.1 / 2021-04-25
+=============
+* resolve errors wheh using lazyload and ssr (#306)
+
+
 1.4.0 / 2021-02-22
 ==================
 * Add service api to update configuration during runtime (#302)
