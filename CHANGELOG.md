@@ -1,4 +1,8 @@
 
+1.4.2 / 2021-05-24
+=============
+ * Add support for angular 12 (#308)
+
 1.4.1 / 2021-04-25
 =============
 * resolve errors wheh using lazyload and ssr (#306)
