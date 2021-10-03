@@ -12,7 +12,7 @@ import { CloudinaryTransformationDirective } from './cloudinary-transformation.d
         <cl-transformation effect="sepia"></cl-transformation>
         click me
     </button>
-    <img [clBackgroundImage]="image.public_id" width="100" crop="scale"/>
+    <img [clBackgroundImage]="image.public_id" position="left" width="100" crop="scale"/>
     `
 })
 class TestComponent { }
@@ -55,5 +55,15 @@ describe('CloudinaryBackgroundImageDirective', () => {
   it('updates the background image without transformations', () => {
     const div = des[1].nativeElement as HTMLDivElement;
     expect(div.style.backgroundImage).toEqual(jasmine.stringMatching(/c_scale,w_100\/some_image_id/));
+  });
+
+  it('background image position should default to center', () => {
+    const div = des[0].nativeElement as HTMLDivElement;
+    expect(div.style.backgroundPosition).toEqual('center center');
+  });
+
+  it('should be able to pass background image position', () => {
+    const div = des[1].nativeElement as HTMLDivElement;
+    expect(div.style.backgroundPosition).toEqual('left center');
   });
 });

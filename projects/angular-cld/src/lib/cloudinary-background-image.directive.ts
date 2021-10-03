@@ -8,6 +8,7 @@ import {CloudinaryTransformationDirective} from './cloudinary-transformation.dir
 export class CloudinaryBackgroundImageDirective implements AfterViewInit {
 
     @Input() clBackgroundImage: string;
+    @Input() position: string = 'center';
 
     @ContentChildren(CloudinaryTransformationDirective)
     transformations: QueryList<CloudinaryTransformationDirective>;
@@ -26,7 +27,7 @@ export class CloudinaryBackgroundImageDirective implements AfterViewInit {
         const imageUrl = this.cloudinary.url(this.clBackgroundImage, options);
         this.renderer.setStyle(nativeElement, 'background-image', `url('${imageUrl}')`);
         this.renderer.setStyle(nativeElement, 'background-repeat', 'no-repeat');
-        this.renderer.setStyle(nativeElement, 'background-position', 'center');
+        this.renderer.setStyle(nativeElement, 'background-position', this.position);
       }
   }
 }
