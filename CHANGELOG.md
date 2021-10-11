@@ -1,4 +1,15 @@
 
+1.5.0 / 2021-10-11
+=============
+New functionality
+-----------------
+ * Add position input to background image directive (#309)
+ 
+Other changes
+-----------------
+ * Updated cloudinary-core version (#310)
+ 
+
 1.4.2 / 2021-05-24
 =============
  * Add support for angular 12 (#308)
