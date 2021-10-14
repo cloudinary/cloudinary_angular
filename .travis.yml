@@ -6,3 +6,8 @@ os:
   - linux
 script:
   - npm run test-headless
+
+notifications:
+  email:
+    recipients:
+      - sdk_developers@cloudinary.com
