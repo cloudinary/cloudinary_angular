@@ -8,6 +8,8 @@ import { CloudinaryTransformationDirective } from './cloudinary-transformation.d
 
 describe('CloudinaryVideo', () => {
 
+  const VIDEO_UPLOAD_PATH = 'http://res.cloudinary.com/demo/video/upload/';
+
   let localCloudinary: Cloudinary = new Cloudinary(require('cloudinary-core'),
     { cloud_name: '@@fake_angular2_sdk@@' } as CloudinaryConfiguration);
 
@@ -161,6 +163,200 @@ describe('CloudinaryVideo', () => {
 
       // verify interaction with underlying cloudinary-core lib
       expect(localCloudinary.videoTag).toHaveBeenCalledTimes(11);
+    });
+  });
+
+  describe('video with custom sources', () => {
+    @Component({
+      template: `
+        <cl-video cloud-name="demo" public-id="dog" sources='[{"type": "mp4", "codecs":"hev1", "transformations": {"video-codec":"h265"}},
+             {"type": "webm", "codecs":"vp9", "transformations": {"video-codec":"vp9"}},
+             {"type": "mp4", "transformations": {"video-codec":"auto"}},
+             {"type": "webm", "transformations": {"video-codec":"auto"}}]'>
+        </cl-video>`
+    })
+
+    class TestComponent {
+    }
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement;  // the elements w/ the directive
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryVideo, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: localCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+
+      // Our element under test, which is attached to CloudinaryVideo
+      des = fixture.debugElement.query(By.directive(CloudinaryVideo));
+    });
+
+    it('should generate video tag using custom sources', () => {
+      const video = des.children[0].nativeElement as HTMLVideoElement;
+      // Created <video> element should have 4 child <source> elements
+      expect(video.childElementCount).toBe(4);
+      expect(video.children[0].attributes.getNamedItem('type').value).toEqual('video/mp4; codecs=hev1');
+      expect(video.children[0].attributes.getNamedItem('src').value).toEqual(`${VIDEO_UPLOAD_PATH}vc_h265/dog.mp4`);
+      expect(video.children[1].attributes.getNamedItem('type').value).toEqual('video/webm; codecs=vp9');
+      expect(video.children[1].attributes.getNamedItem('src').value).toEqual(`${VIDEO_UPLOAD_PATH}vc_vp9/dog.webm`);
+      expect(video.children[2].attributes.getNamedItem('type').value).toEqual('video/mp4');
+      expect(video.children[2].attributes.getNamedItem('src').value).toEqual(`${VIDEO_UPLOAD_PATH}vc_auto/dog.mp4`);
+      expect(video.children[3].attributes.getNamedItem('type').value).toEqual('video/webm');
+      expect(video.children[3].attributes.getNamedItem('src').value).toEqual(`${VIDEO_UPLOAD_PATH}vc_auto/dog.webm`);
+    });
+  });
+
+  describe('video with codecs array', () => {
+    @Component({
+      template: `
+        <cl-video cloud-name="demo" public-id="dog" sources='[{"type": "mp4", "codecs": ["vp8", "vorbis"], "transformations": {"video-codec":"auto"}},
+             {"type": "webm", "codecs": ["avc1.4D401E", "mp4a.40.2"], "transformations": {"video-codec":"auto"}}]'>
+        </cl-video>`
+    })
+
+    class TestComponent {
+    }
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement;  // the elements w/ the directive
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryVideo, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: localCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+
+      // Our element under test, which is attached to CloudinaryVideo
+      des = fixture.debugElement.query(By.directive(CloudinaryVideo));
+    });
+
+    it('should generate video tag with codecs array', () => {
+      const video = des.children[0].nativeElement as HTMLVideoElement;
+      // Created <video> element should have 2 child <source> elements
+      expect(video.childElementCount).toBe(2);
+      expect(video.children[0].attributes.getNamedItem('type').value).toEqual('video/mp4; codecs=vp8, vorbis');
+      expect(video.children[0].attributes.getNamedItem('src').value).toEqual(`${VIDEO_UPLOAD_PATH}vc_auto/dog.mp4`);
+      expect(video.children[1].attributes.getNamedItem('type').value).toEqual('video/webm; codecs=avc1.4D401E, mp4a.40.2');
+      expect(video.children[1].attributes.getNamedItem('src').value).toEqual(`${VIDEO_UPLOAD_PATH}vc_auto/dog.webm`);
+    });
+  });
+
+  describe('video with overriding sourceTypes', () => {
+    @Component({
+      template: `
+          <cl-video cloud-name="demo" public-id="dog" sources='[{"type": "mp4"}]' source-types='["ogv", "mp4", "webm"]'>
+          </cl-video>`
+    })
+
+    class TestComponent {
+    }
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement;  // the elements w/ the directive
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryVideo, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: localCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+
+      // Our element under test, which is attached to CloudinaryVideo
+      des = fixture.debugElement.query(By.directive(CloudinaryVideo));
+    });
+
+    it('should generate video tag overriding sourceTypes with sources if both are given', () => {
+      const video = des.children[0].nativeElement as HTMLVideoElement;
+      // Created <video> element should have 1 child <source> element
+      expect(video.childElementCount).toBe(1);
+      expect(video.children[0].attributes.getNamedItem('type').value).toEqual('video/mp4');
+      expect(video.children[0].attributes.getNamedItem('src').value).toEqual(`${VIDEO_UPLOAD_PATH}dog.mp4`);
+    });
+  });
+
+  describe('handle ogg/ogv in sources', () => {
+    @Component({
+      template: `
+          <cl-video cloud-name="demo" public-id="dog" sources='[{"type": "ogv"}]'>
+          </cl-video>`
+    })
+
+    class TestComponent {
+    }
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement;  // the elements w/ the directive
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryVideo, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: localCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+
+      // Our element under test, which is attached to CloudinaryVideo
+      des = fixture.debugElement.query(By.directive(CloudinaryVideo));
+    });
+
+    it('should correctly handle ogg/ogv', () => {
+      const video = des.children[0].nativeElement as HTMLVideoElement;
+      // Created <video> element should have 1 child <source> element
+      expect(video.childElementCount).toBe(1);
+      expect(video.children[0].attributes.getNamedItem('type').value).toEqual('video/ogg');
+      expect(video.children[0].attributes.getNamedItem('src').value).toEqual(`${VIDEO_UPLOAD_PATH}dog.ogv`);
+    });
+  });
+
+  describe('video with sources and transformations', () => {
+    @Component({
+      template: `
+        <cl-video cloud-name="demo" public-id="dog" sources='[{"type": "mp4", "codecs":"hev1", "transformations": {"video-codec":"h265"}},
+             {"type": "webm", "codecs":"vp9", "transformations": {"video-codec":"vp9"}},
+             {"type": "mp4", "transformations": {"video-codec":"auto"}},
+             {"type": "webm", "transformations": {"video-codec":"auto"}}]' audio-codec="aac" video-codec='{"codec":"h264"}' start-offset="3" html-width="200" html-height="100">
+        </cl-video>`
+    })
+
+    class TestComponent {
+    }
+
+    let fixture: ComponentFixture<TestComponent>;
+    let des: DebugElement;  // the elements w/ the directive
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        declarations: [CloudinaryTransformationDirective, CloudinaryVideo, TestComponent],
+        providers: [{ provide: Cloudinary, useValue: localCloudinary }]
+      }).createComponent(TestComponent);
+
+      fixture.detectChanges(); // initial binding
+
+      // Our element under test, which is attached to CloudinaryVideo
+      des = fixture.debugElement.query(By.directive(CloudinaryVideo));
+    });
+
+    it('should generate video tag with sources and transformations', () => {
+      const video = des.children[0].nativeElement as HTMLVideoElement;
+      expect(video.attributes.getNamedItem('width').value).toEqual('200');
+      expect(video.attributes.getNamedItem('height').value).toEqual('100');
+      expect(video.attributes.getNamedItem('poster').value).toEqual(`${VIDEO_UPLOAD_PATH}ac_aac,so_3,vc_h264/dog.jpg`);
+      // Created <video> element should have 4 child <source> elements
+      expect(video.childElementCount).toBe(4);
+      expect(video.children[0].attributes.getNamedItem('type').value).toEqual('video/mp4; codecs=hev1');
+      expect(video.children[0].attributes.getNamedItem('src').value).toEqual(`${VIDEO_UPLOAD_PATH}ac_aac,so_3,vc_h265/dog.mp4`);
+      expect(video.children[1].attributes.getNamedItem('type').value).toEqual('video/webm; codecs=vp9');
+      expect(video.children[1].attributes.getNamedItem('src').value).toEqual(`${VIDEO_UPLOAD_PATH}ac_aac,so_3,vc_vp9/dog.webm`)
+      expect(video.children[2].attributes.getNamedItem('type').value).toEqual('video/mp4');
+      expect(video.children[2].attributes.getNamedItem('src').value).toEqual(`${VIDEO_UPLOAD_PATH}ac_aac,so_3,vc_auto/dog.mp4`);
+      expect(video.children[3].attributes.getNamedItem('type').value).toEqual('video/webm');
+      expect(video.children[3].attributes.getNamedItem('src').value).toEqual(`${VIDEO_UPLOAD_PATH}ac_aac,so_3,vc_auto/dog.webm`);
     });
   });
 
