@@ -29,7 +29,7 @@ Install the SDK version that supports the Angular version you are using:
 
 * For Angular 2, use `2.x`
 * For Angular 4, use `4.x`
-* For Angular 5-12, use `5.x`
+* For Angular versions greater than 5, use `5.x`
 
 For example: 
 
