@@ -26,7 +26,7 @@ For the complete documentation, see the [Angular SDK Guide](https://cloudinary.c
 
 
 ## Version Support
-* For Angular versions greater than 5, use `5.x`
+* For Angular versions greater than 5, use latest angular version
 
 ## Installation
 ```shell
