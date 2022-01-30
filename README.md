@@ -2,7 +2,7 @@ Cloudinary Angular SDK
 =========================
 ## About
 The Cloudinary Angular SDK allows you to quickly and easily integrate your application with Cloudinary.
-Effortlessly (Delete what's not possible such as upload) optimize, transform, upload and manage your cloud's assets.
+Effortlessly optimize, transform, and manage your cloud's assets.
 
 
 #### Note
