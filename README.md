@@ -28,9 +28,9 @@ For the complete documentation, see the [Angular SDK Guide](https://cloudinary.c
 ## Version Support
 | SDK Version   | ng 2 | ng 4 | ng >=5.0.0 |
 |---------------|------|------|------------|
-| 2.x           | V    | X    | X          |
-| 4.x           | X    | V    | X          |
 | 5.x           | X    | X    | V          |
+| 4.x           | X    | V    | X          |
+| 2.x           | V    | X    | X          |
 
 ## Installation
 ```shell
