@@ -1,4 +1,8 @@
 
+1.5.1 / 2022-02-27
+=============
+ * Add support for angular versions >=6.0.0
+
 1.5.0 / 2021-10-11
 =============
 New functionality
