@@ -1,6 +1,6 @@
 {
   "name": "@cloudinary/angular-4.x",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "This is a legacy package, please find latest at https://www.npmjs.com/package/@cloudinary/ng",
   "keywords": [
     "cloudinary",
