@@ -1,6 +1,7 @@
 {
   "name": "@cloudinary/angular-5.x",
-  "version": "1.5.2",
+  "version": "1.5.3",
+  "description": "This is a legacy package, please find latest at https://www.npmjs.com/package/@cloudinary/ng",
   "peerDependencies": {
     "@angular/common": ">=6.0.0",
     "@angular/core": ">=6.0.0"

@@ -1,6 +1,7 @@
 {
   "name": "cloudinary_angular",
   "version": "1.5.3",
+  "description": "This is a legacy package, please find latest at https://www.npmjs.com/package/@cloudinary/ng",
   "scripts": {
     "lint": "tslint **/*.ts --exclude \"**/*.d.ts\" -t verbose --project tsconfig.lib.json",
     "test": "npm run test-es5 && npm run test-es2015",

@@ -1,3 +1,8 @@
+
+1.5.3 / 2022-06-12
+=============
+ * Update Readme description
+
 1.5.2 / 2022-03-24
 =============
  * Bump minimist version in photo album (#315)
