@@ -1,6 +1,8 @@
 Cloudinary Angular SDK
 =========================
 ## About
+**NOTE-IMPORTANT**: This is a legacy package, please find latest at https://github.com/cloudinary/frontend-frameworks/tree/master/packages/angular
+
 The Cloudinary Angular SDK allows you to quickly and easily integrate your application with Cloudinary.
 Effortlessly optimize, transform, and manage your cloud's assets.
 
