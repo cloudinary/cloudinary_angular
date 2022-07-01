@@ -1,20 +1,41 @@
-import {AfterViewInit, Directive, ElementRef} from '@angular/core';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  NgZone,
+  OnDestroy,
+} from '@angular/core';
+
 import { isBrowser } from './cloudinary.service';
 
-@Directive({
-  selector: 'cl-image[loading=lazy]'
-})
-export class LazyLoadDirective implements AfterViewInit {
+// Check loading property is defined on image or iframe.
+const isNativeLazyLoadSupported =
+  isBrowser && 'loading' in HTMLImageElement.prototype;
+const isIntersectionObserverSupported =
+  isBrowser && 'IntersectionObserver' in window;
 
-  constructor(private el: ElementRef) {}
+@Directive({
+  selector: 'cl-image[loading=lazy]',
+})
+export class LazyLoadDirective implements AfterViewInit, OnDestroy {
+  private observer: IntersectionObserver | null = null;
+
+  constructor(private el: ElementRef, private ngZone: NgZone) {}
 
   ngAfterViewInit() {
     if (isBrowser()) {
-      if (!this.isNativeLazyLoadSupported() && this.isLazyLoadSupported()) {
-        this.lazyLoad();
+      if (!isNativeLazyLoadSupported && isIntersectionObserverSupported) {
+        this.lazyLoadThroughIntersectionObserver();
       } else {
         this.loadImage();
       }
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.observer) {
+      this.observer.disconnect();
+      this.observer = null;
     }
   }
 
@@ -24,27 +45,23 @@ export class LazyLoadDirective implements AfterViewInit {
     image.setAttribute('src', image.dataset.src);
   }
 
-  isLazyLoadSupported() {
-    return window && 'IntersectionObserver' in window;
-  }
-
-  isNativeLazyLoadSupported() {
-    return 'loading' in HTMLImageElement.prototype; // check loading property is defined on image or iframe
-  }
-
-  lazyLoad() {
+  lazyLoadThroughIntersectionObserver() {
     const options = {
       rootMargin: `0px 0px -50% 0px`, // Margin around the root
     };
-    const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
+    // Caretaker note: the `IntersectionObserver` is patched by zone.js in the latest versions,
+    // which means it triggers change detection when `IntersectionObserver` tasks are invoked.
+    // We only set the `src` property within the task, so we don't require Angular running `tick()`.
+    this.ngZone.runOutsideAngular(() => {
+      this.observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             this.loadImage();
-            observer.unobserve(entry.target);
+            this.observer.unobserve(entry.target);
           }
         }, options);
       });
-    observer.observe(this.el.nativeElement);
+      this.observer.observe(this.el.nativeElement);
+    });
   }
 }
