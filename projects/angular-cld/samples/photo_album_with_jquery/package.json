@@ -8,7 +8,7 @@
     "@angular/animations": "^6.0.3",
     "@angular/common": "^6.0.3",
     "@angular/compiler": "^6.0.3",
-    "@angular/compiler-cli": "^6.0.3",
+    "@angular/compiler-cli": "^9.0.0",
     "@angular/core": "^6.0.3",
     "@angular/forms": "^6.0.3",
     "@angular/http": "^6.0.3",
