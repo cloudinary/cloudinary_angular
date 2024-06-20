@@ -27,6 +27,10 @@
     "systemjs": "^0.21.3",
     "zone.js": "^0.8.26"
   },
+  "overrides": {
+    "braces": "^3.0.3",
+    "micromatch": "^4.0.6"
+  },
   "devDependencies": {
     "@types/jquery": "^3.3.2",
     "concurrently": "^3.5.1",
